@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FancyPants Sample</title>
+  <script type="module">
+
+  import Component from './lib/component.js';
+  import { tracked } from './lib/tracking.js';
+
+  class FooBar extends Component {
+    foo = tracked(0);
+
+    get bar() {
+      return `bar-${this.foo}`;
+    }
+
+    defineDynamicContent({ when, update, event }) {
+      when('foo');
+      update('.foo').prop('value');
+
+      when('bar');
+      update('.bar').prop('value');
+
+      event('.go').click(() => { this.foo += 1; });
+    }
+  }
+
+  FooBar.register('#foo-bar');
+
+  </script>
+</head>
+<body>
+
+  <h1>FancyPants Sample</h1>
+
+  <p><foo-bar></foo-bar></p>
+  <p><foo-bar></foo-bar></p>
+
+  <template id="foo-bar">
+    <button class="go">+1</button>
+    <output class="foo"></output>
+    <output class="bar"></output>
+  </template>
+
+</body>
+</html>
