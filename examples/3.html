@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FancyPants Example Three</title>
+  <link rel="modulepreload" href="../tracking.js">
+  <link rel="modulepreload" href="../rendering.js">
+  <link rel="modulepreload" href="../component.js">
+  <script type="module">
+
+  import Component from '../component.js';
+  import { tracked } from '../tracking.js';
+
+  class FooBar extends Component {
+    foo = tracked(0);
+
+    get bar() {
+      return `bar-${this.foo}`;
+    }
+
+    constructor() {
+      super();
+      this.shadow.querySelector('.go')
+        .addEventListener('click', () => { this.foo += 1 });
+    }
+
+    render() {
+      this.shadow.querySelector('.foo').value = this.foo;
+      this.shadow.querySelector('.bar').value = this.bar;
+    }
+
+  }
+
+  FooBar.register('#different-id');
+
+  </script>
+</head>
+<body>
+
+  <h1>FancyPants Example Three</h1>
+
+  <p><foo-bar></foo-bar></p>
+  <p><foo-bar></foo-bar></p>
+
+  <template id="different-id">
+    <button class="go">+1</button>
+    <output class="foo"></output>
+    <output class="bar"></output>
+  </template>
+
+</body>
+</html>

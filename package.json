@@ -1,0 +1,18 @@
+{
+  "name": "fancy-pants",
+  "version": "1.0.0",
+  "description": "performant custom elements micro-lib",
+  "repository": "git@github.com:sukima/fancy-pants.git",
+  "author": "Devin Weaver (@sukima) <suki@tritarget.org> (https://tritarget.org/)",
+  "license": "MIT",
+  "scripts": {
+    "start": "serve",
+    "lint:js": "eslint *.js"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.12.0",
+    "eslint-plugin-babel": "^5.3.1",
+    "serve": "^11.3.2"
+  }
+}

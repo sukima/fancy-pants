@@ -2,46 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>FancyPants Sample</title>
-  <script type="module">
-
-  import Component from './lib/component.js';
-  import { tracked } from './lib/tracking.js';
-
-  class FooBar extends Component {
-    foo = tracked(0);
-
-    get bar() {
-      return `bar-${this.foo}`;
-    }
-
-    defineDynamicContent({ when, update, event }) {
-      when('foo');
-      update('.foo').prop('value');
-
-      when('bar');
-      update('.bar').prop('value');
-
-      event('.go').click(() => { this.foo += 1; });
-    }
-  }
-
-  FooBar.register('#foo-bar');
-
-  </script>
+  <title>Fancy Pants</title>
 </head>
 <body>
 
-  <h1>FancyPants Sample</h1>
+  <h1>FancyPants</h1>
+  <h2>A performant <em>custom elements</em> micro-lib</h2>
 
-  <p><foo-bar></foo-bar></p>
-  <p><foo-bar></foo-bar></p>
-
-  <template id="foo-bar">
-    <button class="go">+1</button>
-    <output class="foo"></output>
-    <output class="bar"></output>
-  </template>
+  <nav>
+    <ol>
+      <li><a href="examples/1.html">Example One</a> &mdash; HTML <code>&lt;template&gt;</code></li>
+      <li><a href="examples/2.html">Example Two</a> &mdash; <code>static template = `&hellip;`;</code> string</li>
+      <li><a href="examples/3.html">Example Three</a> &mdash; HTML <code>&lt;template&gt;</code> with hardcoded ID</li>
+      <li><a href="examples/4.html">Example Four</a> &mdash; Global tracking object using <code>tracked()</code></li>
+      <li><a href="examples/5.html">Example Five</a> &mdash; Manual global tracking (lower level API)</li>
+      <li><a href="examples/6.html">Example Six</a> &mdash; Auto updating counter</li>
+      <li><a href="examples/7.html">Example Seven</a> &mdash; Emoji randomizer (performance example)</li>
+    </ol>
+  </nav>
 
 </body>
 </html>

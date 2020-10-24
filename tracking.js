@@ -8,7 +8,7 @@ class Tag {
   [REVISION] = CURRENT_REVISION;
 }
 
-class Trackable {
+class TrackedProperty {
   constructor(initialValue) {
     this.initialValue = initialValue;
   }
@@ -22,16 +22,16 @@ export function createTag() {
   return new Tag();
 }
 
-export function dirtyTag(tag, ctx) {
+export function dirtyTag(tag) {
   if (currentComputation?.has(tag)) {
-    throw new Error('Cannot dirty tag that has been used during a computation');
+    throw new Error('Cannot dirty a tag during a computation');
   }
   tag[REVISION] = ++CURRENT_REVISION;
-  onTagDirtied(ctx);
+  onTagDirtied();
 }
 
 export function consumeTag(tag) {
-  if (!currentComputation) { return; }
+  if (!(currentComputation && tag instanceof Tag)) { return; }
   currentComputation.add(tag);
 }
 
@@ -68,8 +68,8 @@ export function memoizeFunction(fn) {
   };
 }
 
-function isTrackableDescriptor(descriptor) {
-  return descriptor.value instanceof Trackable;
+function isTrackedPropertyDescriptor(descriptor) {
+  return descriptor.value instanceof TrackedProperty;
 }
 
 function trackedDescriptor(initialValue) {
@@ -89,13 +89,13 @@ function trackedDescriptor(initialValue) {
       if (!tags.has(this)) {
         tags.set(this, createTag());
       }
-      dirtyTag(tags.get(this), this);
+      dirtyTag(tags.get(this));
     }
   };
 }
 
 export function tracked(initialValue) {
-  return new Trackable(initialValue);
+  return new TrackedProperty(initialValue);
 }
 
 export function defineTrackedProp(ctx, propName, initialValue) {
@@ -105,7 +105,8 @@ export function defineTrackedProp(ctx, propName, initialValue) {
 export function activateTracking(ctx) {
   for (let prop of Reflect.ownKeys(ctx)) {
     let descriptor = Reflect.getOwnPropertyDescriptor(ctx, prop);
-    if (!isTrackableDescriptor(descriptor)) { continue; }
+    if (!isTrackedPropertyDescriptor(descriptor)) { continue; }
     defineTrackedProp(ctx, prop, descriptor.value.initialValue);
   }
+  return ctx;
 }

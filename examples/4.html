@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FancyPants Example Four</title>
+  <link rel="modulepreload" href="../tracking.js">
+  <link rel="modulepreload" href="../rendering.js">
+  <link rel="modulepreload" href="../component.js">
+  <script type="module">
+
+  import Component from '../component.js';
+  import { tracked, activateTracking } from '../tracking.js';
+
+  const globalTrackable = activateTracking({
+    foo: tracked(0),
+  });
+
+  class FooBar extends Component {
+
+    get bar() {
+      return `bar-${globalTrackable.foo}`;
+    }
+
+    constructor() {
+      super();
+      this.shadow.querySelector('.go')
+        .addEventListener('click', () => { globalTrackable.foo += 1 });
+    }
+
+    render() {
+      this.shadow.querySelector('.foo').value = globalTrackable.foo;
+      this.shadow.querySelector('.bar').value = this.bar;
+    }
+  }
+
+  FooBar.register();
+
+  </script>
+</head>
+<body>
+
+  <h1>FancyPants Example Four</h1>
+
+  <p><foo-bar></foo-bar></p>
+  <p><foo-bar></foo-bar></p>
+
+  <template id="foo-bar">
+    <button class="go">+1</button>
+    <output class="foo"></output>
+    <output class="bar"></output>
+  </template>
+
+</body>
+</html>
