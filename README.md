@@ -14,6 +14,10 @@ class MyCustomElement extends Component {
 
   count = tracked(0);
 
+  constructor() {
+    super();
+  }
+
   connectedCallback() {
     super.connectedCallback();
     this.timer = setInterval(() => this.count++, 1000);
@@ -28,7 +32,9 @@ class MyCustomElement extends Component {
     this.shadow.querySelector('output').value = this.count;
   }
 
-  static template = `<span>Counter: <output></output></span>`;
+  static get template() {
+    return `<span>Counter: <output></output></span>`;
+  }
 
 }
 

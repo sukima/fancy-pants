@@ -5,7 +5,9 @@ let currentComputation = null;
 let onTagDirtied = () => {};
 
 class Tag {
-  [REVISION] = CURRENT_REVISION;
+  constructor() {
+    this[REVISION] = CURRENT_REVISION;
+  }
 }
 
 class TrackedProperty {

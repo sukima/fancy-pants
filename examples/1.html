@@ -12,6 +12,7 @@
   import { tracked } from '../tracking.js';
 
   class FooBar extends Component {
+
     foo = tracked(0);
 
     get bar() {
@@ -28,6 +29,7 @@
       this.shadow.querySelector('.foo').value = this.foo;
       this.shadow.querySelector('.bar').value = this.bar;
     }
+
   }
 
   FooBar.register();

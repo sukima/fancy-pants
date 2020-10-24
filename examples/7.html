@@ -31,9 +31,12 @@
   }
 
   class BlinknLights extends Component {
-    lights = new Set();
-    previousEmojiCount = 0;
     timer = tracked();
+    constructor() {
+      super();
+      this.lights = new Set();
+      this.previousEmojiCount = 0;
+    }
     connectedCallback() {
       super.connectedCallback();
       if (this.hasAttribute('autostart')) { this.start(); }
@@ -143,15 +146,14 @@
   }
 
   class PlayPauseButton extends Component {
-    static template = `<button type="button"></button>`;
     connectedCallback() {
       super.connectedCallback();
       this.clickHandler = () => this.toggle();
-      this.buttonElement.addEventListener('click', this.clickHandler);
+      this.buttonElement.addEventListener('mouseup', this.clickHandler);
     }
     disconnectedCallback() {
       super.disconnectedCallback();
-      this.buttonElement.removeEventListener('click', this.clickHandler);
+      this.buttonElement.removeEventListener('mouseup', this.clickHandler);
     }
     toggle() {
       let { runnableElement } = this;
@@ -168,6 +170,9 @@
     get runnableElement() {
       let id = this.getAttribute('for');
       return document.querySelector(`#${id}`);
+    }
+    static get template() {
+      return `<button type="button"></button>`;
     }
   }
 

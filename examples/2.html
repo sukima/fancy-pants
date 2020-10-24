@@ -12,6 +12,7 @@
   import { tracked } from '../tracking.js';
 
   class FooBar extends Component {
+
     foo = tracked(0);
 
     get bar() {
@@ -29,11 +30,13 @@
       this.shadow.querySelector('.bar').value = this.bar;
     }
 
-    static template = `
-      <button class="go">+1</button>
-      <output class="foo"></output>
-      <output class="bar"></output>
-    `;
+    static get template() {
+      return `
+        <button class="go">+1</button>
+        <output class="foo"></output>
+        <output class="bar"></output>
+      `;
+    }
 
   }
 
