@@ -1,49 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>FancyPants Example Six</title>
-  <link rel="modulepreload" href="../tracking.js">
-  <link rel="modulepreload" href="../rendering.js">
-  <link rel="modulepreload" href="../component.js">
-  <script type="module">
+<script type="module" src="./scripts/example-source.js"></script>
 
-  import Component from '../component.js';
-  import { tracked } from '../tracking.js';
+<example-source lang="html">
 
-  class MyCustomElement extends Component {
+<my-custom-element></my-custom-element>
 
-    count = tracked(0);
+</example-source>
 
-    connectedCallback() {
-      super.connectedCallback();
-      this.timer = setInterval(() => this.count++, 1000);
-    }
+<example-source lang="js" strip-script>
 
-    disconnectedCallback() {
-      super.disconnectedCallback();
-      clearInterval(this.timer);
-    }
+<script type="module">
 
-    render() {
-      this.shadow.querySelector('output').value = this.count;
-    }
+import Component from './fancy-pants/component.js';
+import { tracked } from './fancy-pants/tracking.js';
 
-    static get template() {
-      return `<span>Counter: <output></output></span>`;
-    }
+class MyCustomElement extends Component {
 
+  constructor() {
+    super();
+    this.count = tracked(0);
   }
 
-  MyCustomElement.register();
+  connectedCallback() {
+    super.connectedCallback();
+    this.timer = setInterval(() => this.count++, 1000);
+  }
 
-  </script>
-</head>
-<body>
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    clearInterval(this.timer);
+  }
 
-  <h1>FancyPants Example Six</h1>
+  render() {
+    this.shadow.querySelector('output').value = this.count;
+  }
 
-  <my-custom-element></my-custom-element>
+  static get template() {
+    return `<span>Counter: <output></output></span>`;
+  }
 
-</body>
-</html>
+}
+
+MyCustomElement.register();
+
+</script>
+
+</example-source>

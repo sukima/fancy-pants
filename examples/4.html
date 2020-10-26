@@ -1,55 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>FancyPants Example Four</title>
-  <link rel="modulepreload" href="../tracking.js">
-  <link rel="modulepreload" href="../rendering.js">
-  <link rel="modulepreload" href="../component.js">
-  <script type="module">
+<script type="module" src="./scripts/example-source.js"></script>
 
-  import Component from '../component.js';
-  import { tracked, activateTracking } from '../tracking.js';
+<example-source lang="html">
 
-  const globalTrackable = activateTracking({
-    foo: tracked(0),
-  });
+<p><foo-bar></foo-bar></p>
+<p><foo-bar></foo-bar></p>
 
-  class FooBar extends Component {
+<template id="foo-bar">
+  <button class="go">+1</button>
+  <output class="foo"></output>
+  <output class="bar"></output>
+</template>
 
-    get bar() {
-      return `bar-${globalTrackable.foo}`;
-    }
+</example-source>
 
-    constructor() {
-      super();
-      this.shadow.querySelector('.go')
-        .addEventListener('click', () => { globalTrackable.foo += 1 });
-    }
+<example-source lang="js" strip-script>
 
-    render() {
-      this.shadow.querySelector('.foo').value = globalTrackable.foo;
-      this.shadow.querySelector('.bar').value = this.bar;
-    }
+<script type="module">
 
+import Component from './fancy-pants/component.js';
+import { tracked, activateTracking } from './fancy-pants/tracking.js';
+
+const globalTrackable = activateTracking({
+  foo: tracked(0),
+});
+
+class FooBar extends Component {
+
+  constructor() {
+    super();
+    this.shadow.querySelector('.go')
+      .addEventListener('click', () => { globalTrackable.foo += 1 });
   }
 
-  FooBar.register();
+  render() {
+    this.shadow.querySelector('.foo').value = globalTrackable.foo;
+    this.shadow.querySelector('.bar').value = this.bar;
+  }
 
-  </script>
-</head>
-<body>
+  get bar() {
+    return `bar-${globalTrackable.foo}`;
+  }
 
-  <h1>FancyPants Example Four</h1>
+}
 
-  <p><foo-bar></foo-bar></p>
-  <p><foo-bar></foo-bar></p>
+FooBar.register();
 
-  <template id="foo-bar">
-    <button class="go">+1</button>
-    <output class="foo"></output>
-    <output class="bar"></output>
-  </template>
+</script>
 
-</body>
-</html>
+</example-source>

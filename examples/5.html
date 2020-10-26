@@ -1,64 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>FancyPants Example Five</title>
-  <link rel="modulepreload" href="../tracking.js">
-  <link rel="modulepreload" href="../rendering.js">
-  <link rel="modulepreload" href="../component.js">
-  <script type="module">
+<script type="module" src="./scripts/example-source.js"></script>
 
-  import Component from '../component.js';
-  import { tracked, dirtyTag, consumeTag, createTag } from '../tracking.js';
+<example-source lang="html">
 
-  const globalTag = createTag();
-  let globalValue = 0;
+<p><foo-bar></foo-bar></p>
+<p><foo-bar></foo-bar></p>
 
-  function updateGlobalValue() {
-    dirtyTag(globalTag);
-    globalValue++;
+<template id="foo-bar">
+  <button class="go">+1</button>
+  <output class="foo"></output>
+  <output class="bar"></output>
+</template>
+
+</example-source>
+
+<example-source lang="js" strip-script>
+
+<script type="module">
+
+import Component from './fancy-pants/component.js';
+import { tracked, dirtyTag, consumeTag, createTag } from './fancy-pants/tracking.js';
+
+const globalTag = createTag();
+let globalValue = 0;
+
+function updateGlobalValue() {
+  dirtyTag(globalTag);
+  globalValue++;
+}
+
+function getGlobalValue() {
+  consumeTag(globalTag);
+  return globalValue;
+}
+
+class FooBar extends Component {
+
+  constructor() {
+    super();
+    this.shadow.querySelector('.go')
+      .addEventListener('click', updateGlobalValue);
   }
 
-  function getGlobalValue() {
-    consumeTag(globalTag);
-    return globalValue;
+  render() {
+    this.shadow.querySelector('.foo').value = getGlobalValue();
+    this.shadow.querySelector('.bar').value = this.bar;
   }
 
-  class FooBar extends Component {
-
-    get bar() {
-      return `bar-${getGlobalValue()}`;
-    }
-
-    constructor() {
-      super();
-      this.shadow.querySelector('.go')
-        .addEventListener('click', updateGlobalValue);
-    }
-
-    render() {
-      this.shadow.querySelector('.foo').value = getGlobalValue();
-      this.shadow.querySelector('.bar').value = this.bar;
-    }
-
+  get bar() {
+    return `bar-${getGlobalValue()}`;
   }
 
-  FooBar.register();
+}
 
-  </script>
-</head>
-<body>
+FooBar.register();
 
-  <h1>FancyPants Example Five</h1>
+</script>
 
-  <p><foo-bar></foo-bar></p>
-  <p><foo-bar></foo-bar></p>
-
-  <template id="foo-bar">
-    <button class="go">+1</button>
-    <output class="foo"></output>
-    <output class="bar"></output>
-  </template>
-
-</body>
-</html>
+</example-source>

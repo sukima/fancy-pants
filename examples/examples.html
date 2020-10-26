@@ -1,0 +1,68 @@
+<script type="module" src="./scripts/example-source.js"></script>
+
+<example-source lang="html">
+
+<ol>
+  <li><example-link num="1">HTML <code>&lt;template&gt;</code></example-link></li>
+  <li><example-link num="2"><code>static template = `&hellip;`;</code> string</example-link></li>
+  <li><example-link num="3">HTML <code>&lt;template&gt;</code> with hardcoded ID</example-link></li>
+  <li><example-link num="4">Global tracking object using <code>tracked()</code></example-link></li>
+  <li><example-link num="5">Manual global tracking (lower level API)</example-link></li>
+  <li><example-link num="6">Auto updating counter</example-link></li>
+  <li><example-link num="7">Emoji randomizer (performance example)</example-link></li>
+</ol>
+
+<p>This page is also an example.</p>
+
+</example-source>
+
+<example-source lang="js" strip-script>
+
+<script type="module">
+
+import Component from './fancy-pants/component.js';
+
+const ONES = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+const TENS = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+const TEENS = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+
+function convertTens(num) {
+  const { floor } = Math;
+  if (num < 10) {
+    return `${ONES[num]}`;
+  } else if (num >= 10 && num < 20) {
+    return `${TEENS[num - 10]}`;
+  } else {
+    return `${TENS[floor(num / 10)]} ${ONES[num % 10]}`;
+  }
+}
+
+function capitalize(str) {
+  return str.replace(/^\w/, c => c.toUpperCase());
+}
+
+class ExampleLink extends Component {
+  render() {
+    let { num, word } = this;
+    this.shadow.innerHTML = ExampleLink.template
+      .replace(/{{(\w+)}}/g, (_, g1) => this[g1]);
+  }
+  get num() {
+    return Number(this.getAttribute('num'));
+  }
+  get word() {
+    return capitalize(convertTens(this.num));
+  }
+  static get template() {
+    return `<a href="tutorial-{{num}}.html">Example {{word}}</a> &mdash; <slot></slot>`;
+  }
+  static get observedAttributes() {
+    return ['num'];
+  }
+}
+
+ExampleLink.register();
+
+</script>
+
+</example-source>

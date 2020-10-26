@@ -1,4 +1,4 @@
-# FancyPants
+<p style="text-align: center;"><img src="https://sukima.github.io/fancy-pants/images/logo.png" width="128" style="border-radius: 24px;" alt="FancyPants logo"></p>
 
 Have you ever been working on a simple JavaScript project like a bookmarklet or
 tiny static site and thought to yourself if only you could have a backbone like
@@ -42,7 +42,20 @@ class MyCustomElement extends Component {
 MyCustomElement.register();
 ```
 
-[demo](https://sukima.github.io/fancy-pants/examples/6.html)
+[demo](https://sukima.github.io/fancy-pants/tutorial-6.html)
+
+*NOTE:* for **Safari Mobile** you will have to assign `tracked()` properties in
+the `constructor` instead of as a field since Apple is dragging their feet on
+modern JavaScript support.
+
+```js
+class MyCustomElement extends Component {
+  constructor() {
+    super();
+    this.count = tracked(0);
+  }
+}
+```
 
 ## Why use this
 
@@ -60,10 +73,10 @@ worth it. This micro-lib fits into the same needs spectrum as Backbone™.
 ## Why not use this
 
 * You are serious about writing an actual application
-* You want to use a template or VirtualDOM™
+* You want to use a VirtualDOM™
 * Your project is larger then a single HTML file
 
-If you project needs more then just jQuery then this is not for you.
+If your project needs more then just jQuery then this is not for you.
 
 ## Technical explanation
 
@@ -118,7 +131,12 @@ from a template and defines a render function that gets memoized.
 
 ## Documentation
 
-Each part is split into three files. Import the ones as you need them.
+Each part is split into three files. Import the ones as you need them. Here is
+a basic overview of how this system works. There is also
+[detailed API docs][api]
+
+Please check out the [examples][] (view source) as they do not use any
+minification and are easily digestible.
 
 ### Component
 
@@ -267,5 +285,7 @@ import { memoizeFunction } from 'fancy-pants/tracking.js';
 let optimised = memoizeFunction(() => { … });
 ```
 
-For more specific usage see the many
-[Examples](https://sukima.github.io/fancy-pants/index.html).
+For more specific usage see the many [Examples][examples].
+
+[examples]: https://sukima.github.io/fancy-pants/tutorial-examples.html
+[api]: https://sukima.github.io/fancy-pants/

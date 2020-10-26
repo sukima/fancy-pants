@@ -1,243 +1,310 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>FancyPants Example Seven</title>
-  <link rel="modulepreload" href="../tracking.js">
-  <link rel="modulepreload" href="../rendering.js">
-  <link rel="modulepreload" href="../component.js">
-  <script type="module">
-
-  import Component from '../component.js';
-  import { tracked } from '../tracking.js';
-
-  const FRAME_DELAY = 100;
-  const MAX_CONCURRENT_EMOJI_CHANGES = 200;
-  const MIN_CONCURRENT_EMOJI_CHANGES = 10;
-  const EMOJIES = [
-    '😀', '😁', '😂', '🤣', '😃', '😄', '😅', '😆', '😉', '😊', '😋', '😎', '😍', '😘', '😗', '😙', '😚', '☺', '🙂', '🤗', '🤔', '😐', '😑', '😶', '🙄', '😏', '😣', '😥', '😮', '🤐', '😯', '😪', '😫', '😴', '😌', '🤓', '😛', '😜', '😝', '🤤', '😒', '😓', '😔', '😕', '🙃', '🤑', '😲', '☹', '🙁', '😖', '😞', '😟', '😤', '😢', '😭', '😦', '😧', '😨', '😩', '😬', '😰', '😱', '😳', '😵', '😡', '😠', '😇', '🤠', '🤡', '🤥', '😷', '🤒', '🤕', '🤢', '🤧', '😈', '👿', '👹', '👺', '💀', '☠', '👻', '👽', '👾', '🤖', '💩', '😺', '😸', '😹', '😻', '😼', '😽', '🙀', '😿', '😾', '🙈', '🙉', '🙊', '👦', '👦🏻', '👦🏼', '👦🏽', '👦🏾', '👦🏿', '👧', '👧🏻', '👧🏼', '👧🏽', '👧🏾', '👧🏿', '👨', '👨🏻', '👨🏼', '👨🏽', '👨🏾', '👨🏿', '👩', '👩🏻', '👩🏼', '👩🏽', '👩🏾', '👩🏿', '👴', '👴🏻', '👴🏼', '👴🏽', '👴🏾', '👴🏿', '👵', '👵🏻', '👵🏼', '👵🏽', '👵🏾', '👵🏿', '👶', '👶🏻', '👶🏼', '👶🏽', '👶🏾', '👶🏿', '👼', '👼🏻', '👼🏼', '👼🏽', '👼🏾', '👼🏿', '👮', '👮🏻', '👮🏼', '👮🏽', '👮🏾', '👮🏿', '🕵', '🕵🏻', '🕵🏼', '🕵🏽', '🕵🏾', '🕵🏿', '💂', '💂🏻', '💂🏼', '💂🏽', '💂🏾', '💂🏿', '👷', '👷🏻', '👷🏼', '👷🏽', '👷🏾', '👷🏿', '👳', '👳🏻', '👳🏼', '👳🏽', '👳🏾', '👳🏿', '👱', '👱🏻', '👱🏼', '👱🏽', '👱🏾', '👱🏿', '🎅', '🎅🏻', '🎅🏼', '🎅🏽', '🎅🏾', '🎅🏿', '🤶', '🤶🏻', '🤶🏼', '🤶🏽', '🤶🏾', '🤶🏿', '👸', '👸🏻', '👸🏼', '👸🏽', '👸🏾', '👸🏿', '🤴', '🤴🏻', '🤴🏼', '🤴🏽', '🤴🏾', '🤴🏿', '👰', '👰🏻', '👰🏼', '👰🏽', '👰🏾', '👰🏿', '🤵', '🤵🏻', '🤵🏼', '🤵🏽', '🤵🏾', '🤵🏿', '🤰', '🤰🏻', '🤰🏼', '🤰🏽', '🤰🏾', '🤰🏿', '👲', '👲🏻', '👲🏼', '👲🏽', '👲🏾', '👲🏿', '🙍', '🙍🏻', '🙍🏼', '🙍🏽', '🙍🏾', '🙍🏿', '🙎', '🙎🏻', '🙎🏼', '🙎🏽', '🙎🏾', '🙎🏿', '🙅', '🙅🏻', '🙅🏼', '🙅🏽', '🙅🏾', '🙅🏿', '🙆', '🙆🏻', '🙆🏼', '🙆🏽', '🙆🏾', '🙆🏿', '💁', '💁🏻', '💁🏼', '💁🏽', '💁🏾', '💁🏿', '🙋', '🙋🏻', '🙋🏼', '🙋🏽', '🙋🏾', '🙋🏿', '🙇', '🙇🏻', '🙇🏼', '🙇🏽', '🙇🏾', '🙇🏿', '🤦', '🤦🏻', '🤦🏼', '🤦🏽', '🤦🏾', '🤦🏿', '🤷', '🤷🏻', '🤷🏼', '🤷🏽', '🤷🏾', '🤷🏿', '💆', '💆🏻', '💆🏼', '💆🏽', '💆🏾', '💆🏿', '💇', '💇🏻', '💇🏼', '💇🏽', '💇🏾', '💇🏿', '🚶', '🚶🏻', '🚶🏼', '🚶🏽', '🚶🏾', '🚶🏿', '🏃', '🏃🏻', '🏃🏼', '🏃🏽', '🏃🏾', '🏃🏿', '💃', '💃🏻', '💃🏼', '💃🏽', '💃🏾', '💃🏿', '🕺', '🕺🏻', '🕺🏼', '🕺🏽', '🕺🏾', '🕺🏿', '👯', '🕴', '🗣', '👤', '👥', '🤺', '🏇', '⛷', '🏂', '🏌', '🏄', '🏄🏻', '🏄🏼', '🏄🏽', '🏄🏾', '🏄🏿', '🚣', '🚣🏻', '🚣🏼', '🚣🏽', '🚣🏾', '🚣🏿', '🏊', '🏊🏻', '🏊🏼', '🏊🏽', '🏊🏾', '🏊🏿', '⛹', '⛹🏻', '⛹🏼', '⛹🏽', '⛹🏾', '⛹🏿', '🏋', '🏋🏻', '🏋🏼', '🏋🏽', '🏋🏾', '🏋🏿', '🚴', '🚴🏻', '🚴🏼', '🚴🏽', '🚴🏾', '🚴🏿', '🚵', '🚵🏻', '🚵🏼', '🚵🏽', '🚵🏾', '🚵🏿', '🏎', '🏍', '🤸', '🤸🏻', '🤸🏼', '🤸🏽', '🤸🏾', '🤸🏿', '🤼', '🤼🏻', '🤼🏼', '🤼🏽', '🤼🏾', '🤼🏿', '🤽', '🤽🏻', '🤽🏼', '🤽🏽', '🤽🏾', '🤽🏿', '🤾', '🤾🏻', '🤾🏼', '🤾🏽', '🤾🏾', '🤾🏿', '🤹', '🤹🏻', '🤹🏼', '🤹🏽', '🤹🏾', '🤹🏿', '👫', '👬', '👭', '💏', '👩‍❤️‍💋‍👨', '👨‍❤️‍💋‍👨', '👩‍❤️‍💋‍👩', '💑', '👩‍❤️‍👨', '👨‍❤️‍👨', '👩‍❤️‍👩', '👪', '👨‍👩‍👦', '👨‍👩‍👧', '👨‍👩‍👧‍👦', '👨‍👩‍👦‍👦', '👨‍👩‍👧‍👧', '👨‍👨‍👦', '👨‍👨‍👧', '👨‍👨‍👧‍👦', '👨‍👨‍👦‍👦', '👨‍👨‍👧‍👧', '👩‍👩‍👦', '👩‍👩‍👧', '👩‍👩‍👧‍👦', '👩‍👩‍👦‍👦', '👩‍👩‍👧‍👧', '🏻', '🏼', '🏽', '🏾', '🏿', '💪', '💪🏻', '💪🏼', '💪🏽', '💪🏾', '💪🏿', '🤳', '🤳🏻', '🤳🏼', '🤳🏽', '🤳🏾', '🤳🏿', '👈', '👈🏻', '👈🏼', '👈🏽', '👈🏾', '👈🏿', '👉', '👉🏻', '👉🏼', '👉🏽', '👉🏾', '👉🏿', '☝', '☝🏻', '☝🏼', '☝🏽', '☝🏾', '☝🏿', '👆', '👆🏻', '👆🏼', '👆🏽', '👆🏾', '👆🏿', '🖕', '🖕🏻', '🖕🏼', '🖕🏽', '🖕🏾', '🖕🏿', '👇', '👇🏻', '👇🏼', '👇🏽', '👇🏾', '👇🏿', '✌', '✌🏻', '✌🏼', '✌🏽', '✌🏾', '✌🏿', '🤞', '🤞🏻', '🤞🏼', '🤞🏽', '🤞🏾', '🤞🏿', '🖖', '🖖🏻', '🖖🏼', '🖖🏽', '🖖🏾', '🖖🏿', '🤘', '🤘🏻', '🤘🏼', '🤘🏽', '🤘🏾', '🤘🏿', '🤙', '🤙🏻', '🤙🏼', '🤙🏽', '🤙🏾', '🤙🏿', '🖐', '🖐🏻', '🖐🏼', '🖐🏽', '🖐🏾', '🖐🏿', '✋', '✋🏻', '✋🏼', '✋🏽', '✋🏾', '✋🏿', '👌', '👌🏻', '👌🏼', '👌🏽', '👌🏾', '👌🏿', '👍', '👍🏻', '👍🏼', '👍🏽', '👍🏾', '👍🏿', '👎', '👎🏻', '👎🏼', '👎🏽', '👎🏾', '👎🏿', '✊', '✊🏻', '✊🏼', '✊🏽', '✊🏾', '✊🏿', '👊', '👊🏻', '👊🏼', '👊🏽', '👊🏾', '👊🏿', '🤛', '🤛🏻', '🤛🏼', '🤛🏽', '🤛🏾', '🤛🏿', '🤜', '🤜🏻', '🤜🏼', '🤜🏽', '🤜🏾', '🤜🏿', '🤚', '🤚🏻', '🤚🏼', '🤚🏽', '🤚🏾', '🤚🏿', '👋', '👋🏻', '👋🏼', '👋🏽', '👋🏾', '👋🏿', '👏', '👏🏻', '👏🏼', '👏🏽', '👏🏾', '👏🏿', '✍', '✍🏻', '✍🏼', '✍🏽', '✍🏾', '✍🏿', '👐', '👐🏻', '👐🏼', '👐🏽', '👐🏾', '👐🏿', '🙌', '🙌🏻', '🙌🏼', '🙌🏽', '🙌🏾', '🙌🏿', '🙏', '🙏🏻', '🙏🏼', '🙏🏽', '🙏🏾', '🙏🏿', '🤝', '🤝🏻', '🤝🏼', '🤝🏽', '🤝🏾', '🤝🏿', '💅', '💅🏻', '💅🏼', '💅🏽', '💅🏾', '💅🏿', '👂', '👂🏻', '👂🏼', '👂🏽', '👂🏾', '👂🏿', '👃', '👃🏻', '👃🏼', '👃🏽', '👃🏾', '👃🏿', '👣', '👀', '👁', '👁‍🗨', '👅', '👄', '💋', '💘', '❤', '💓', '💔', '💕', '💖', '💗', '💙', '💚', '💛', '💜', '🖤', '💝', '💞', '💟', '❣', '💌', '💤', '💢', '💣', '💥', '💦', '💨', '💫', '💬', '🗨', '🗯', '💭', '🕳', '👓', '🕶', '👔', '👕', '👖', '👗', '👘', '👙', '👚', '👛', '👜', '👝', '🛍', '🎒', '👞', '👟', '👠', '👡', '👢', '👑', '👒', '🎩', '🎓', '⛑', '📿', '💄', '💍', '💎', '🐵', '🐒', '🦍', '🐶', '🐕', '🐩', '🐺', '🦊', '🐱', '🐈', '🦁', '🐯', '🐅', '🐆', '🐴', '🐎', '🦌', '🦄', '🐮', '🐂', '🐃', '🐄', '🐷', '🐖', '🐗', '🐽', '🐏', '🐑', '🐐', '🐪', '🐫', '🐘', '🦏', '🐭', '🐁', '🐀', '🐹', '🐰', '🐇', '🐿', '🦇', '🐻', '🐨', '🐼', '🐾', '🦃', '🐔', '🐓', '🐣', '🐤', '🐥', '🐦', '🐧', '🕊', '🦅', '🦆', '🦉', '🐸', '🐊', '🐢', '🦎', '🐍', '🐲', '🐉', '🐳', '🐋', '🐬', '🐟', '🐠', '🐡', '🦈', '🐙', '🐚', '🦀', '🦐', '🦑', '🦋', '🐌', '🐛', '🐜', '🐝', '🐞', '🕷', '🕸', '🦂', '💐', '🌸', '💮', '🏵', '🌹', '🥀', '🌺', '🌻', '🌼', '🌷', '🌱', '🌲', '🌳', '🌴', '🌵', '🌾', '🌿', '☘', '🍀', '🍁', '🍂', '🍃', '🍇', '🍈', '🍉', '🍊', '🍋', '🍌', '🍍', '🍎', '🍏', '🍐', '🍑', '🍒', '🍓', '🥝', '🍅', '🥑', '🍆', '🥔', '🥕', '🌽', '🌶', '🥒', '🍄', '🥜', '🌰', '🍞', '🥐', '🥖', '🥞', '🧀', '🍖', '🍗', '🥓', '🍔', '🍟', '🍕', '🌭', '🌮', '🌯', '🥙', '🥚', '🍳', '🥘', '🍲', '🥗', '🍿', '🍱', '🍘', '🍙', '🍚', '🍛', '🍜', '🍝', '🍠', '🍢', '🍣', '🍤', '🍥', '🍡', '🍦', '🍧', '🍨', '🍩', '🍪', '🎂', '🍰', '🍫', '🍬', '🍭', '🍮', '🍯', '🍼', '🥛', '☕', '🍵', '🍶', '🍾', '🍷', '🍸', '🍹', '🍺', '🍻', '🥂', '🥃', '🍽', '🍴', '🥄', '🔪', '🏺', '🌍', '🌎', '🌏', '🌐', '🗺', '🗾', '🏔', '⛰', '🌋', '🗻', '🏕', '🏖', '🏜', '🏝', '🏞', '🏟', '🏛', '🏗', '🏘', '🏙', '🏚', '🏠', '🏡', '🏢', '🏣', '🏤', '🏥', '🏦', '🏨', '🏩', '🏪', '🏫', '🏬', '🏭', '🏯', '🏰', '💒', '🗼', '🗽', '⛪', '🕌', '🕍', '⛩', '🕋', '⛲', '⛺', '🌁', '🌃', '🌄', '🌅', '🌆', '🌇', '🌉', '♨', '🌌', '🎠', '🎡', '🎢', '💈', '🎪', '🎭', '🖼', '🎨', '🎰', '🚂', '🚃', '🚄', '🚅', '🚆', '🚇', '🚈', '🚉', '🚊', '🚝', '🚞', '🚋', '🚌', '🚍', '🚎', '🚐', '🚑', '🚒', '🚓', '🚔', '🚕', '🚖', '🚗', '🚘', '🚙', '🚚', '🚛', '🚜', '🚲', '🛴', '🛵', '🚏', '🛣', '🛤', '⛽', '🚨', '🚥', '🚦', '🚧', '🛑', '⚓', '⛵', '🛶', '🚤', '🛳', '⛴', '🛥', '🚢', '✈', '🛩', '🛫', '🛬', '💺', '🚁', '🚟', '🚠', '🚡', '🚀', '🛰', '🛎', '🚪', '🛌', '🛏', '🛋', '🚽', '🚿', '🛀', '🛀🏻', '🛀🏼', '🛀🏽', '🛀🏾', '🛀🏿', '🛁', '⌛', '⏳', '⌚', '⏰', '⏱', '⏲', '🕰', '🕛', '🕧', '🕐', '🕜', '🕑', '🕝', '🕒', '🕞', '🕓', '🕟', '🕔', '🕠', '🕕', '🕡', '🕖', '🕢', '🕗', '🕣', '🕘', '🕤', '🕙', '🕥', '🕚', '🕦', '🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘', '🌙', '🌚', '🌛', '🌜', '🌡', '☀', '🌝', '🌞', '⭐', '🌟', '🌠', '☁', '⛅', '⛈', '🌤', '🌥', '🌦', '🌧', '🌨', '🌩', '🌪', '🌫', '🌬', '🌀', '🌈', '🌂', '☂', '☔', '⛱', '⚡', '❄', '☃', '⛄', '☄', '🔥', '💧', '🌊', '🎃', '🎄', '🎆', '🎇', '✨', '🎈', '🎉', '🎊', '🎋', '🎍', '🎎', '🎏', '🎐', '🎑', '🎀', '🎁', '🎗', '🎟', '🎫', '🎖', '🏆', '🏅', '🥇', '🥈', '🥉', '⚽', '⚾', '🏀', '🏐', '🏈', '🏉', '🎾', '🎱', '🎳', '🏏', '🏑', '🏒', '🏓', '🏸', '🥊', '🥋', '🥅', '🎯', '⛳', '⛸', '🎣', '🎽', '🎿', '🎮', '🕹', '🎲', '♠', '♥', '♦', '♣', '🃏', '🀄', '🎴', '🔇', '🔈', '🔉', '🔊', '📢', '📣', '📯', '🔔', '🔕', '🎼', '🎵', '🎶', '🎙', '🎚', '🎛', '🎤', '🎧', '📻', '🎷', '🎸', '🎹', '🎺', '🎻', '🥁', '📱', '📲', '☎', '📞', '📟', '📠', '🔋', '🔌', '💻', '🖥', '🖨', '⌨', '🖱', '🖲', '💽', '💾', '💿', '📀', '🎥', '🎞', '📽', '🎬', '📺', '📷', '📸', '📹', '📼', '🔍', '🔎', '🔬', '🔭', '📡', '🕯', '💡', '🔦', '🏮', '📔', '📕', '📖', '📗', '📘', '📙', '📚', '📓', '📒', '📃', '📜', '📄', '📰', '🗞', '📑', '🔖', '🏷', '💰', '💴', '💵', '💶', '💷', '💸', '💳', '💹', '💱', '💲', '✉', '📧', '📨', '📩', '📤', '📥', '📦', '📫', '📪', '📬', '📭', '📮', '🗳', '✏', '✒', '🖋', '🖊', '🖌', '🖍', '📝', '💼', '📁', '📂', '🗂', '📅', '📆', '🗒', '🗓', '📇', '📈', '📉', '📊', '📋', '📌', '📍', '📎', '🖇', '📏', '📐', '✂', '🗃', '🗄', '🗑', '🔒', '🔓', '🔏', '🔐', '🔑', '🗝', '🔨', '⛏', '⚒', '🛠', '🗡', '⚔', '🔫', '🏹', '🛡', '🔧', '🔩', '⚙', '🗜', '⚗', '⚖', '🔗', '⛓', '💉', '💊', '🚬', '⚰', '⚱', '🗿', '🛢', '🔮', '🛒', '🏧', '🚮', '🚰', '♿', '🚹', '🚺', '🚻', '🚼', '🚾', '🛂', '🛃', '🛄', '🛅', '⚠', '🚸', '⛔', '🚫', '🚳', '🚭', '🚯', '🚱', '🚷', '📵', '🔞', '☢', '☣', '⬆', '↗', '➡', '↘', '⬇', '↙', '⬅', '↖', '↕', '↔', '↩', '↪', '⤴', '⤵', '🔃', '🔄', '🔙', '🔚', '🔛', '🔜', '🔝', '🛐', '⚛', '🕉', '✡', '☸', '☯', '✝', '☦', '☪', '☮', '🕎', '🔯', '♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓', '⛎', '🔀', '🔁', '🔂', '▶', '⏩', '⏭', '⏯', '◀', '⏪', '⏮', '🔼', '⏫', '🔽', '⏬', '⏸', '⏹', '⏺', '⏏', '🎦', '🔅', '🔆', '📶', '📳', '📴', '♻', '📛', '⚜', '🔰', '🔱', '⭕', '✅', '☑', '✔', '✖', '❌', '❎', '➕', '➖', '➗', '➰', '➿', '〽', '✳', '✴', '❇', '‼', '⁉', '❓', '❔', '❕', '❗', '〰', '©', '®', '™', '#️⃣', '*️⃣', '0️⃣', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟', '💯', '🔠', '🔡', '🔢', '🔣', '🔤', '🅰', '🆎', '🅱', '🆑', '🆒', '🆓', 'ℹ', '🆔', 'Ⓜ', '🆕', '🆖', '🅾', '🆗', '🅿', '🆘', '🆙', '🆚', '🈁', '🈂', '🈷', '🈶', '🈯', '🉐', '🈹', '🈚', '🈲', '🉑', '🈸', '🈴', '🈳', '㊗', '㊙', '🈺', '🈵', '▪', '▫', '◻', '◼', '◽', '◾', '⬛', '⬜', '🔶', '🔷', '🔸', '🔹', '🔺', '🔻', '💠', '🔘', '🔲', '🔳', '⚪', '⚫', '🔴', '🔵', '🏁', '🚩', '🎌', '🏴', '🏳', '🇦🇨', '🇦🇩', '🇦🇪', '🇦🇫', '🇦🇬', '🇦🇮', '🇦🇱', '🇦🇲', '🇦🇴', '🇦🇶', '🇦🇷', '🇦🇸', '🇦🇹', '🇦🇺', '🇦🇼', '🇦🇽', '🇦🇿', '🇧🇦', '🇧🇧', '🇧🇩', '🇧🇪', '🇧🇫', '🇧🇬', '🇧🇭', '🇧🇮', '🇧🇯', '🇧🇱', '🇧🇲', '🇧🇳', '🇧🇴', '🇧🇶', '🇧🇷', '🇧🇸', '🇧🇹', '🇧🇻', '🇧🇼', '🇧🇾', '🇧🇿', '🇨🇦', '🇨🇨', '🇨🇩', '🇨🇫', '🇨🇬', '🇨🇭', '🇨🇮', '🇨🇰', '🇨🇱', '🇨🇲', '🇨🇳', '🇨🇴', '🇨🇵', '🇨🇷', '🇨🇺', '🇨🇻', '🇨🇼', '🇨🇽', '🇨🇾', '🇨🇿', '🇩🇪', '🇩🇬', '🇩🇯', '🇩🇰', '🇩🇲', '🇩🇴', '🇩🇿', '🇪🇦', '🇪🇨', '🇪🇪', '🇪🇬', '🇪🇭', '🇪🇷', '🇪🇸', '🇪🇹', '🇪🇺', '🇫🇮', '🇫🇯', '🇫🇰', '🇫🇲', '🇫🇴', '🇫🇷', '🇬🇦', '🇬🇧', '🇬🇩', '🇬🇪', '🇬🇫', '🇬🇬', '🇬🇭', '🇬🇮', '🇬🇱', '🇬🇲', '🇬🇳', '🇬🇵', '🇬🇶', '🇬🇷', '🇬🇸', '🇬🇹', '🇬🇺', '🇬🇼', '🇬🇾', '🇭🇰', '🇭🇲', '🇭🇳', '🇭🇷', '🇭🇹', '🇭🇺', '🇮🇨', '🇮🇩', '🇮🇪', '🇮🇱', '🇮🇲', '🇮🇳', '🇮🇴', '🇮🇶', '🇮🇷', '🇮🇸', '🇮🇹', '🇯🇪', '🇯🇲', '🇯🇴', '🇯🇵', '🇰🇪', '🇰🇬', '🇰🇭', '🇰🇮', '🇰🇲', '🇰🇳', '🇰🇵', '🇰🇷', '🇰🇼', '🇰🇾', '🇰🇿', '🇱🇦', '🇱🇧', '🇱🇨', '🇱🇮', '🇱🇰', '🇱🇷', '🇱🇸', '🇱🇹', '🇱🇺', '🇱🇻', '🇱🇾', '🇲🇦', '🇲🇨', '🇲🇩', '🇲🇪', '🇲🇫', '🇲🇬', '🇲🇭', '🇲🇰', '🇲🇱', '🇲🇲', '🇲🇳', '🇲🇴', '🇲🇵', '🇲🇶', '🇲🇷', '🇲🇸', '🇲🇹', '🇲🇺', '🇲🇻', '🇲🇼', '🇲🇽', '🇲🇾', '🇲🇿', '🇳🇦', '🇳🇨', '🇳🇪', '🇳🇫', '🇳🇬', '🇳🇮', '🇳🇱', '🇳🇴', '🇳🇵', '🇳🇷', '🇳🇺', '🇳🇿', '🇴🇲', '🇵🇦', '🇵🇪', '🇵🇫', '🇵🇬', '🇵🇭', '🇵🇰', '🇵🇱', '🇵🇲', '🇵🇳', '🇵🇷', '🇵🇸', '🇵🇹', '🇵🇼', '🇵🇾', '🇶🇦', '🇷🇪', '🇷🇴', '🇷🇸', '🇷🇺', '🇷🇼', '🇸🇦', '🇸🇧', '🇸🇨', '🇸🇩', '🇸🇪', '🇸🇬', '🇸🇭', '🇸🇮', '🇸🇯', '🇸🇰', '🇸🇱', '🇸🇲', '🇸🇳', '🇸🇴', '🇸🇷', '🇸🇸', '🇸🇹', '🇸🇻', '🇸🇽', '🇸🇾', '🇸🇿', '🇹🇦', '🇹🇨', '🇹🇩', '🇹🇫', '🇹🇬', '🇹🇭', '🇹🇯', '🇹🇰', '🇹🇱', '🇹🇲', '🇹🇳', '🇹🇴', '🇹🇷', '🇹🇹', '🇹🇻', '🇹🇼', '🇹🇿', '🇺🇦', '🇺🇬', '🇺🇲', '🇺🇸', '🇺🇾', '🇺🇿', '🇻🇦', '🇻🇨', '🇻🇪', '🇻🇬', '🇻🇮', '🇻🇳', '🇻🇺', '🇼🇫', '🇼🇸', '🇽🇰', '🇾🇪', '🇾🇹', '🇿🇦', '🇿🇲', '🇿🇼'
-  ];
-
-  function sample(array, size = 1) {
-    const { floor, random } = Math;
-    let sampleSet = new Set();
-    for (let i = 0; i < size; i++) {
-      let index;
-      do { index = floor(random() * array.length); }
-      while (sampleSet.has(index));
-      sampleSet.add(index);
-    }
-    return [...sampleSet].map(i => array[i]);
+<!-- Example Head {{{1 -->
+<style>
+  :root {
+    --emoji-size: 26px;
   }
-
-  class BlinknLights extends Component {
-    timer = tracked();
-    constructor() {
-      super();
-      this.lights = new Set();
-      this.previousEmojiCount = 0;
-    }
-    connectedCallback() {
-      super.connectedCallback();
-      if (this.hasAttribute('autostart')) { this.start(); }
-    }
-    start() {
-      this.assignRandomEmojis();
-      this.timer = setTimeout(() => this.start(), FRAME_DELAY);
-    }
-    stop() {
-      clearTimeout(this.timer);
-      this.timer = null;
-    }
-    assignRandomEmojis() {
-      const { ceil, random, min, max } = Math;
-      let lights = this.shadow.querySelectorAll('blinkn-light');
-      let sampleSize = ceil(random() * lights.length);
-      if (lights.length > MAX_CONCURRENT_EMOJI_CHANGES) {
-        sampleSize = min(MAX_CONCURRENT_EMOJI_CHANGES, sampleSize);
-      }
-      if (lights.length > MIN_CONCURRENT_EMOJI_CHANGES) {
-        sampleSize = max(MIN_CONCURRENT_EMOJI_CHANGES, sampleSize);
-      }
-      let emojies = sample(EMOJIES, sampleSize)[Symbol.iterator]();
-      let sampledLights = sample([...lights], sampleSize);
-      sampledLights.forEach(i => i.emoji = emojies.next().value);
-    }
-    addLights(count) {
-      let frag = document.createDocumentFragment();
-      for (let i = 0; i < count; i++) {
-        frag.appendChild(document.createElement('blinkn-light'));
-      }
-      this.shadow.appendChild(frag);
-    }
-    removeLights(count) {
-      let lights = [...this.shadow.querySelectorAll('blinkn-light')].slice(count);
-      let frag = document.createDocumentFragment();
-      lights.forEach(i => frag.appendChild(i));
-    }
-    render() {
-      const { min, max, floor, sqrt } = Math;
-      let { emojiCount, previousEmojiCount } = this;
-      let columns = min(max(floor(sqrt(emojiCount) * 2), 1), 50);
-      let count = emojiCount - previousEmojiCount;
-      let action = count < 0 ? 'removeLights' : 'addLights';
-      this[action](count);
-      this.previousEmojiCount = emojiCount;
-      this.shadow.host.style.setProperty('--emoji-columns', columns);
-    }
-    get emojiCount() {
-      return Number(this.getAttribute('count')) || 0;
-    }
-    get isRunning() {
-      return !!this.timer;
-    }
-    static get observedAttributes() { return ['count']; }
+  .boxed {
+    padding: 2em;
+    margin: 2rem;
+    border: thin solid black;
+    box-shadow: 0.5rem 0.5rem 0.5rem darkgrey;
+    border-radius: 0.5rem;
   }
+</style>
 
-  class BlinknLight extends Component {
-    emoji = tracked(EMOJIES[0]);
-    render() {
-      this.shadow.querySelector('.emoji').textContent = this.emoji;
-    }
+<script type="module" src="./scripts/example-source.js"></script>
+
+<!-- FPS Meter {{{1 -->
+<script type="module">
+
+import Component from './fancy-pants/component.js';
+import { tracked } from './fancy-pants/tracking.js';
+
+class FpsMeter extends Component {
+  constructor() {
+    super();
+    this.fps = tracked(0);
+    this.be = new Date();
+    this.running = false;
   }
-
-  class FpsMeter extends Component {
-    be = new Date();
-    running = false;
-    fps = tracked(0);
-    connectedCallback() {
-      super.connectedCallback();
-      this.start();
-    }
-    disconnectedCallback() {
-      super.disconnectedCallback();
-      this.stop();
-    }
-    start() {
-      this.running = true;
-      requestAnimationFrame(() => this.loop());
-    }
-    stop() {
-      this.running = false;
-    }
-    loop() {
-      if (!this.running) { return; }
-      let now = Date.now();
-      this.fps = Math.round(1000 / (now - this.be));
-      this.be = now;
-      requestAnimationFrame(() => this.loop());
-    }
-    render() {
-      let { fps, shadow } = this;
-      let kFps = shadow.querySelector('#kFps');
-      let kpFps = shadow.querySelector('#kpFps');
-      if (fps < 35){
-        kFps.style.color = "red";
-        kFps.textContent = fps;
-      } if (fps >= 35 && fps <= 41) {
-        kFps.style.color = "deepskyblue";
-        kFps.textContent = fps + " FPS";
-      } else {
-        kFps.style.color = "black";
-        kFps.textContent = fps + " FPS";
-      }
-      kpFps.value = fps;
-    }
+  connectedCallback() {
+    super.connectedCallback();
+    this.start();
   }
-
-  class PlayPauseButton extends Component {
-    connectedCallback() {
-      super.connectedCallback();
-      this.clickHandler = () => this.toggle();
-      this.buttonElement.addEventListener('mouseup', this.clickHandler);
-    }
-    disconnectedCallback() {
-      super.disconnectedCallback();
-      this.buttonElement.removeEventListener('mouseup', this.clickHandler);
-    }
-    toggle() {
-      let { runnableElement } = this;
-      let action = runnableElement.isRunning ? 'stop' : 'start';
-      runnableElement[action]();
-    }
-    render() {
-      let { buttonElement, runnableElement: { isRunning } } = this;
-      this.shadow.querySelector('button').textContent = isRunning ? 'Pause' : 'Run';
-    }
-    get buttonElement() {
-      return this.shadow.querySelector('button');
-    }
-    get runnableElement() {
-      let id = this.getAttribute('for');
-      return document.querySelector(`#${id}`);
-    }
-    static get template() {
-      return `<button type="button"></button>`;
-    }
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.stop();
   }
+  start() {
+    this.running = true;
+    requestAnimationFrame(() => this.loop());
+  }
+  stop() {
+    this.running = false;
+  }
+  loop() {
+    if (!this.running) { return; }
+    let now = Date.now();
+    this.fps = Math.round(1000 / (now - this.be));
+    this.be = now;
+    requestAnimationFrame(() => this.loop());
+  }
+  render() {
+    let { fps, shadow } = this;
+    let kFps = shadow.querySelector('#kFps');
+    let kpFps = shadow.querySelector('#kpFps');
+    if (fps < 35){
+      kFps.style.color = "red";
+      kFps.textContent = fps;
+    } if (fps >= 35 && fps <= 41) {
+      kFps.style.color = "deepskyblue";
+      kFps.textContent = fps + " FPS";
+    } else {
+      kFps.style.color = "black";
+      kFps.textContent = fps + " FPS";
+    }
+    kpFps.value = fps;
+  }
+}
 
-  FpsMeter.register();
-  BlinknLight.register();
-  BlinknLights.register();
-  PlayPauseButton.register();
+FpsMeter.register();
 
-  let emojiGrid = document.querySelector('#emojiGrid');
-  document.querySelector('#emojiCount')
-    .addEventListener('input', ({ target: { value } }) => emojiGrid.setAttribute('count', value));
+</script>
 
-  </script>
+<template id="fps-meter">
+  <span id="kFps"></span>
+  <progress id="kpFps" value="0" min="0" max="100" style="vertical-align:middle"></progress>
+</template>
+<!-- }}}1 -->
 
+<fps-meter></fps-meter>
+
+<!-- Example content {{{1 -->
+<example-source lang="html">
+
+<p>
+  <label for="emojiCount">Emoji Count</label>
+  <input type="number" id="emojiCount" value="256" min="0" max="10000" autocomplete="off">
+  <play-pause-button for="emojiGrid"></play-pause-button>
+</p>
+
+<div class="boxed">
+  <blinkn-lights id="emojiGrid" count="256" autostart=""></blinkn-lights>
+</div>
+
+</example-source>
+
+<example-source lang="js" strip-script>
+
+<script type="module">
+
+let emojiGrid = document.querySelector('#emojiGrid');
+document.querySelector('#emojiCount')
+  .addEventListener('input', ({ target: { value } }) => emojiGrid.setAttribute('count', value));
+
+</script>
+
+</example-source>
+
+<!-- Blikn lights {{{1 -->
+<h4>Blikn lights</h4>
+
+<!-- HTML {{{2 -->
+<example-source lang="html">
+
+<template id="blinkn-lights">
   <style>
-    :root {
-      --emoji-size: 26px;
-    }
-    .boxed {
-      padding: 2em;
-      margin: 2rem;
-      border: thin solid black;
-      box-shadow: 0.5rem 0.5rem 0.5rem darkgrey;
-      border-radius: 0.5rem;
+    :host {
+      display: grid;
+      grid-template-columns: repeat(var(--emoji-columns), var(--emoji-size));
     }
   </style>
-</head>
-<body>
+</template>
 
-  <h1>FancyPants Example Seven</h1>
+</example-source>
 
-  <fps-meter></fps-meter>
+<!-- JS {{{2 -->
+<example-source lang="js" strip-script>
 
-  <p>
-    <label for="emojiCount">Emoji Count</label>
-    <input type="number" id="emojiCount" value="256" min="0" max="10000" autocomplete="off">
-    <play-pause-button for="emojiGrid"></play-pause-button>
-  </p>
+<script type="module">
 
-  <div class="boxed">
-    <blinkn-lights id="emojiGrid" count="256" autostart=""></blinkn-lights>
-  </div>
+import Component from './fancy-pants/component.js';
+import { tracked } from './fancy-pants/tracking.js';
+import { EMOJIS } from './scripts/emojis.js';
 
-  <template id="blinkn-lights">
-    <style>
-      :host {
-        display: grid;
-        grid-template-columns: repeat(var(--emoji-columns), var(--emoji-size));
-      }
-    </style>
-  </template>
+const FRAME_DELAY = 100;
+const MAX_CONCURRENT_EMOJI_CHANGES = 200;
+const MIN_CONCURRENT_EMOJI_CHANGES = 10;
 
-  <template id="blinkn-light">
-    <style>
-      :host {
-        font-size: var(--emoji-size, inherit);
-      }
-    </style>
-    <div class="emoji"></div>
-  </template>
+function sample(array, size = 1) {
+  const { floor, random } = Math;
+  let sampleSet = new Set();
+  for (let i = 0; i < size; i++) {
+    let index;
+    do { index = floor(random() * array.length); }
+    while (sampleSet.has(index));
+    sampleSet.add(index);
+  }
+  return [...sampleSet].map(i => array[i]);
+}
 
-  <template id="fps-meter">
-    <span id="kFps"></span>
-    <progress id="kpFps" value="0" min="0" max="100" style="vertical-align:middle"></progress>
-  </template>
+class BlinknLights extends Component {
+  constructor() {
+    super();
+    this.timer = tracked();
+    this.lights = new Set();
+    this.previousEmojiCount = 0;
+  }
+  connectedCallback() {
+    super.connectedCallback();
+    if (this.hasAttribute('autostart')) { this.start(); }
+  }
+  start() {
+    this.assignRandomEmojis();
+    this.timer = setTimeout(() => this.start(), FRAME_DELAY);
+  }
+  stop() {
+    clearTimeout(this.timer);
+    this.timer = null;
+  }
+  assignRandomEmojis() {
+    const { ceil, random, min, max } = Math;
+    let lights = this.shadow.querySelectorAll('blinkn-light');
+    let sampleSize = ceil(random() * lights.length);
+    if (lights.length > MAX_CONCURRENT_EMOJI_CHANGES) {
+      sampleSize = min(MAX_CONCURRENT_EMOJI_CHANGES, sampleSize);
+    }
+    if (lights.length > MIN_CONCURRENT_EMOJI_CHANGES) {
+      sampleSize = max(MIN_CONCURRENT_EMOJI_CHANGES, sampleSize);
+    }
+    let emojies = sample(EMOJIS, sampleSize)[Symbol.iterator]();
+    let sampledLights = sample([...lights], sampleSize);
+    sampledLights.forEach(i => i.emoji = emojies.next().value);
+  }
+  addLights(count) {
+    let frag = document.createDocumentFragment();
+    for (let i = 0; i < count; i++) {
+      frag.appendChild(document.createElement('blinkn-light'));
+    }
+    this.shadow.appendChild(frag);
+  }
+  removeLights(count) {
+    let lights = [...this.shadow.querySelectorAll('blinkn-light')].slice(count);
+    let frag = document.createDocumentFragment();
+    lights.forEach(i => frag.appendChild(i));
+  }
+  render() {
+    const { min, max, floor, sqrt } = Math;
+    let { emojiCount, previousEmojiCount } = this;
+    let columns = min(max(floor(sqrt(emojiCount) * 2), 1), 50);
+    let count = emojiCount - previousEmojiCount;
+    let action = count < 0 ? 'removeLights' : 'addLights';
+    this[action](count);
+    this.previousEmojiCount = emojiCount;
+    this.shadow.host.style.setProperty('--emoji-columns', columns);
+  }
+  get emojiCount() {
+    return Number(this.getAttribute('count')) || 0;
+  }
+  get isRunning() {
+    return !!this.timer;
+  }
+  static get observedAttributes() { return ['count']; }
+}
 
-</body>
-</html>
+BlinknLights.register();
+
+</script>
+
+</example-source>
+
+<!-- Blikn light {{{1 -->
+<h4>Blikn light</h5>
+
+<!-- HTML {{{2 -->
+<example-source lang="html">
+
+<template id="blinkn-light">
+  <style>
+    :host {
+      font-size: var(--emoji-size, inherit);
+    }
+  </style>
+  <div class="emoji"></div>
+</template>
+
+</example-source>
+
+<!-- JS {{{2 -->
+<example-source lang="js" strip-script>
+
+<script type="module">
+
+import Component from './fancy-pants/component.js';
+import { tracked } from './fancy-pants/tracking.js';
+import { EMOJIS } from './scripts/emojis.js';
+
+class BlinknLight extends Component {
+  constructor() {
+    super();
+    this.emoji = tracked(EMOJIS[0]);
+  }
+  render() {
+    this.shadow.querySelector('.emoji').textContent = this.emoji;
+  }
+}
+
+BlinknLight.register();
+
+</script>
+
+</example-source>
+
+<!-- PlayButton {{{1 -->
+<h4>Play/Pause Button</h4>
+
+<!-- JS {{{2 -->
+<example-source lang="js" strip-script>
+
+<script type="module">
+
+import Component from './fancy-pants/component.js';
+
+class PlayPauseButton extends Component {
+  connectedCallback() {
+    super.connectedCallback();
+    this.clickHandler = () => this.toggle();
+    this.buttonElement.addEventListener('mouseup', this.clickHandler);
+  }
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.buttonElement.removeEventListener('mouseup', this.clickHandler);
+  }
+  toggle() {
+    let { runnableElement } = this;
+    let action = runnableElement.isRunning ? 'stop' : 'start';
+    runnableElement[action]();
+  }
+  render() {
+    let { buttonElement, runnableElement: { isRunning } } = this;
+    this.shadow.querySelector('button').textContent = isRunning ? 'Pause' : 'Run';
+  }
+  get buttonElement() {
+    return this.shadow.querySelector('button');
+  }
+  get runnableElement() {
+    let id = this.getAttribute('for');
+    return document.querySelector(`#${id}`);
+  }
+  static get template() {
+    return `<button type="button"></button>`;
+  }
+}
+
+PlayPauseButton.register();
+
+</script>
+
+</example-source>
+
+<!-- vim:set fdm=marker: }}}1 -->

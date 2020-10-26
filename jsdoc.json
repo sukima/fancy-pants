@@ -1,0 +1,29 @@
+{
+  "opts": {
+    "destination": "./docs",
+    "tutorials": "./examples",
+    "template": "node_modules/better-docs",
+    "readme": "./README.md"
+  },
+  "plugins": ["plugins/markdown"],
+  "templates": {
+    "cleverLinks": true,
+    "default": {
+      "staticFiles": {
+        "include": ["./lib", "./static"]
+      }
+    },
+    "better-docs": {
+      "name": "FancyPants",
+      "logo": "images/logo.png",
+      "title": "FancyPants",
+      "css": "styles/custom.css",
+      "navLinks": [
+        {
+          "label": "Github",
+          "href": "https://github.com/sukima/fancy-pants"
+        }
+      ]
+    }
+  }
+}

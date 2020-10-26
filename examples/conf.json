@@ -1,0 +1,27 @@
+{
+  "examples": {
+    "title": "Examples",
+    "children": ["1", "2", "3", "4", "5", "6", "7"]
+  },
+  "1": {
+    "title": "Example One"
+  },
+  "2": {
+    "title": "Example Two"
+  },
+  "3": {
+    "title": "Example Three"
+  },
+  "4": {
+    "title": "Example Four"
+  },
+  "5": {
+    "title": "Example Five"
+  },
+  "6": {
+    "title": "Example Six"
+  },
+  "7": {
+    "title": "Example Seven"
+  }
+}

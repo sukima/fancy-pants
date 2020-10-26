@@ -1,18 +1,23 @@
 {
   "name": "fancy-pants",
   "version": "1.0.0",
-  "description": "performant custom elements micro-lib",
+  "description": "A performant JavaScript Micro-lib for Custom Elements with reactive updates via dirty tracking",
   "repository": "git@github.com:sukima/fancy-pants.git",
   "author": "Devin Weaver (@sukima) <suki@tritarget.org> (https://tritarget.org/)",
   "license": "MIT",
   "scripts": {
-    "start": "serve",
-    "lint:js": "eslint *.js"
+    "start": "serve docs",
+    "docs": "jsdoc -r -c jsdoc.json lib",
+    "lint:js": "eslint lib/fancy-pants/*.js",
+    "deploy": "yarn lint:js && yarn docs && gh-pages -d docs"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
+    "better-docs": "^2.3.2",
     "eslint": "^7.12.0",
     "eslint-plugin-babel": "^5.3.1",
+    "gh-pages": "^3.1.0",
+    "jsdoc": "^3.6.6",
     "serve": "^11.3.2"
   }
 }
