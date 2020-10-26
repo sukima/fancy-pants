@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FancyPants Documentation Home</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="styles/custom.css">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+             
+                <a class="image" href="index.html">
+                    <img src="images/logo.png" alt="logo">
+                </a>
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">FancyPants</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                <div class="dropdown is-hoverable is-right">
+                    <a class="dropdown-trigger link">
+                        Tutorials
+                        <i class="fas fa-chevron-down fa-xs"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-content">
+                        
+                            <a class="dropdown-item" href="tutorial-index_.html">
+                                Table of Contents
+                            </a>
+                        
+                        </div>
+                    </div>
+                </div>
+                
+                 
+                    
+                        <a
+                            class="link user-link "
+                            href="https://github.com/sukima/fancy-pants"
+                        >
+                            Github
+                        </a>
+                    
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-Renderer.html">Renderer</a></li></ul><h3>Classes</h3><ul><li><a href="Component.html">Component</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p></p>
+                    <h1>Home</h1>
+                </header>
+                
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>FancyPants</h1>
+<p>Have you ever been working on a simple JavaScript project like a bookmarklet or
+tiny static site and thought to yourself if only you could have a backbone like
+micro-lib to make writing <strong>custom elements</strong> easier?</p>
+<p>No?! … oh guess it was just me. Well it is done now might as well show it.</p>
+<p>This <em>micro-lib</em> is an attempt to introduce some very modern ECMAScript ideas
+and allow you to make small and yet <em>performant</em> custom elements.</p>
+<pre class="prettyprint source lang-js"><code>class MyCustomElement extends Component {
+
+  // Whenever this value changes it will schedule a render cycle
+  count = tracked(0);
+
+  // Every second update the count
+  connectedCallback() {
+    super.connectedCallback();
+    this.timer = setInterval(() => this.count++, 1000);
+  }
+
+  // Be nice when the component is disconnected
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    clearInterval(this.timer);
+  }
+
+  // Every render cycle update the Shadow DOM
+  render() {
+    this.shadow.querySelector('output').value = this.count;
+  }
+
+  // Use this innerHTML to create the Shadow DOM
+  static get template() {
+    return `&lt;span>Counter: &lt;output>&lt;/output>&lt;/span>`;
+  }
+
+}
+
+MyCustomElement.register();
+</code></pre>
+<p><a href="https://sukima.github.io/fancy-pants/examples/6.html">demo</a></p>
+<p><em>NOTE:</em> for <strong>Safari Mobile</strong> you will have to assign <code>tracked()</code> properties in
+the <code>constructor</code> instead of as a field since Apple is dragging their feet on
+modern JavaScript support.</p>
+<pre class="prettyprint source lang-js"><code>class MyCustomElement extends Component {
+  constructor() {
+    super();
+    this.count = tracked(0);
+  }
+}
+</code></pre>
+<h2>Why use this</h2>
+<ul>
+<li>Your project is large enough to benefit from using custom elements but not
+big enough to need templates, DOM libs, or a VirtualDOM™</li>
+<li>You want an easy way to memoize the render functions</li>
+<li>You just want a render function to be called when it needs to be called</li>
+<li>You want to use VanillaJS™ DOM API to update content but you don't want to
+have to roll your own guards to prevent unoptimized DOM mutations (i.e.
+Backbone™)</li>
+</ul>
+<p>Basically if your project was large enough to warrant jQuery then this might be
+worth it. This micro-lib fits into the same needs spectrum as Backbone™.</p>
+<h2>Why not use this</h2>
+<ul>
+<li>You are serious about writing an actual application</li>
+<li>You want to use a template or VirtualDOM™</li>
+<li>Your project is larger then a single HTML file</li>
+</ul>
+<p>If you project needs more then just jQuery then this is not for you.</p>
+<h2>Technical explanation</h2>
+<p>This lib has three basic parts tracking, renderer, and component.</p>
+<h3>Tracking</h3>
+<p>This concept is explained in extreme detail (and where I stole this idea from)
+in the blog post &quot;<a href="https://www.pzuraq.com/how-autotracking-works/">How Autotracking Works</a>&quot; by <a href="https://www.pzuraq.com/author/pzuraq/">Chris Garrett</a>.</p>
+<p>The condensed version is that when we consume a tracked property it stores
+increments a counter specific to that property (<em>tag</em>). We then allow functions
+to be memoized which run only when the tags it knows about have changed.</p>
+<p>Because this is a dense topic I'll paraphrase by running through an example.</p>
+<p>A function executes (I will call this <code>render()</code>) it <em>consumes</em> a tracked
+property. When this happens the system records that the <code>render()</code> depends on
+that tag.</p>
+<p>The next time <code>render()</code> is called it checks the list of tags for itself to see
+if any of the tags revision counter is larger then the last time the memoized
+function ran. If so then it executes recording consumed tags. If not then it
+knows nothing has changed and does a no-op.</p>
+<p>In the end this means that when we dirty a tag by incrementing its revision
+counter the next time the <code>render()</code> happens it is ready to execute again.</p>
+<p>This affords us the ability to call the <code>render()</code> function without worrying
+that it is executing when nothing has changed. This setup also means that we do
+not need to declare the dependencies because the very act of consuming a value
+will register it as a dependency. In short executing the memoized function will
+<strong>auto-track</strong> its dependencies.</p>
+<h3>Renderer</h3>
+<p>The renderer is responsible for collecting functions and scheduling when to
+execute those functions. It uses a microtask to schedule the next run. If all
+the functions it attempts to run on each render cycle are memoized it is quite
+performant.</p>
+<p>It taps into the tracking system simply to schedule a render cycle when
+a tracked property is dirtied.</p>
+<h3>Component</h3>
+<p>A simple custom element implementation which is able to create a shadow DOM
+from a template and defines a render function that gets memoized.</p>
+<h2>Documentation</h2>
+<p>Each part is split into three files. Import the ones as you need them. Here is
+a basic overview of how this system works. There is also
+<a href="https://sukima.github.io/fancy-pants/api">detailed API docs</a></p>
+<p>Please check out the <a href="https://sukima.github.io/fancy-pants/index.html">examples</a> (view source) as they do not use any
+minification and are easily digestible.</p>
+<h3>Component</h3>
+<p>First create an HTML template. This can either be a <code>&lt;template&gt;</code> element or
+a string. For now we will presume a <code>&lt;template&gt;</code> element.</p>
+<pre class="prettyprint source lang-html"><code>&lt;template id=&quot;my-component&quot;>
+  &lt;output>&lt;/output>
+&lt;/template>
+</code></pre>
+<p>Take note it has the ID of <code>my-component</code> which will match to the component's
+name <code>MyComponent</code>.</p>
+<pre class="prettyprint source lang-js"><code>import Component from 'fancy-pants/component.js';
+
+class MyComponent extends Component {
+}
+
+MyComponent.register();
+</code></pre>
+<p>the <code>register()</code> will call <code>customElements.define(…)</code> and will infer the
+tagname based on dasherizing the class name — <code>MyComponent</code> will define a
+<code>&lt;my-component&gt;&lt;/my-component&gt;</code> element.</p>
+<p>This can be overridden by providing a static tagName.</p>
+<pre class="prettyprint source lang-js"><code>class MyComponent extends Component {
+  static get tagName() {
+    return 'some-other-dashed-name';
+  }
+}
+MyComponent.register();
+</code></pre>
+<p>By default it will look for a <code>&lt;template&gt;</code> in the dom with an ID of the
+tagname. This can be overridden by passing in a selector string.</p>
+<pre class="prettyprint source lang-js"><code>MyComponent.register('#a-different-template-id');
+</code></pre>
+<p>Dynamic content can be updated with the <code>render()</code> method. This methods is
+automatically memoized for you. Any tracked/auto-tracked properties consumed
+will contribute to this method to being executed.</p>
+<p>All other custom element methods are available just be sure to call the
+appropriate <code>super.*()</code>.</p>
+<p>Any observed attributes will also be auto-tracked. Use <code>this.getAttribute()</code>
+and <code>this.setAttribute()</code> as normal.</p>
+<pre class="prettyprint source"><code>class MyComponent extends Component {
+  static get observedAttributes() {
+    return ['foo'];
+  }
+}
+</code></pre>
+<p>The Shadow DOM for the component can be accessed via <code>this.shadow</code>.</p>
+<h3>Renderer</h3>
+<p>The renderer is not exclusive to components. You can add any function to the
+renderer. Even memoizewd functions if you wish.</p>
+<pre class="prettyprint source lang-js"><code>import { registerRenderer, scheduleRender } from 'fancy-pants/renderer.js';
+
+let shouldRender = true;
+
+registerRenderer(() => {
+  if (!shouldRender) {
+    console.log('noop cycle');
+  } else {
+    console.log('render cycle');
+  }
+  shouldRender = false;
+});
+</code></pre>
+<p>Rendering is async within a microtask cycle. Calling <code>scheduleRender()</code> will
+only schedule the render cycle therefor multiple calls will only result in one
+pass over the registered functions.</p>
+<pre class="prettyprint source lang-js"><code>scheduleRender();                  // => render cycle
+setTimeout(scheduleRender, 1000);  // => noop cycle
+setTimeout(() => shouldRender = true, 2000);
+setTimeout(scheduleRender, 3000);  // => render cycle
+</code></pre>
+<p>If needed you can also remove a renderer function with <code>unregisterRenderer(…)</code>.</p>
+<h3>Tracking</h3>
+<p>Any object can have tracked properties. Until <a href="https://github.com/tc39/proposal-decorators">decorators</a> are available
+there is an initialization step to activate tracked properties.</p>
+<pre class="prettyprint source lang-js"><code>import { tracked, activateTracking } from 'fancy-pants/tracking.js';
+</code></pre>
+<p>The <code>tracked()</code> function returns a <code>Trackable</code> object. This is an inert object
+till it is activated.</p>
+<p>Calling <code>activateTracking()</code> on an object will convert all <code>Trackable</code>
+properties to getter and setters hooked into the auto-tracking system.</p>
+<p>This allows the following syntax to work with <code>Component</code>s.</p>
+<pre class="prettyprint source lang-js"><code>let myObject = {
+  foo: tracked()
+};
+activateTracking(myObject);
+</code></pre>
+<p>It also returns the same object to a more condenced syntax.</p>
+<pre class="prettyprint source lang-js"><code>let myObject = activateTracking({
+  foo: tracked()
+});
+</code></pre>
+<p>Anytime foo is assigned it will mark the property as dirty and schedule
+a render cycle.</p>
+<pre class="prettyprint source lang-js"><code>myObject.foo = 'bar';
+</code></pre>
+<p>To create a function that only runs when any of its auto-tracked dependencies
+changes use <code>memoizeFunction()</code>.</p>
+<pre class="prettyprint source lang-js"><code>import { memoizeFunction } from 'fancy-pants/tracking.js';
+let optimised = memoizeFunction(() => { … });
+</code></pre>
+<p>For more specific usage see the many <a href="https://sukima.github.io/fancy-pants/index.html">Examples</a>.</p></article>
+    </section>
+
+
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>
