@@ -3,6 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <title>Fancy Pants</title>
+  <link rel="modulepreload" href="../tracking.js">
+  <link rel="modulepreload" href="../rendering.js">
+  <link rel="modulepreload" href="../component.js">
+  <script type="module">
+import Component from './component.js';
+
+const ONES = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+const TENS = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+const TEENS = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+
+function convertTens(num) {
+  const { floor } = Math;
+  if (num < 10) {
+    return `${ONES[num]}`;
+  } else if (num >= 10 && num < 20) {
+    return `${TEENS[num - 10]}`;
+  } else {
+    return `${TENS[floor(num / 10)]} ${ONES[num % 10]}`;
+  }
+}
+
+function capitalize(str) {
+  return str.replace(/^\w/, c => c.toUpperCase());
+}
+
+class ExampleLink extends Component {
+  render() {
+    let { num, word } = this;
+    this.shadow.innerHTML = ExampleLink.template
+      .replace(/{{(\w+)}}/g, (_, g1) => this[g1]);
+  }
+  get num() {
+    return Number(this.getAttribute('num'));
+  }
+  get word() {
+    return capitalize(convertTens(this.num));
+  }
+  static get template() {
+    return `<a href="examples/{{num}}.html">Example {{word}}</a> &mdash; <slot></slot>`;
+  }
+  static get observedAttributes() {
+    return ['num'];
+  }
+}
+
+ExampleLink.register();
+  </script>
 </head>
 <body>
 
@@ -11,15 +58,17 @@
 
   <nav>
     <ol>
-      <li><a href="examples/1.html">Example One</a> &mdash; HTML <code>&lt;template&gt;</code></li>
-      <li><a href="examples/2.html">Example Two</a> &mdash; <code>static template = `&hellip;`;</code> string</li>
-      <li><a href="examples/3.html">Example Three</a> &mdash; HTML <code>&lt;template&gt;</code> with hardcoded ID</li>
-      <li><a href="examples/4.html">Example Four</a> &mdash; Global tracking object using <code>tracked()</code></li>
-      <li><a href="examples/5.html">Example Five</a> &mdash; Manual global tracking (lower level API)</li>
-      <li><a href="examples/6.html">Example Six</a> &mdash; Auto updating counter</li>
-      <li><a href="examples/7.html">Example Seven</a> &mdash; Emoji randomizer (performance example)</li>
+      <li><example-link num="1">HTML <code>&lt;template&gt;</code></example-link></li>
+      <li><example-link num="2"><code>static template = `&hellip;`;</code> string</example-link></li>
+      <li><example-link num="3">HTML <code>&lt;template&gt;</code> with hardcoded ID</example-link></li>
+      <li><example-link num="4">Global tracking object using <code>tracked()</code></example-link></li>
+      <li><example-link num="5">Manual global tracking (lower level API)</example-link></li>
+      <li><example-link num="6">Auto updating counter</example-link></li>
+      <li><example-link num="7">Emoji randomizer (performance example)</example-link></li>
     </ol>
   </nav>
+
+  <p>This page is also an example.</p>
 
 </body>
 </html>

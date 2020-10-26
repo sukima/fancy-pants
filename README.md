@@ -172,12 +172,23 @@ will contribute to this method to being executed.
 All other custom element methods are available just be sure to call the
 appropriate `super.*()`.
 
+Any observed attributes will also be auto-tracked. Use `this.getAttribute()`
+and `this.setAttribute()` as normal.
+
+```
+class MyComponent extends Component {
+  static get observedAttributes() {
+    return ['foo'];
+  }
+}
+```
+
+The Shadow DOM for the component can be accessed via `this.shadow`.
+
 ### Renderer
 
 The renderer is not exclusive to components. You can add any function to the
 renderer. Even memoizewd functions if you wish.
-
-
 
 ```js
 import { registerRenderer, scheduleRender } from 'fancy-pants/renderer.js';
@@ -257,4 +268,4 @@ let optimised = memoizeFunction(() => { … });
 ```
 
 For more specific usage see the many
-[Examples](https://sukima.github.io/fancy-pants/examples/index.html).
+[Examples](https://sukima.github.io/fancy-pants/index.html).
