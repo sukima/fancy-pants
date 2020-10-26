@@ -15,10 +15,6 @@
 
     count = tracked(0);
 
-    constructor() {
-      super();
-    }
-
     connectedCallback() {
       super.connectedCallback();
       this.timer = setInterval(() => this.count++, 1000);
