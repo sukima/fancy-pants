@@ -68,7 +68,7 @@
                     <div class="dropdown-menu">
                         <div class="dropdown-content">
                         
-                            <a class="dropdown-item" href="tutorial-index_.html">
+                            <a class="dropdown-item" href="tutorial-examples.html">
                                 Examples
                             </a>
                         
@@ -99,7 +99,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-Renderer.html">Renderer</a></li></ul><h3>Classes</h3><ul><li><a href="Component.html">Component</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-renderer.html">renderer</a></li><li><a href="module-tracking.html">tracking</a></li></ul><h3>Classes</h3><ul><li><a href="Component.html">Component</a></li></ul></div>
                 
             </nav>
         </div>
@@ -120,7 +120,14 @@
     
         <h2><span class="attribs"><span class="type-signature"></span></span>Component<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">FancyPants Component</div>
+            <div class="class-description"><p>This is the main class for using the FancyPants system. When extended it
+will provide easy means for tracking dirty changes and rendering dynamic
+parts of the custom element's DOM. You have access to both a ShadowDOM and
+the HTMLElement itself.</p>
+<p>You don't need to instantiate it yourself as this is done by the insertion
+of the custom element into the DOM.</p>
+<p>Once defined use the <a href="Component.html#.register"><code>.register()</code></a> method to
+define the custom element and associate a template to the custom element.</p></div>
         
     
 </header>
@@ -153,8 +160,22 @@
     
     
     <div class="description">
-        Perform any setup in the `constructor()`. This is a good place to assign
-`tracked()` properties when targeting Mobile Safari browsers.
+        <p>Perform any setup in the constructor. This
+is a good place to assign <a href="module-tracking.html#.tracked"><code>tracked()</code></a>
+properties when targeting Mobile Safari browsers.</p>
+<pre class="prettyprint source lang-js"><code>class MyComponent extends Component {
+  constructor() {
+    super();
+    this.foobar = tracked();
+  }
+}
+</code></pre>
+<p>If you do not need to support <strong>Mobile Safari</strong> then you can use class
+field syntax instead.</p>
+<pre class="prettyprint source lang-js"><code>class MyComponent extends Component {
+  foobar = tracked();
+}
+</code></pre>
     </div>
     
 
@@ -205,7 +226,7 @@
         <p class="tag-source">
             <a href="component.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line22">line 22</a>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line30">line 30</a>
             </span>
         </p>
     
@@ -283,7 +304,13 @@
 
 
 <div class="description">
-    Optional tagName. Defaults to a dasherized version of the class name
+    <p>Optional tag name. Defaults to a dasherized version of the class name</p>
+<pre class="prettyprint source lang-js"><code>class MyComponent extends Component {
+  static get tagName() {
+    return 'my-alternative-component-tag-name';
+  }
+}
+</code></pre>
 </div>
 
 
@@ -325,7 +352,7 @@
         <p class="tag-source">
             <a href="component.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line107">line 107</a>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line190">line 190</a>
             </span>
         </p>
     
@@ -364,7 +391,13 @@
 
 
 <div class="description">
-    Optional string version of the Shadow DOM template
+    <p>Optional string version of the Shadow DOM template</p>
+<pre class="prettyprint source lang-js"><code>class MyComponent extends Component {
+  static get template() {
+    return `&lt;p>lorem ipsum&lt;/p>`;
+  }
+}
+</code></pre>
 </div>
 
 
@@ -406,7 +439,7 @@
         <p class="tag-source">
             <a href="component.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line115">line 115</a>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line207">line 207</a>
             </span>
         </p>
     
@@ -441,7 +474,7 @@
 
 
 <div class="description">
-    Direct access to the Shadow DOM.
+    <p>Direct access to the Shadow DOM.</p>
 </div>
 
 
@@ -483,7 +516,7 @@
         <p class="tag-source">
             <a href="component.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line24">line 24</a>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line32">line 32</a>
             </span>
         </p>
     
@@ -526,7 +559,15 @@
     
     
     <div class="description">
-        Call this static method to define the component as a custom element with the browser.
+        <p>Call this static method to define the component as a custom element with the browser.</p>
+<pre class="prettyprint source lang-js"><code>class MyComponent extends Component {
+  …
+}
+
+MyComponent.register();
+MyComponent.register('#selector');
+MyComponent.register(myTemplateNode);
+</code></pre>
     </div>
     
 
@@ -604,7 +645,7 @@
       </td>
   
 
-  <td class="description last">optional template element or selector</td>
+  <td class="description last"><p>optional template element or selector</p></td>
 </tr>
 
 
@@ -645,7 +686,7 @@
       </td>
   
 
-  <td class="description last">optional scope for the template selector</td>
+  <td class="description last"><p>optional scope for the template selector</p></td>
 </tr>
 
 
@@ -693,7 +734,7 @@
         <p class="tag-source">
             <a href="component.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line88">line 88</a>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line162">line 162</a>
             </span>
         </p>
     
@@ -739,7 +780,13 @@
     
     
     <div class="description">
-        This will auto-track any attributes listed in `observedAttributes`.
+        <p>This will auto-track any attributes listed in <code>observedAttributes</code>.</p>
+<pre class="prettyprint source lang-js"><code>class MyComponent extends Component {
+  static get observedAttributes() {
+    return ['foo', 'bar'];
+  }
+}
+</code></pre>
     </div>
     
 
@@ -790,7 +837,7 @@
         <p class="tag-source">
             <a href="component.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line68">line 68</a>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line124">line 124</a>
             </span>
         </p>
     
@@ -836,9 +883,18 @@
     
     
     <div class="description">
-        Here is a good place to add event listeners to the DOM.
+        <p>Here is a good place to add event listeners to the DOM.
 Activates tracking and registers this component instance with the renderer.
-First render is scheduled after this callback.
+First render is scheduled after this callback.</p>
+<pre class="prettyprint source lang-js"><code>class MyComponent extends Component {
+  connectedCallback() {
+    super.connectedCallback();
+    this.clickHandler = () => this.doSomething();
+    this.shadow.querySelector('button')
+      .addEventListener('click', this.clickHandler);
+  }
+}
+</code></pre>
     </div>
     
 
@@ -889,7 +945,7 @@ First render is scheduled after this callback.
         <p class="tag-source">
             <a href="component.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line51">line 51</a>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line89">line 89</a>
             </span>
         </p>
     
@@ -935,8 +991,16 @@ First render is scheduled after this callback.
     
     
     <div class="description">
-        Here is a good place to remove event listeners to the DOM.
-Removes this component instance from the renderer.
+        <p>Here is a good place to remove event listeners to the DOM.
+Removes this component instance from the renderer.</p>
+<pre class="prettyprint source lang-js"><code>class MyComponent extends Component {
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.shadow.querySelector('button')
+      .removeEventListener('click', this.clickHandler);
+  }
+}
+</code></pre>
     </div>
     
 
@@ -987,7 +1051,7 @@ Removes this component instance from the renderer.
         <p class="tag-source">
             <a href="component.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line61">line 61</a>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line109">line 109</a>
             </span>
         </p>
     
@@ -1033,7 +1097,13 @@ Removes this component instance from the renderer.
     
     
     <div class="description">
-        When this component needs to render this function will be called.
+        <p>When this component needs to render this function will be called.</p>
+<pre class="prettyprint source lang-js"><code>class MyComponent extends Component {
+  render() {
+    this.shadow.querySelector('.foo').textContent = this.foobar;
+  }
+}
+</code></pre>
     </div>
     
 
@@ -1084,7 +1154,7 @@ Removes this component instance from the renderer.
         <p class="tag-source">
             <a href="component.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line80">line 80</a>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line144">line 144</a>
             </span>
         </p>
     

@@ -1,0 +1,348 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FancyPants tracking.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="styles/custom.css">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+             
+                <a class="image" href="index.html">
+                    <img src="images/logo.png" alt="logo">
+                </a>
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">FancyPants</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                <div class="dropdown is-hoverable is-right">
+                    <a class="dropdown-trigger link">
+                        Tutorials
+                        <i class="fas fa-chevron-down fa-xs"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-content">
+                        
+                            <a class="dropdown-item" href="tutorial-examples.html">
+                                Examples
+                            </a>
+                        
+                        </div>
+                    </div>
+                </div>
+                
+                 
+                    
+                        <a
+                            class="link user-link "
+                            href="https://github.com/sukima/fancy-pants"
+                        >
+                            Github
+                        </a>
+                    
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-renderer.html">renderer</a></li><li><a href="module-tracking.html">tracking</a></li></ul><h3>Classes</h3><ul><li><a href="Component.html">Component</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>tracking.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * This is the auto-tracking system and is the main method to
+ * [scheduleRender{}]{@link module:renderer.scheduleRender}.
+ * @module tracking
+ */
+const REVISION = Symbol('REVISION');
+
+let CURRENT_REVISION = 0;
+let currentComputation = null;
+let onTagDirtied = () => {};
+
+class Tag {
+  constructor() {
+    this[REVISION] = CURRENT_REVISION;
+  }
+}
+
+class TrackedProperty {
+  constructor(initialValue) {
+    this.initialValue = initialValue;
+  }
+}
+
+/**
+ * Register a function to be called when a tracked property is dirtied.
+ * There can only be one. This is not used when working with the
+ * [renderer]{@link module:renderer} or {@link Component} class as they mange
+ * this for you.
+ *
+ * You would only use this if you were interfacing with this module on your own.
+ *
+ * @param {function} callback the function to call when tags are dirtied
+ */
+export function setOnTagDirtied(callback) {
+  onTagDirtied = callback;
+}
+
+/**
+ * If you need to manually handle tracking you can use this to get a unique tag
+ * for [dirtyTag]{@link module:tracking.dirtyTag} and
+ * [consumeTag]{@link module:tracking.consumeTag}.
+ *
+ * @return {Tag} a tag object to be used by other tracking methods
+ */
+export function createTag() {
+  return new Tag();
+}
+
+/**
+ * @param {Tag} tag a tag object created with
+ * [createTag]{@link module:tracking.createTag}
+ */
+export function dirtyTag(tag) {
+  if (currentComputation?.has(tag)) {
+    throw new Error('Cannot dirty a tag during a computation');
+  }
+  tag[REVISION] = ++CURRENT_REVISION;
+  onTagDirtied();
+}
+
+/**
+ * @param {Tag} tag a tag object created with
+ * [createTag]{@link module:tracking.createTag}
+ */
+export function consumeTag(tag) {
+  if (!(currentComputation &amp;&amp; tag instanceof Tag)) { return; }
+  currentComputation.add(tag);
+}
+
+function getMax(tags) {
+  return Math.max(...tags.map(t => t[REVISION]));
+}
+
+/**
+ * Wrap a function to be memoized based on the auto-tracking system.
+ * @param {function} fn the function to memoize
+ * @return {function} a memoized version of the fn
+ */
+export function memoizeFunction(fn) {
+  let lastValue, lastRevision, lastTags;
+  return (...args) => {
+    if (lastTags &amp;&amp; getMax(lastTags) === lastRevision) {
+      if (currentComputation &amp;&amp; lastTags.length > 0) {
+        currentComputation = new Set([...currentComputation, ...lastTags]);
+      }
+      return lastValue;
+    }
+    let previousComputation = currentComputation;
+    currentComputation = new Set();
+
+    try {
+      lastValue = fn(...args);
+    } finally {
+      lastTags = Array.from(currentComputation);
+      lastRevision = getMax(lastTags);
+
+      if (previousComputation &amp;&amp; lastTags.length > 0) {
+        previousComputation = new Set([...previousComputation, ...lastTags]);
+      }
+
+      currentComputation = previousComputation;
+    }
+
+    return lastValue;
+  };
+}
+
+function isTrackedPropertyDescriptor(descriptor) {
+  return descriptor.value instanceof TrackedProperty;
+}
+
+function trackedDescriptor(initialValue) {
+  let tags = new WeakMap();
+  let values = new WeakMap();
+  return {
+    get() {
+      if (!values.has(this)) {
+        values.set(this, initialValue);
+        tags.set(this, createTag());
+      }
+      consumeTag(tags.get(this));
+      return values.get(this);
+    },
+    set(value) {
+      values.set(this, value);
+      if (!tags.has(this)) {
+        tags.set(this, createTag());
+      }
+      dirtyTag(tags.get(this));
+    }
+  };
+}
+
+/**
+ * Returns a TrackedProperty object which is a representation of a tracked
+ * property. It is of no use until
+ * [activateTracking]{@link module:tracking.activateTracking} converts them
+ * into getters and setters,
+ *
+ * @param {any} [initialValue] any initial value the tracked property will have
+ * @return {TrackedProperty} an internal representatino of a tracked property.
+ * Object must be activated with {@link tracking.activateTracking} to be of any
+ * use.
+ */
+export function tracked(initialValue) {
+  return new TrackedProperty(initialValue);
+}
+
+/**
+ * Manually add a tracked getter/setter to an object. This can be used in lieu
+ * of [tracked]{@link module:tracked.tracked} and
+ * [activateTracking]{@link module:tracked.activateTracking}
+ *
+ * ```js
+ * let obj = {};
+ * defineTrackedProp(ctx, 'foobar', 'FOO');
+ * ```
+ *
+ * Is the same as
+ *
+ * ```js
+ * let obj = activateTracking({
+ *   foobar: tracked('FOO')
+ * });
+ * ```
+ *
+ * @param {Object} ctx the object to assign a tracked getter/setter on
+ * @param {string} propName the name of the tracked property
+ * @param {any} [initialValue] the initial value of the tracked property
+ */
+export function defineTrackedProp(ctx, propName, initialValue) {
+  Reflect.defineProperty(ctx, propName, trackedDescriptor(initialValue));
+}
+
+/**
+ * This is how all [tracked]{@link module:tracking.tracked} properties are
+ * converted from the place holder TrackedProperty object into actual tracked
+ * getter/setters. Any object that uses [tracked]{@link module:tracking.tracked}
+ * must be passed through `activateTracking` otherwise the properties are
+ * useless.
+ *
+ * ```js
+ * let obj = activateTracking({
+ *   foobar: tracked('FOO')
+ * });
+ * ```
+ *
+ * @param {Object} ctx the object to search and replace any TrackedProperty
+ * objects.
+ * @return {Object} the same ctx object passed in to support chaining
+ */
+export function activateTracking(ctx) {
+  for (let prop of Reflect.ownKeys(ctx)) {
+    let descriptor = Reflect.getOwnPropertyDescriptor(ctx, prop);
+    if (!isTrackedPropertyDescriptor(descriptor)) { continue; }
+    defineTrackedProp(ctx, prop, descriptor.value.initialValue);
+  }
+  return ctx;
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>

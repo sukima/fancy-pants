@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FancyPants renderer.js</title>
+  <title>FancyPants Global</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -70,7 +68,7 @@
                     <div class="dropdown-menu">
                         <div class="dropdown-content">
                         
-                            <a class="dropdown-item" href="tutorial-examples.html">
+                            <a class="dropdown-item" href="tutorial-index_.html">
                                 Examples
                             </a>
                         
@@ -101,68 +99,293 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-renderer.html">renderer</a></li><li><a href="module-tracking.html">tracking</a></li></ul><h3>Classes</h3><ul><li><a href="Component.html">Component</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-renderer.html">renderer</a></li><li><a href="module-tracking.html">tracking</a></li></ul><h3>Classes</h3><ul><li><a href="Component.html">Component</a></li></ul><h3>Global</h3><ul><li><a href="global.html#undefined">undefined</a></li></ul></div>
                 
             </nav>
         </div>
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p>Source</p>
-                    <h1>renderer.js</h1>
+                    <p>Title</p>
+                    <h1>Global</h1>
                 </header>
                 
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/**
- * This is the global rendering cycle. It is built into the {@link Component}
- * implementation but can also be used outside of a Component.
- * @module renderer
- */
-import { setOnTagDirtied } from './tracking.js';
+        <h2></h2>
+        
+    
+</header>
 
-let renderScheduled = false;
-const renderOperations = new Set();
+<article>
+    <div class="container-overview">
+    
+        
 
-/**
- * @param {function} renderFn the function to add to the operations queue
- */
-export function registerRenderer(renderFn) {
-  renderOperations.add(renderFn);
-}
+        
 
-/**
- * @param {function} renderFn the function to remove from the operations queue
- */
-export function unregisterRenderer(renderFn) {
-  renderOperations.delete(renderFn);
-}
 
-/**
- * Will schedule a render for the next microtask loop
- */
-export function scheduleRender() {
-  if (renderScheduled) { return; }
-  renderScheduled = true;
-  Promise.resolve().then(executeRenderOperations);
-}
+<dl class="details">
 
-function executeRenderOperations() {
-  try {
-    renderOperations.forEach(i => i());
-  } finally {
-    renderScheduled = false;
-  }
-}
+    
 
-setOnTagDirtied(scheduleRender);
-</code></pre>
-        </article>
-    </section>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class='vertical-section'>
+            <h1>Methods</h1>
+            <div class="members">
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="undefined">
+        <a class="href-link" href="#undefined">#</a>
+        
+        <span class="code-name">
+            
+                undefined<span class="signature">(initialValue<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {TrackedProperty}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>foobar</p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+            <th>Attributes</th>
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>initialValue</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">any</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last"><p>any initial value the tracked property will have</p></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="tracking.js.html" class="button">View Source</a>
+            <span>
+                <a href="tracking.js.html">tracking.js</a>, <a href="tracking.js.html#line109">line 109</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'><p>an internal representatino of a tracked property.
+Object must be activated with <code>tracking.activateTracking</code> to be of any
+use.</p></div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">TrackedProperty</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+            </div>
+        </div>
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

@@ -1,17 +1,30 @@
-/** @module Renderer */
+/**
+ * This is the global rendering cycle. It is built into the {@link Component}
+ * implementation but can also be used outside of a Component.
+ * @module renderer
+ */
 import { setOnTagDirtied } from './tracking.js';
 
 let renderScheduled = false;
 const renderOperations = new Set();
 
+/**
+ * @param {function} renderFn the function to add to the operations queue
+ */
 export function registerRenderer(renderFn) {
   renderOperations.add(renderFn);
 }
 
+/**
+ * @param {function} renderFn the function to remove from the operations queue
+ */
 export function unregisterRenderer(renderFn) {
   renderOperations.delete(renderFn);
 }
 
+/**
+ * Will schedule a render for the next microtask loop
+ */
 export function scheduleRender() {
   if (renderScheduled) { return; }
   renderScheduled = true;

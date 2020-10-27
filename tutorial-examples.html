@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FancyPants renderer.js</title>
+  <title>FancyPants Examples</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -95,77 +93,97 @@
 </div>
     <div id="main">
         <div
-            class="sidebar "
+            class="sidebar tutorials"
             id="sidebarNav"
         >
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-renderer.html">renderer</a></li><li><a href="module-tracking.html">tracking</a></li></ul><h3>Classes</h3><ul><li><a href="Component.html">Component</a></li></ul></div>
+                    <div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-examples.html">Examples</a><ul><li><a href="tutorial-1.html">Example One</a></li><li><a href="tutorial-2.html">Example Two</a></li><li><a href="tutorial-3.html">Example Three</a></li><li><a href="tutorial-4.html">Example Four</a></li><li><a href="tutorial-5.html">Example Five</a></li><li><a href="tutorial-6.html">Example Six</a></li><li><a href="tutorial-7.html">Example Seven</a></li></ul></li></ul></div>
                 
             </nav>
         </div>
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p>Source</p>
-                    <h1>renderer.js</h1>
+                    <p>Tutorial</p>
+                    <h1>Examples</h1>
                 </header>
-                
+                <section>
 
+<article>
+    <script type="module" src="./scripts/example-source.js"></script>
 
+<example-source lang="html">
 
-    
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/**
- * This is the global rendering cycle. It is built into the {@link Component}
- * implementation but can also be used outside of a Component.
- * @module renderer
- */
-import { setOnTagDirtied } from './tracking.js';
+<ol>
+  <li><example-link num="1">HTML <code>&lt;template&gt;</code></example-link></li>
+  <li><example-link num="2"><code>static template = `&hellip;`;</code> string</example-link></li>
+  <li><example-link num="3">HTML <code>&lt;template&gt;</code> with hardcoded ID</example-link></li>
+  <li><example-link num="4">Global tracking object using <code>tracked()</code></example-link></li>
+  <li><example-link num="5">Manual global tracking (lower level API)</example-link></li>
+  <li><example-link num="6">Auto updating counter</example-link></li>
+  <li><example-link num="7">Emoji randomizer (performance example)</example-link></li>
+</ol>
 
-let renderScheduled = false;
-const renderOperations = new Set();
+<p>This page is also an example.</p>
 
-/**
- * @param {function} renderFn the function to add to the operations queue
- */
-export function registerRenderer(renderFn) {
-  renderOperations.add(renderFn);
-}
+</example-source>
 
-/**
- * @param {function} renderFn the function to remove from the operations queue
- */
-export function unregisterRenderer(renderFn) {
-  renderOperations.delete(renderFn);
-}
+<example-source lang="js" strip-script>
 
-/**
- * Will schedule a render for the next microtask loop
- */
-export function scheduleRender() {
-  if (renderScheduled) { return; }
-  renderScheduled = true;
-  Promise.resolve().then(executeRenderOperations);
-}
+<script type="module">
 
-function executeRenderOperations() {
-  try {
-    renderOperations.forEach(i => i());
-  } finally {
-    renderScheduled = false;
+import Component from './fancy-pants/component.js';
+
+const ONES = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+const TENS = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+const TEENS = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+
+function convertTens(num) {
+  const { floor } = Math;
+  if (num < 10) {
+    return `${ONES[num]}`;
+  } else if (num >= 10 && num < 20) {
+    return `${TEENS[num - 10]}`;
+  } else {
+    return `${TENS[floor(num / 10)]} ${ONES[num % 10]}`;
   }
 }
 
-setOnTagDirtied(scheduleRender);
-</code></pre>
-        </article>
-    </section>
+function capitalize(str) {
+  return str.replace(/^\w/, c => c.toUpperCase());
+}
 
+class ExampleLink extends Component {
+  render() {
+    let { num, word } = this;
+    this.shadow.innerHTML = ExampleLink.template
+      .replace(/{{(\w+)}}/g, (_, g1) => this[g1]);
+  }
+  get num() {
+    return Number(this.getAttribute('num'));
+  }
+  get word() {
+    return capitalize(convertTens(this.num));
+  }
+  static get template() {
+    return `<a href="tutorial-{{num}}.html">Example {{word}}</a> &mdash; <slot></slot>`;
+  }
+  static get observedAttributes() {
+    return ['num'];
+  }
+}
 
+ExampleLink.register();
 
+</script>
+
+</example-source>
+
+</article>
+
+</section>
 
             </div>
             
