@@ -220,95 +220,6 @@ document.querySelector('#emojiCount')
 
 </example-source>
 
-<!-- PlayButton {{{1 -->
-<h4>Play/Pause Button</h4>
-
-<!-- JS {{{2 -->
-<example-source lang="js" strip-script>
-
-<script type="module">
-
-import Component from './fancy-pants/component.js';
-
-class PlayPauseButton extends Component {
-  connectedCallback() {
-    super.connectedCallback();
-    this.clickHandler = () => this.toggle();
-    this.buttonElement.addEventListener('mouseup', this.clickHandler);
-  }
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    this.buttonElement.removeEventListener('mouseup', this.clickHandler);
-  }
-  toggle() {
-    let { runnableElement } = this;
-    let action = runnableElement.isRunning ? 'stop' : 'start';
-    runnableElement[action]();
-  }
-  render() {
-    let { buttonElement, runnableElement: { isRunning } } = this;
-    this.shadow.querySelector('button').textContent = isRunning ? 'Pause' : 'Run';
-  }
-  get buttonElement() {
-    return this.shadow.querySelector('button');
-  }
-  get runnableElement() {
-    let id = this.getAttribute('for');
-    return document.querySelector(`#${id}`);
-  }
-  static get template() {
-    return `<button type="button"></button>`;
-  }
-}
-
-PlayPauseButton.register();
-
-</script>
-
-</example-source>
-
-<!-- Blikn light {{{1 -->
-<h4>Blikn light</h5>
-
-<!-- HTML {{{2 -->
-<example-source lang="html">
-
-<template id="blinkn-light">
-  <style>
-    :host {
-      font-size: var(--emoji-size, inherit);
-    }
-  </style>
-  <div class="emoji"></div>
-</template>
-
-</example-source>
-
-<!-- JS {{{2 -->
-<example-source lang="js" strip-script>
-
-<script type="module">
-
-import Component from './fancy-pants/component.js';
-import { tracked } from './fancy-pants/tracking.js';
-import { EMOJIS } from './scripts/emojis.js';
-
-class BlinknLight extends Component {
-  constructor() {
-    super();
-    this.emoji = tracked(EMOJIS[0]);
-  }
-  render() {
-    this.shadow.querySelector('.emoji').textContent = this.emoji;
-  }
-}
-
-BlinknLight.register();
-
-</script>
-
-</example-source>
-
 <!-- Blikn lights {{{1 -->
 <h4>Blikn lights</h4>
 
@@ -416,6 +327,95 @@ class BlinknLights extends Component {
 }
 
 BlinknLights.register();
+
+</script>
+
+</example-source>
+
+<!-- Blikn light {{{1 -->
+<h4>Blikn light</h5>
+
+<!-- HTML {{{2 -->
+<example-source lang="html">
+
+<template id="blinkn-light">
+  <style>
+    :host {
+      font-size: var(--emoji-size, inherit);
+    }
+  </style>
+  <div class="emoji"></div>
+</template>
+
+</example-source>
+
+<!-- JS {{{2 -->
+<example-source lang="js" strip-script>
+
+<script type="module">
+
+import Component from './fancy-pants/component.js';
+import { tracked } from './fancy-pants/tracking.js';
+import { EMOJIS } from './scripts/emojis.js';
+
+class BlinknLight extends Component {
+  constructor() {
+    super();
+    this.emoji = tracked(EMOJIS[0]);
+  }
+  render() {
+    this.shadow.querySelector('.emoji').textContent = this.emoji;
+  }
+}
+
+BlinknLight.register();
+
+</script>
+
+</example-source>
+
+<!-- PlayButton {{{1 -->
+<h4>Play/Pause Button</h4>
+
+<!-- JS {{{2 -->
+<example-source lang="js" strip-script>
+
+<script type="module">
+
+import Component from './fancy-pants/component.js';
+
+class PlayPauseButton extends Component {
+  connectedCallback() {
+    super.connectedCallback();
+    this.clickHandler = () => this.toggle();
+    this.buttonElement.addEventListener('mouseup', this.clickHandler);
+  }
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.buttonElement.removeEventListener('mouseup', this.clickHandler);
+  }
+  toggle() {
+    let { runnableElement } = this;
+    let action = runnableElement.isRunning ? 'stop' : 'start';
+    runnableElement[action]();
+  }
+  render() {
+    let { buttonElement, runnableElement: { isRunning } } = this;
+    this.shadow.querySelector('button').textContent = isRunning ? 'Pause' : 'Run';
+  }
+  get buttonElement() {
+    return this.shadow.querySelector('button');
+  }
+  get runnableElement() {
+    let id = this.getAttribute('for');
+    return document.querySelector(`#${id}`);
+  }
+  static get template() {
+    return `<button type="button"></button>`;
+  }
+}
+
+PlayPauseButton.register();
 
 </script>
 
