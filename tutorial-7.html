@@ -131,8 +131,8 @@
 <!-- FPS Meter {{{1 -->
 <script type="module">
 
-import Component from '../fancy-pants/component.js';
-import { tracked } from '../fancy-pants/tracking.js';
+import Component from './fancy-pants/component.js';
+import { tracked } from './fancy-pants/tracking.js';
 
 class FpsMeter extends Component {
   constructor() {
@@ -228,7 +228,7 @@ document.querySelector('#emojiCount')
 
 <script type="module">
 
-import Component from '../fancy-pants/component.js';
+import Component from './fancy-pants/component.js';
 
 class PlayPauseButton extends Component {
   connectedCallback() {
@@ -289,9 +289,9 @@ PlayPauseButton.register();
 
 <script type="module">
 
-import Component from '../fancy-pants/component.js';
-import { tracked } from '../fancy-pants/tracking.js';
-import { EMOJIS } from '../scripts/emojis.js';
+import Component from './fancy-pants/component.js';
+import { tracked } from './fancy-pants/tracking.js';
+import { EMOJIS } from './scripts/emojis.js';
 
 class BlinknLight extends Component {
   constructor() {
@@ -331,9 +331,9 @@ BlinknLight.register();
 
 <script type="module">
 
-import Component from '../fancy-pants/component.js';
-import { tracked } from '../fancy-pants/tracking.js';
-import { EMOJIS } from '../scripts/emojis.js';
+import Component from './fancy-pants/component.js';
+import { tracked } from './fancy-pants/tracking.js';
+import { EMOJIS } from './scripts/emojis.js';
 
 const FRAME_DELAY = 100;
 const MAX_CONCURRENT_EMOJI_CHANGES = 200;
