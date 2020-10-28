@@ -285,10 +285,9 @@ class Component extends HTMLElement {
       templateFactory = () => queryable.querySelector(templatable);
     } else if (templatable instanceof Element) {
       templateFactory = () => templatable;
-    } else if (this.template) {
-      templateFactory = () => makeTemplateElement(this.template);
     } else {
-      templateFactory = () => queryable.querySelector(`template#${this.tagName}`) ?? makeTemplateElement();
+      let templateEl = queryable.querySelector(`template#${this.tagName}`);
+      templateFactory = () => templateEl ?? makeTemplateElement(this.template);
     }
     templates.set(this.tagName, templateFactory());
     customElements.define(this.tagName, this);
