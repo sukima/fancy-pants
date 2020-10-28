@@ -312,7 +312,8 @@ class Component extends HTMLElement {
   }
 
   /**
-   * Optional string version of the Shadow DOM template
+   * Optional string version of the Shadow DOM template.
+   * Defaults to `&lt;slot>&lt;/slot>`.
    *
    * ```js
    * class MyComponent extends Component {
@@ -325,7 +326,7 @@ class Component extends HTMLElement {
    * @member {string}
    */
   static get template() {
-    return undefined;
+    return '&lt;slot>&lt;/slot>';
   }
 
 }

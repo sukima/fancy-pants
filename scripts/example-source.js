@@ -23,9 +23,6 @@ class ExampleSource extends Component {
   get preTag() {
     return document.querySelector('pre.prettyprint');
   }
-  static get template() {
-    return '<slot></slot>';
-  }
 }
 
 ExampleSource.register();
