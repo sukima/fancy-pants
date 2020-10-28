@@ -9,7 +9,8 @@
     "start": "serve docs",
     "docs": "jsdoc -r -c jsdoc.json lib",
     "lint:js": "eslint lib/fancy-pants/*.js",
-    "deploy": "yarn lint:js && yarn docs && gh-pages -d docs"
+    "deploy": "yarn lint:js && yarn docs && gh-pages -d docs",
+    "watch": "find lib examples static jsdoc.json -type f | entr yarn docs"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
