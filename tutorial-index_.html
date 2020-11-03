@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FancyPants Example Three</title>
+  <title>FancyPants Examples</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -22,10 +22,6 @@
   <link type="text/css" rel="stylesheet" href="styles/custom.css">
   <script async defer src="https://buttons.github.io/buttons.js"></script>
 
-  
-    <meta name="description" content="A performant JavaScript micro-lib for Custom Elements with reactive updates via dirty tracking">
-    <meta name="twitter:image:src" content="https://raw.githubusercontent.com/sukima/fancy-pants/main/static/images/logo.png" /><meta name="twitter:site" content="@sukima" /><meta name="twitter:card" content="summary" /><meta name="twitter:title" content="FancyPants" /><meta name="twitter:description" content="A performant JavaScript micro-lib for Custom Elements with reactive updates via dirty tracking" />
-    <meta property="og:image" content="https://raw.githubusercontent.com/sukima/fancy-pants/main/static/images/logo.png" /><meta property="og:site_name" content="FancyPants" /><meta property="og:type" content="object" /><meta property="og:title" content="FancyPants" /><meta property="og:url" content="https://github.com/sukima/fancy-pants" /><meta property="og:description" content="A performant JavaScript micro-lib for Custom Elements with reactive updates via dirty tracking" />
   
 </head>
 
@@ -72,7 +68,7 @@
                     <div class="dropdown-menu">
                         <div class="dropdown-content">
                         
-                            <a class="dropdown-item" href="tutorial-examples.html">
+                            <a class="dropdown-item" href="tutorial-index_.html">
                                 Examples
                             </a>
                         
@@ -103,7 +99,7 @@
             
             <nav>
                 
-                    <div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-examples.html">Examples</a><ul><li><a href="tutorial-1.html">Example One</a></li><li><a href="tutorial-2.html">Example Two</a></li><li><a href="tutorial-3.html">Example Three</a></li><li><a href="tutorial-4.html">Example Four</a></li><li><a href="tutorial-5.html">Example Five</a></li><li><a href="tutorial-6.html">Example Six</a></li><li><a href="tutorial-7.html">Example Seven</a></li></ul></li></ul></div>
+                    <div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-index_.html">Examples</a><ul><li><a href="tutorial-1.html">Example One</a></li><li><a href="tutorial-2.html">Example Two</a></li><li><a href="tutorial-3.html">Example Three</a></li><li><a href="tutorial-4.html">Example Four</a></li><li><a href="tutorial-5.html">Example Five</a></li><li><a href="tutorial-6.html">Example Six</a></li><li><a href="tutorial-7.html">Example Seven</a></li></ul></li></ul></div>
                 
             </nav>
         </div>
@@ -111,7 +107,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Tutorial</p>
-                    <h1>Example Three</h1>
+                    <h1>Examples</h1>
                 </header>
                 <section>
 
@@ -120,14 +116,17 @@
 
 <example-source lang="html">
 
-<p><foo-bar></foo-bar></p>
-<p><foo-bar></foo-bar></p>
+<ol>
+  <li><example-link num="1">HTML <code>&lt;template&gt;</code></example-link></li>
+  <li><example-link num="2"><code>static template = `&hellip;`;</code> string</example-link></li>
+  <li><example-link num="3">HTML <code>&lt;template&gt;</code> with hardcoded ID</example-link></li>
+  <li><example-link num="4">Global tracking object using <code>tracked()</code></example-link></li>
+  <li><example-link num="5">Manual global tracking (lower level API)</example-link></li>
+  <li><example-link num="6">Auto updating counter</example-link></li>
+  <li><example-link num="7">Emoji randomizer (performance example)</example-link></li>
+</ol>
 
-<template id="different-id">
-  <button class="go">+1</button>
-  <output class="foo"></output>
-  <output class="bar"></output>
-</template>
+<p>This page is also an example.</p>
 
 </example-source>
 
@@ -136,29 +135,47 @@
 <script type="module">
 
 import Component from './fancy-pants/component.js';
-import { tracked } from './fancy-pants/tracking.js';
 
-class FooBar extends Component {
+const ONES = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+const TENS = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+const TEENS = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
 
-  constructor() {
-    super();
-    this.foo = tracked(0);
-    this.shadow.querySelector('.go')
-      .addEventListener('click', () => { this.foo += 1 });
+function convertTens(num) {
+  const { floor } = Math;
+  if (num < 10) {
+    return `${ONES[num]}`;
+  } else if (num >= 10 && num < 20) {
+    return `${TEENS[num - 10]}`;
+  } else {
+    return `${TENS[floor(num / 10)]} ${ONES[num % 10]}`;
   }
-
-  render() {
-    this.shadow.querySelector('.foo').value = this.foo;
-    this.shadow.querySelector('.bar').value = this.bar;
-  }
-
-  get bar() {
-    return `bar-${this.foo}`;
-  }
-
 }
 
-FooBar.register('#different-id');
+function capitalize(str) {
+  return str.replace(/^\w/, c => c.toUpperCase());
+}
+
+class ExampleLink extends Component {
+  render() {
+    let { num, word } = this;
+    this.shadow.innerHTML = ExampleLink.template
+      .replace(/{{(\w+)}}/g, (_, g1) => this[g1]);
+  }
+  get num() {
+    return Number(this.getAttribute('num'));
+  }
+  get word() {
+    return capitalize(convertTens(this.num));
+  }
+  static get template() {
+    return `<a href="tutorial-{{num}}.html">Example {{word}}</a> &mdash; <slot></slot>`;
+  }
+  static get observedAttributes() {
+    return ['num'];
+  }
+}
+
+ExampleLink.register();
 
 </script>
 
