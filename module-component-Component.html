@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FancyPants Component</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="styles/custom.css">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+    <meta name="description" content="A performant JavaScript micro-lib for Custom Elements with reactive updates via dirty tracking">
+    <meta name="twitter:image:src" content="https://raw.githubusercontent.com/sukima/fancy-pants/main/static/images/logo.png" /><meta name="twitter:site" content="@sukima" /><meta name="twitter:card" content="summary" /><meta name="twitter:title" content="FancyPants" /><meta name="twitter:description" content="A performant JavaScript micro-lib for Custom Elements with reactive updates via dirty tracking" />
+    <meta property="og:image" content="https://raw.githubusercontent.com/sukima/fancy-pants/main/static/images/logo.png" /><meta property="og:site_name" content="FancyPants" /><meta property="og:type" content="object" /><meta property="og:title" content="FancyPants" /><meta property="og:url" content="https://github.com/sukima/fancy-pants" /><meta property="og:description" content="A performant JavaScript micro-lib for Custom Elements with reactive updates via dirty tracking" />
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+             
+                <a class="image" href="index.html">
+                    <img src="images/logo.png" alt="logo">
+                </a>
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">FancyPants</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                <div class="dropdown is-hoverable is-right">
+                    <a class="dropdown-trigger link">
+                        Tutorials
+                        <i class="fas fa-chevron-down fa-xs"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-content">
+                        
+                            <a class="dropdown-item" href="tutorial-examples.html">
+                                Examples
+                            </a>
+                        
+                        </div>
+                    </div>
+                </div>
+                
+                 
+                    
+                        <a
+                            class="link user-link "
+                            href="https://github.com/sukima/fancy-pants"
+                        >
+                            Github
+                        </a>
+                    
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-component.html">component</a></li><li><a href="module-renderer.html">renderer</a></li><li><a href="module-tracking.html">tracking</a></li></ul><h3>Classes</h3><ul><li><a href="module-component-Component.html">Component</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Class</p>
+                    <h1>Component</h1>
+                </header>
+                
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>
+            <span class="ancestors"><a href="module-component.html">component</a>~</span>Component<span class="signature">()</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description"><p>This is the main class for using the FancyPants system. When extended it
+will provide easy means for tracking dirty changes and rendering dynamic
+parts of the custom element's DOM. You have access to both a ShadowDOM and
+the HTMLElement itself.</p>
+<p>You don't need to instantiate it yourself as this is done by the insertion
+of the custom element into the DOM.</p>
+<p>Use the <code>.register()</code> method to define the custom
+element and associate a template to the custom element.</p></div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <div class="members">
+                    <div class="member">
+                        <div class=name>
+                            <span class="tag">Constructor</span>
+                        </div>
+                        
+
+
+    
+    <h4 class="name" id="Component">
+        <a class="href-link" href="#Component">#</a>
+        
+        <span class="code-name">
+            
+                new Component<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>Perform any setup in the constructor. This
+is a good place to assign <a href="module-tracking.html#.tracked"><code>tracked()</code></a>
+properties when targeting Mobile Safari browsers.</p>
+<pre class="prettyprint source lang-js"><code>import Component from './fancy-pants/component.js';
+
+class MyComponent extends Component {
+  constructor() {
+    super();
+    this.foobar = tracked();
+  }
+}
+
+MyComponent.register();
+</code></pre>
+<p>If you do not need to support <strong>Mobile Safari</strong> then you can use class
+field syntax instead.</p>
+<pre class="prettyprint source lang-js"><code>class MyComponent extends Component {
+  foobar = tracked();
+}
+</code></pre>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="component.js.html" class="button">View Source</a>
+            <span>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line51">line 51</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        
+    
+    </div>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class='vertical-section'>
+            <h1>Members</h1>
+            <div class="members">
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">string</span>
+
+
+    </span>
+
+<h4 class="name" id=".tagName">
+    <a class="href-link" href="#.tagName">#</a>
+    
+        
+            <span class='tag'>static</span>
+        
+    
+    <span class="code-name">
+        tagName
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <p>Optional tag name. Defaults to a dasherized version of the class name</p>
+<pre class="prettyprint source lang-js"><code>class MyComponent extends Component {
+  static get tagName() {
+    return 'my-alternative-component-tag-name';
+  }
+}
+</code></pre>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="component.js.html" class="button">View Source</a>
+            <span>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line214">line 214</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">string</span>
+
+
+    </span>
+
+<h4 class="name" id=".template">
+    <a class="href-link" href="#.template">#</a>
+    
+        
+            <span class='tag'>static</span>
+        
+    
+    <span class="code-name">
+        template
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <p>Optional string version of the Shadow DOM template.
+Defaults to <code>&lt;slot&gt;&lt;/slot&gt;</code>.</p>
+<pre class="prettyprint source lang-js"><code>class MyComponent extends Component {
+  static get template() {
+    return `&lt;p>lorem ipsum&lt;/p>`;
+  }
+}
+</code></pre>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="component.js.html" class="button">View Source</a>
+            <span>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line232">line 232</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+            </div>
+        </div>
+    
+
+    
+        <div class='vertical-section'>
+            <h1>Methods</h1>
+            <div class="members">
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".register">
+        <a class="href-link" href="#.register">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                register<span class="signature">(templatable<span class="signature-attributes">opt</span>, queryable<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>Call this static method to define the component as a custom element with the browser.</p>
+<pre class="prettyprint source lang-js"><code>class MyComponent extends Component {
+  …
+}
+
+MyComponent.register();
+MyComponent.register('#selector');
+MyComponent.register(myTemplateNode);
+</code></pre>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+            <th>Attributes</th>
+            
+
+            
+            <th>Default</th>
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>templatable</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">HTMLElement</span>
+|
+
+<span class="param-type">string</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last"><p>optional template element or selector</p></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>queryable</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Queryable</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          document
+      
+      </td>
+  
+
+  <td class="description last"><p>optional scope for the template selector</p></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="component.js.html" class="button">View Source</a>
+            <span>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line187">line 187</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="attributeChangedCallback">
+        <a class="href-link" href="#attributeChangedCallback">#</a>
+        
+        <span class="code-name">
+            
+                attributeChangedCallback<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>This will auto-track any attributes listed in <code>observedAttributes</code>.</p>
+<pre class="prettyprint source lang-js"><code>class MyComponent extends Component {
+  static get observedAttributes() {
+    return ['foo', 'bar'];
+  }
+}
+</code></pre>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="component.js.html" class="button">View Source</a>
+            <span>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line149">line 149</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="connectedCallback">
+        <a class="href-link" href="#connectedCallback">#</a>
+        
+        <span class="code-name">
+            
+                connectedCallback<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>Here is a good place to add event listeners to the DOM.
+Activates tracking and registers this component instance with the renderer.
+First render is scheduled after this callback.</p>
+<pre class="prettyprint source lang-js"><code>class MyComponent extends Component {
+  connectedCallback() {
+    super.connectedCallback();
+    this.clickHandler = () => this.doSomething();
+    this.shadow.querySelector('button')
+      .addEventListener('click', this.clickHandler);
+  }
+}
+</code></pre>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="component.js.html" class="button">View Source</a>
+            <span>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line114">line 114</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="disconnectedCallback">
+        <a class="href-link" href="#disconnectedCallback">#</a>
+        
+        <span class="code-name">
+            
+                disconnectedCallback<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>Here is a good place to remove event listeners to the DOM.
+Removes this component instance from the renderer.</p>
+<pre class="prettyprint source lang-js"><code>class MyComponent extends Component {
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.shadow.querySelector('button')
+      .removeEventListener('click', this.clickHandler);
+  }
+}
+</code></pre>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="component.js.html" class="button">View Source</a>
+            <span>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line134">line 134</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="render">
+        <a class="href-link" href="#render">#</a>
+        
+        <span class="code-name">
+            
+                render<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>When this component needs to render this function will be called.</p>
+<pre class="prettyprint source lang-js"><code>class MyComponent extends Component {
+  render() {
+    this.shadow.querySelector('.foo').textContent = this.foobar;
+  }
+}
+</code></pre>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="component.js.html" class="button">View Source</a>
+            <span>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line169">line 169</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+            </div>
+        </div>
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>
