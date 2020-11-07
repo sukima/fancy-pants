@@ -1,0 +1,258 @@
+<h2 class="[ tutorial ] [ subtitle ]">
+  Iteration with tracked tabular data
+</h2>
+
+<script type="module" src="./scripts/example-source.js"></script>
+
+<example-source lang="html">
+
+<fruit-creator></fruit-creator>
+<fruit-table></fruit-table>
+
+</example-source>
+
+<!-- FruitTable {{{1 -->
+<h3>FruitTable Component</h3>
+
+<example-source lang="javascriot" strip-script>
+
+<script type="module">
+
+import Component from './fancy-pants/component.js';
+import { activateTracking, memoizeFunction, tracked } from './fancy-pants/tracking.js';
+
+class FruitTable extends Component {
+
+  constructor() {
+    super();
+    this.fruitManager = tracked({ fruits: [] });
+    this.renderHelpers = new WeakMap();
+  }
+
+  registerFruitManager(manager) {
+    this.fruitManager = manager;
+  }
+
+  render() {
+    this.renderTableRows();
+    this.updateRenderHelpers();
+  }
+
+  renderTableRows() {
+    let { fruitManager: { fruits } } = this;
+    let frag = document.createDocumentFragment();
+    for (let fruit of fruits) {
+      frag.appendChild(this.makeFruitRow(fruit));
+    }
+    if (fruits.length === 0) {
+      frag.appendChild(this.makeEmptyRow());
+    }
+    let tbody = this.shadow.querySelector('tbody');
+    tbody.innerHTML = '';
+    tbody.appendChild(frag);
+  }
+
+  updateRenderHelpers() {
+    this.shadow.querySelectorAll('tbody *')
+      .forEach(e => this.renderHelpers.get(e)?.(e));
+  }
+
+  updateRow(fruit, row) {
+    row.querySelector('.name').textContent = fruit.name;
+    row.querySelector('.count').textContent = fruit.count;
+  }
+
+  makeRow(template) {
+    let row = document.createElement('tr');
+    row.className = '[ fruit-table ] [ fruit-row ]';
+    row.innerHTML = template;
+    return row;
+  }
+
+  makeFruitRow(fruit) {
+    let row = this.makeRow(FruitTable.rowTemplate);
+    row.addEventListener('click', e => this.handleAction(e, fruit));
+    this.renderHelpers.set(row, memoizeFunction(e => this.updateRow(fruit, e)));
+    return row;
+  }
+
+  makeEmptyRow() {
+    return this.makeR(FruitTable.emptyTemplate);
+  }
+
+  handleAction(event, fruit) {
+    const { max } = Math;
+    let { action } = event.target.dataset;
+    switch (action) {
+      case 'remove':
+        this.fruitManager.remove(fruit);
+        break;
+      case 'inc':
+        fruit.count++;
+        break;
+      case 'dec':
+        fruit.count = max(0, --fruit.count);
+        break;
+      default: return;
+    }
+    event.stopPropagation();
+  }
+
+  static get rowTemplate() {
+    return `
+      <td class="[ fruit-table ] [ name ]"></td>
+      <td class="[ fruit-table ] [ count ]"></td>
+      <td class="[ fruit-table ] [ actions ]">
+        <button
+          type="button"
+          data-action="dec"
+          aria-label="Increase count"
+          title="Increase count"
+        >&minus;</button>
+        <button
+          type="button"
+          data-action="inc"
+          aria-label="Decrease count"
+          title="Decrease count"
+        >&plus;</button>
+        <button
+          type="button"
+          data-action="remove"
+          aria-label="Remove fruit entry"
+          title="Remove fruit entry"
+        >&cross;</button>
+      </td>
+    `;
+  }
+
+  static get emptyTemplate() {
+    return `
+      <td class="[ fruit-table ] [ empty ] [ centered ]" colspan="2">
+        There are no fruits
+      </td>
+    `;
+  }
+
+  static get template() {
+    return `
+      <style>
+      .centered { text-align: center; }
+      </style>
+      <table class="[ fruit-table ]">
+        <thead>
+          <tr>
+            <th>Fruit name</th>
+            <th>Quantity</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    `;
+  }
+
+}
+FruitTable.register();
+
+</script>
+
+</example-source>
+
+<!-- FruitCreator {{{1 -->
+<h3>FruitCreator Component</h3>
+
+<example-source lang="javascriot" strip-script>
+
+<script type="module">
+
+import Component from './fancy-pants/component.js';
+
+class FruitCreator extends Component {
+  constructor() {
+    super();
+    this.shadow.querySelector('form')
+      .addEventListener('submit', e => this.onSubmit(e));
+  }
+  registerFruitManager(manager) {
+    this.fruitManager = manager;
+  }
+  onSubmit(event) {
+    event.preventDefault();
+    let form = event.target;
+    if (!form.reportValidity()) { return; }
+    this.addNewFruit(new FormData(form));
+    form.reset();
+    form.elements.namedItem('name').focus();
+  }
+  addNewFruit(formData) {
+    this.fruitManager.add({
+      name: formData.get('name'),
+      count: formData.get('count')
+    });
+  }
+  static get template() {
+    return `
+      <form>
+        <fieldset>
+          <legend>Add new fruit entry</legend>
+          <label for="name">Fruit name</label>
+          <input id="name" name="name" minlength="3" required>
+          <label for="count">Quantity</label>
+          <input id="count" name="count" type="number" min="0" required>
+          <button type="submit">Add fruit</button>
+        </fieldset>
+      </form>
+    `;
+  }
+}
+FruitCreator.register();
+
+</script>
+
+</example-source>
+
+<!-- Application {{{1 -->
+<h3>Application</h3>
+
+<example-source lang="javascriot" strip-script>
+
+<script type="module">
+
+import Component from './fancy-pants/component.js';
+import { activateTracking, tracked } from './fancy-pants/tracking.js';
+
+class Fruit {
+  constructor({ name, count }) {
+    this.name = tracked(name);
+    this.count = tracked(count);
+    activateTracking(this);
+  }
+}
+
+class FruitManager {
+  constructor() {
+    this.fruits = tracked(new Set());
+    activateTracking(this);
+  }
+  add(data) {
+    this.fruits = new Set([...this.fruits, new Fruit(data)]);
+  }
+  remove(fruit) {
+    this.fruits.delete(fruit);
+    this.fruits = this.fruits;
+  }
+}
+
+const fruitManager = new FruitManager();
+fruitManager.add({ name: 'Apples', count: 10 });
+fruitManager.add({ name: 'Oranges', count: 20 });
+[
+  ...document.querySelectorAll('fruit-creator'),
+  ...document.querySelectorAll('fruit-table')
+].forEach(t => t.registerFruitManager(fruitManager));
+
+</script>
+
+</example-source>
+
+<!-- vim:set fdm=marker: }}}1 -->
