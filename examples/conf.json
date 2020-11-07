@@ -1,30 +1,30 @@
 {
-  "examples": {
+  "90-examples": {
     "title": "Examples",
-    "children": ["1", "2", "3", "4", "5", "6", "7", "8"]
+    "children": ["example1", "example2", "example3", "example4", "example5", "example6", "example7", "example8"]
   },
-  "1": {
+  "example1": {
     "title": "Example One"
   },
-  "2": {
+  "example2": {
     "title": "Example Two"
   },
-  "3": {
+  "example3": {
     "title": "Example Three"
   },
-  "4": {
+  "example4": {
     "title": "Example Four"
   },
-  "5": {
+  "example5": {
     "title": "Example Five"
   },
-  "6": {
+  "example6": {
     "title": "Example Six"
   },
-  "7": {
+  "example7": {
     "title": "Example Seven"
   },
-  "8": {
+  "example8": {
     "title": "Example Eight"
   }
 }

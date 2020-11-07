@@ -55,7 +55,7 @@ class ExampleLink extends Component {
     return capitalize(convertTens(this.num));
   }
   static get template() {
-    return `<a href="tutorial-{{num}}.html">Example {{word}}</a> &mdash; <slot></slot>`;
+    return `<a href="tutorial-example{{num}}.html">Example {{word}}</a> &mdash; <slot></slot>`;
   }
   static get observedAttributes() {
     return ['num'];
