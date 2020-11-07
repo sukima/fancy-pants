@@ -1,4 +1,4 @@
-import Component from '../fancy-pants/component.js';
+import Component from '../component.js';
 
 class ExampleSource extends Component {
   constructor() {

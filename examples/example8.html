@@ -18,8 +18,8 @@
 
 <script type="module">
 
-import Component from './fancy-pants/component.js';
-import { activateTracking, memoizeFunction, tracked } from './fancy-pants/tracking.js';
+import Component from './component.js';
+import { activateTracking, memoizeFunction, tracked } from './tracking.js';
 
 class FruitTable extends Component {
 
@@ -165,7 +165,7 @@ FruitTable.register();
 
 <script type="module">
 
-import Component from './fancy-pants/component.js';
+import Component from './component.js';
 
 class FruitCreator extends Component {
   constructor() {
@@ -218,8 +218,8 @@ FruitCreator.register();
 
 <script type="module">
 
-import Component from './fancy-pants/component.js';
-import { activateTracking, tracked } from './fancy-pants/tracking.js';
+import Component from './component.js';
+import { activateTracking, tracked } from './tracking.js';
 
 class Fruit {
   constructor({ name, count }) {

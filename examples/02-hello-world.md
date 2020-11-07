@@ -14,7 +14,7 @@ system.
 ```
 
 ```js
-import Component from '../fancy-pants/component.js';
+import Component from '../component.js';
 
 class HelloWorld extends Component {
   render() {

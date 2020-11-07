@@ -8,7 +8,7 @@
   "scripts": {
     "start": "serve docs",
     "docs": "jsdoc -r -c jsdoc.json lib",
-    "lint:js": "eslint lib/fancy-pants/*.js",
+    "lint:js": "eslint lib/*.js",
     "deploy": "yarn lint:js && yarn docs && gh-pages -d docs",
     "watch": "find lib examples static jsdoc.json -type f | entr yarn docs"
   },
