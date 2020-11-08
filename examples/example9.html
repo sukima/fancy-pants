@@ -7,6 +7,9 @@
   [data-selected=true] {
     background-color: lightgrey;
   }
+  caption {
+    text-align: right;
+  }
 </style>
 
 <h2 class="[ tutorial ] [ subtitle ]">
@@ -193,7 +196,14 @@ class DownloadButton extends Component {
     this.shadow.querySelector('button').disabled = disabled;
   }
   static get template() {
-    return '<button type="button">Download data</button>';
+    return `
+      <style>
+      button {
+        font-size: 1.2rem;
+      }
+      </style>
+      <button type="button">Download data</button>
+    `;
   }
 }
 DownloadButton.register();
