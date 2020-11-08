@@ -5,6 +5,9 @@
   "02-hello-world": {
     "title": "Hello World"
   },
+  "03-selectable-table": {
+    "title": "Practical Use Case"
+  },
   "90-examples": {
     "title": "Examples",
     "children": ["example1", "example2", "example3", "example4", "example5", "example6", "example7", "example8", "example9"]
