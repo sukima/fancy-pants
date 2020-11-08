@@ -1,0 +1,203 @@
+<script type="module" src="./scripts/example-source.js"></script>
+
+<style>
+  table {
+    margin-bottom: 2rem;
+  }
+  [data-selected=true] {
+    background-color: lightgrey;
+  }
+</style>
+
+<h2 class="[ tutorial ] [ subtitle ]">
+  Selectable table
+</h2>
+
+<example-source lang="html">
+
+<selectable-data>
+  <table>
+    <caption><download-button></download-button></caption>
+    <thead>
+      <tr>
+        <td><select-all></select-all></td>
+        <td>Name</td>
+        <td>Count</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr itemscope>
+        <td><input type="checkbox"></td>
+        <td itemprop="name">Alice</td>
+        <td itemprop="count">4</td>
+      </tr>
+      <tr itemscope>
+        <td><input type="checkbox"></td>
+        <td itemprop="name">Bob</td>
+        <td itemprop="count">9</td>
+      </tr>
+      <tr itemscope>
+        <td><input type="checkbox"></td>
+        <td itemprop="name">Charlie</td>
+        <td itemprop="count">12</td>
+      </tr>
+      <tr itemscope>
+        <td><input type="checkbox"></td>
+        <td itemprop="name">Zoë</td>
+        <td itemprop="count">35</td>
+      </tr>
+    </tbody>
+  </table>
+</selectable-data>
+
+</example-source>
+
+<h3>SelectableData</h3>
+
+<example-source lang="javascript" strip-script>
+
+<script type="module">
+
+import Component from './component.js';
+import { activateTracking, tracked } from './tracking.js';
+
+class SelectableData extends Component {
+  constructor() {
+    super();
+    this.dataFrom = new WeakMap();
+    this.data = tracked(this.getInitialData());
+    this.querySelectorAll('tbody [itemscope]').forEach(i => {
+      i.addEventListener('click', e => this.setChecked(e.currentTarget));
+    });
+  }
+  connectedCallback() {
+    super.connectedCallback();
+    this.querySelector('select-all').selectionData = this.data;
+    this.querySelector('download-button').selectionData = this.data;
+  }
+  setChecked(item) {
+    let data = this.dataFrom.get(item);
+    data.isChecked = !data.isChecked;
+  }
+  getInitialData() {
+    let entries = [];
+    let items = this.querySelectorAll('tbody [itemscope]');
+    for (let item of items) {
+      let data = this.getItemData(item);
+      entries.push(data);
+      this.dataFrom.set(item, data);
+    }
+    return entries;
+  }
+  getItemData(item) {
+    let entries = [...item.querySelectorAll('[itemprop]')].map(propNode => {
+      return [propNode.getAttribute('itemprop'), propNode.textContent];
+    });
+    let checked = item.querySelector('input[type=checkbox]').checked;
+    return activateTracking(
+      Object.fromEntries([...entries, ['isChecked', tracked(checked)]])
+    );
+  }
+  render() {
+    let domItems = this.querySelectorAll('tbody [itemscope]')[Symbol.iterator]();
+    for (let entry of this.data) {
+      let item = domItems.next().value;
+      item.dataset.selected = entry.isChecked;
+      item.querySelector('input[type=checkbox]').checked = entry.isChecked;
+    }
+  }
+}
+SelectableData.register();
+
+</script>
+
+</example-source>
+
+<h3>SelectAll</h3>
+
+<example-source lang="javascript" strip-script>
+
+<script type="module">
+
+import Component from './component.js';
+import { tracked } from './tracking.js';
+
+class SelectAll extends Component {
+  constructor() {
+    super();
+    this.selectionData = tracked(this.selectionData);
+    this.shadow.querySelector('#select-all').addEventListener('change', e => {
+      e.preventDefault();
+      this.toggleAll()
+    });
+  }
+  toggleAll() {
+    let { state, selectionData } = this;
+    let selectAll = !state.isAll;
+    for (let item of selectionData) {
+      item.isChecked = selectAll;
+    }
+  }
+  render() {
+    let { state, shadow } = this;
+    let label = shadow.querySelector('[for=select-all]');
+    let checkbox = shadow.querySelector('#select-all');
+    label.textContent = state.isAll ? 'Select none' : 'Select all';
+    checkbox.checked = !state.isNone;
+    checkbox.indeterminate = state.isIndeterminate;
+  }
+  get state() {
+    let indeterminateCheck = new Set(this.selectionData.map(i => i.isChecked));
+    let isIndeterminate = indeterminateCheck.size > 1;
+    let isAll = !isIndeterminate && indeterminateCheck.has(true);
+    let isNone = !isIndeterminate && indeterminateCheck.has(false);
+    return { isAll, isNone, isIndeterminate };
+  }
+  static get template() {
+    return `
+      <input type="checkbox" id="select-all">
+      <label for="select-all">Select all</label>
+    `;
+  }
+}
+SelectAll.register();
+
+</script>
+
+</example-source>
+
+<h3>DownloadButton</h3>
+
+<example-source lang="javascript" strip-script>
+
+<script type="module">
+
+import Component from './component.js';
+import { tracked } from './tracking.js';
+
+class DownloadButton extends Component {
+  constructor() {
+    super();
+    this.selectionData = tracked(this.selectionData);
+    this.shadow.querySelector('button')
+      .addEventListener('click', () => this.download());
+  }
+  download() {
+    let selected = this.selectionData
+      .filter(i => i.isChecked)
+      .map(i => i.name);
+    alert(`Selected: ${selected.join(', ')}`);
+  }
+  render() {
+    let disabled = this.selectionData.every(i => !i.isChecked);
+    this.shadow.querySelector('button').disabled = disabled;
+  }
+  static get template() {
+    return '<button type="button">Download data</button>';
+  }
+}
+DownloadButton.register();
+
+</script>
+
+</example-source>

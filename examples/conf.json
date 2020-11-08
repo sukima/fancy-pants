@@ -7,7 +7,7 @@
   },
   "90-examples": {
     "title": "Examples",
-    "children": ["example1", "example2", "example3", "example4", "example5", "example6", "example7", "example8"]
+    "children": ["example1", "example2", "example3", "example4", "example5", "example6", "example7", "example8", "example9"]
   },
   "example1": {
     "title": "Example One"
@@ -32,5 +32,8 @@
   },
   "example8": {
     "title": "Example Eight"
+  },
+  "example9": {
+    "title": "Example Nine"
   }
 }
