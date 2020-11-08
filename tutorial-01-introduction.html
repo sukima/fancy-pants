@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FancyPants component</title>
+  <title>FancyPants Introduction</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -105,262 +105,143 @@
 </div>
     <div id="main">
         <div
-            class="sidebar "
+            class="sidebar tutorials"
             id="sidebarNav"
         >
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-component.html">component</a></li><li><a href="module-renderer.html">renderer</a></li><li><a href="module-tracking.html">tracking</a></li></ul><h3>Classes</h3><ul><li><a href="module-component-Component.html">Component</a></li></ul></div>
+                    <div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-01-introduction.html">Introduction</a></li><li><a href="tutorial-02-hello-world.html">Hello World</a></li><li><a href="tutorial-90-examples.html">Examples</a><ul><li><a href="tutorial-example1.html">Example One</a></li><li><a href="tutorial-example2.html">Example Two</a></li><li><a href="tutorial-example3.html">Example Three</a></li><li><a href="tutorial-example4.html">Example Four</a></li><li><a href="tutorial-example5.html">Example Five</a></li><li><a href="tutorial-example6.html">Example Six</a></li><li><a href="tutorial-example7.html">Example Seven</a></li><li><a href="tutorial-example8.html">Example Eight</a></li><li><a href="tutorial-example9.html">Example Nine</a></li></ul></li></ul></div>
                 
             </nav>
         </div>
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p>Module</p>
-                    <h1>component</h1>
+                    <p>Tutorial</p>
+                    <h1>Introduction</h1>
                 </header>
-                
-
-
-
-
-<section>
-
-<header>
-    
-        
-    
-</header>
+                <section>
 
 <article>
-    <div class="container-overview">
-    
-        
-
-        
-    
-    </div>
-    
-    
-
-    
-
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="module-component-Component.html">Component</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <div class='vertical-section'>
-            <h1>Methods</h1>
-            <div class="members">
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="~componentOf">
-        <a class="href-link" href="#~componentOf">#</a>
-        
-            
-                <span class='tag'>inner</span>
-            
-        
-        <span class="code-name">
-            
-                componentOf<span class="signature">(ElementClass)</span><span class="type-signature"></span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        <p>Construct a Component class that extends from a specific kind of HTMLElement.
-Use this if you want a custom element to work like a Component but extend
-from a more specific type.</p>
-<pre class="prettyprint source lang-js"><code>import { componentOf } from './fancy-pants/component.js';
-
-class MyComponent extends componentOf(HTMLParagraphElement) {
-  …
+    <h2>A refresher (crash) course on custom elements</h2>
+<ul>
+<li>Custom elements must have at least one dash in their names</li>
+<li>Custom elements are inert in HTML until <code>customElements.define(…)</code> in JavaScript</li>
+<li>Custom elements are JavaScript classes extended from <code>HTMLElement</code> or a descendent of one</li>
+<li>Custom elements have several life cycle hooks</li>
+<li>Custom elements can either sandbox their content (ShadowDOM) or directly manipulate the document</li>
+<li>Custom elements can use a ShadowDOM to (sort of) inject content into their own sandbox</li>
+<li>Templating, if any, is on the developer to implement</li>
+<li>Updating (re-rendering) is also on the developer to implement</li>
+</ul>
+<p>The descriptions above got a little weird near the end of that list. That is
+because custom elements focus on one job and leave the pretty packaging to the
+developer to invent. This leaves far too much room for interpretation on the
+student when learning about custom elements. In fact I myself am still trying
+to wrap my head around them. Which is likely a reason why they haven't gain
+wide spread popularity like React did.</p>
+<p>In the end though depending on the scale of your project custom elements might
+be just enough to help without needing a huge framework to work around them.</p>
+<p>FancyPants sits in the middle between the bare metal of the browsers' API and
+helping remove the boiler plate of re-running update code in a performant
+manor.</p>
+<h3>Hello World — Vanilla code</h3>
+<p>First we can just plunk down a custom element into the HTML and it remains
+inert.</p>
+<pre class="prettyprint source lang-html"><code>&lt;hello-world>&lt;/hello-world>
+</code></pre>
+<p>In the JS we will make a simple hello world custom element definition:</p>
+<pre class="prettyprint source lang-js"><code>class HelloWorld extends HTMLElement {
+  constructor() {
+    super();
+    this.textContent = 'Hello World';
+  }
 }
 
-MyComponent.register();
+customElements.define('hello-world', HelloWorld);
 </code></pre>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>ElementClass</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">HTMLElement</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>the HTMLElement the component class will extend from</p></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="component.js.html" class="button">View Source</a>
-            <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line37">line 37</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'><p>Component a FancyPants component that extends from ElementClass</p></div>
-    
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-            </div>
-        </div>
-    
-
-    
-
-    
+<p>You can manipulate the child DOM nodes on your own or you could also scope the
+DOM into a ShadowDOM which lets you scope things like CSS and IDs. Basically
+a sand boxed setup.</p>
+<pre class="prettyprint source lang-js"><code>class HelloWorld extends HTMLElement {
+  constructor() {
+    super();
+    this.shadow = this.attachShadow({ mode: 'open' });
+    this.shadow.innerHTML = `
+      &lt;style>
+      span { background-color: #bada55; }
+      &lt;/style>
+      &lt;span>Hello World&lt;/span>
+    `;
+  }
+}
+
+customElements.define('hello-world', HelloWorld);
+</code></pre>
+<p>A smell of placing a style on a global tag name like this might raise a flag
+but in this example it is safe because the style is scoped to the ShadowDOM.</p>
+<p>How about we add some dynamic content.</p>
+<pre class="prettyprint source lang-js"><code>class HelloWorld extends HTMLElement {
+  constructor() {
+    super();
+    this.shadow = this.attachShadow({ mode: 'open' });
+    this.shadow.innerHTML = `
+      &lt;style>
+      span { background-color: #bada55; }
+      &lt;/style>
+      &lt;span>Hello ${this.name}&lt;/span>
+    `;
+  }
+  get name() {
+    return this.getAttribute('name') || 'World';
+  }
+}
+
+customElements.define('hello-world', HelloWorld);
+</code></pre>
+<pre class="prettyprint source lang-html"><code>&lt;hello-world name=&quot;Alice&quot;>&lt;/hello-world>
+</code></pre>
+<p>You might also notice the use of <code>innerHTML</code> which in this case would very
+quickly get out of control as the component scales. We could move this to
+a <code>&lt;template&gt;</code> tag for easier maintenance but this introduces the task of
+updating the DOM instead of using string interpolation</p>
+<p>Also if we enable observing the attribute changes we will also need a way to
+re-render the dynamic content.</p>
+<pre class="prettyprint source lang-js"><code>class HelloWorld extends HTMLElement {
+  constructor() {
+    super();
+    this.shadow = this.attachShadow({ mode: 'open' });
+    this.render();
+  }
+  attributeChangedCallback() {
+    this.render();
+  }
+  render() {
+    this.shadow.innerHTML = `
+      &lt;style>
+      span { background-color: #bada55; }
+      &lt;/style>
+      &lt;span>Hello ${this.name}&lt;/span>
+    `;
+  }
+  get name() {
+    return this.getAttribute('name') || 'World';
+  }
+  static get observedAttributes() {
+    return ['name'];
+  }
+}
+
+customElements.define('hello-world', HelloWorld);
+</code></pre>
+<p>Hopefully this gave a general idea on what they are and perhaps see how
+FancyPants can help with this process by managing how we trigger and manage
+re-renders of dynamic content.</p>
+<p>For more information you can see the <a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements">MDN Reference</a> on custom elements.</p>
 </article>
 
 </section>
-
-
-
 
             </div>
             

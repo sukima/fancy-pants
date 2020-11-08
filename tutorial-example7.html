@@ -72,7 +72,15 @@
                     <div class="dropdown-menu">
                         <div class="dropdown-content">
                         
-                            <a class="dropdown-item" href="tutorial-examples.html">
+                            <a class="dropdown-item" href="tutorial-01-introduction.html">
+                                Introduction
+                            </a>
+                        
+                            <a class="dropdown-item" href="tutorial-02-hello-world.html">
+                                Hello World
+                            </a>
+                        
+                            <a class="dropdown-item" href="tutorial-90-examples.html">
                                 Examples
                             </a>
                         
@@ -103,7 +111,7 @@
             
             <nav>
                 
-                    <div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-examples.html">Examples</a><ul><li><a href="tutorial-1.html">Example One</a></li><li><a href="tutorial-2.html">Example Two</a></li><li><a href="tutorial-3.html">Example Three</a></li><li><a href="tutorial-4.html">Example Four</a></li><li><a href="tutorial-5.html">Example Five</a></li><li><a href="tutorial-6.html">Example Six</a></li><li><a href="tutorial-7.html">Example Seven</a></li></ul></li></ul></div>
+                    <div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-01-introduction.html">Introduction</a></li><li><a href="tutorial-02-hello-world.html">Hello World</a></li><li><a href="tutorial-90-examples.html">Examples</a><ul><li><a href="tutorial-example1.html">Example One</a></li><li><a href="tutorial-example2.html">Example Two</a></li><li><a href="tutorial-example3.html">Example Three</a></li><li><a href="tutorial-example4.html">Example Four</a></li><li><a href="tutorial-example5.html">Example Five</a></li><li><a href="tutorial-example6.html">Example Six</a></li><li><a href="tutorial-example7.html">Example Seven</a></li><li><a href="tutorial-example8.html">Example Eight</a></li><li><a href="tutorial-example9.html">Example Nine</a></li></ul></li></ul></div>
                 
             </nav>
         </div>
@@ -116,7 +124,10 @@
                 <section>
 
 <article>
-    <!-- Example Head {{{1 -->
+    <h2 class="[ tutorial ] [ subtitle ]">
+  Emoji randomizer (performance example)
+</h2>
+
 <style>
   :root {
     --emoji-size: 26px;
@@ -135,8 +146,8 @@
 <!-- FPS Meter {{{1 -->
 <script type="module">
 
-import Component from './fancy-pants/component.js';
-import { tracked } from './fancy-pants/tracking.js';
+import Component from './component.js';
+import { tracked } from './tracking.js';
 
 class FpsMeter extends Component {
   constructor() {
@@ -246,8 +257,8 @@ document.querySelector('#emojiCount')
 
 <script type="module">
 
-import Component from './fancy-pants/component.js';
-import { tracked } from './fancy-pants/tracking.js';
+import Component from './component.js';
+import { tracked } from './tracking.js';
 import { EMOJIS } from './scripts/emojis.js';
 
 const FRAME_DELAY = 100;
@@ -358,8 +369,8 @@ BlinknLights.register();
 
 <script type="module">
 
-import Component from './fancy-pants/component.js';
-import { tracked } from './fancy-pants/tracking.js';
+import Component from './component.js';
+import { tracked } from './tracking.js';
 import { EMOJIS } from './scripts/emojis.js';
 
 class BlinknLight extends Component {
@@ -386,7 +397,7 @@ BlinknLight.register();
 
 <script type="module">
 
-import Component from './fancy-pants/component.js';
+import Component from './component.js';
 
 class PlayPauseButton extends Component {
   connectedCallback() {

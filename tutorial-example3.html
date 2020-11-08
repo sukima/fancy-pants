@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FancyPants Example Six</title>
+  <title>FancyPants Example Three</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -72,7 +72,15 @@
                     <div class="dropdown-menu">
                         <div class="dropdown-content">
                         
-                            <a class="dropdown-item" href="tutorial-examples.html">
+                            <a class="dropdown-item" href="tutorial-01-introduction.html">
+                                Introduction
+                            </a>
+                        
+                            <a class="dropdown-item" href="tutorial-02-hello-world.html">
+                                Hello World
+                            </a>
+                        
+                            <a class="dropdown-item" href="tutorial-90-examples.html">
                                 Examples
                             </a>
                         
@@ -103,7 +111,7 @@
             
             <nav>
                 
-                    <div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-examples.html">Examples</a><ul><li><a href="tutorial-1.html">Example One</a></li><li><a href="tutorial-2.html">Example Two</a></li><li><a href="tutorial-3.html">Example Three</a></li><li><a href="tutorial-4.html">Example Four</a></li><li><a href="tutorial-5.html">Example Five</a></li><li><a href="tutorial-6.html">Example Six</a></li><li><a href="tutorial-7.html">Example Seven</a></li></ul></li></ul></div>
+                    <div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-01-introduction.html">Introduction</a></li><li><a href="tutorial-02-hello-world.html">Hello World</a></li><li><a href="tutorial-90-examples.html">Examples</a><ul><li><a href="tutorial-example1.html">Example One</a></li><li><a href="tutorial-example2.html">Example Two</a></li><li><a href="tutorial-example3.html">Example Three</a></li><li><a href="tutorial-example4.html">Example Four</a></li><li><a href="tutorial-example5.html">Example Five</a></li><li><a href="tutorial-example6.html">Example Six</a></li><li><a href="tutorial-example7.html">Example Seven</a></li><li><a href="tutorial-example8.html">Example Eight</a></li><li><a href="tutorial-example9.html">Example Nine</a></li></ul></li></ul></div>
                 
             </nav>
         </div>
@@ -111,16 +119,27 @@
             <div class="content">
                 <header class="page-title">
                     <p>Tutorial</p>
-                    <h1>Example Six</h1>
+                    <h1>Example Three</h1>
                 </header>
                 <section>
 
 <article>
     <script type="module" src="./scripts/example-source.js"></script>
 
+<h2 class="[ tutorial ] [ subtitle ]">
+  HTML <code>&lt;template&gt;</code> with hardcoded ID
+</h2>
+
 <example-source lang="html">
 
-<my-custom-element></my-custom-element>
+<p><foo-bar></foo-bar></p>
+<p><foo-bar></foo-bar></p>
+
+<template id="different-id">
+  <button class="go">+1</button>
+  <output class="foo"></output>
+  <output class="bar"></output>
+</template>
 
 </example-source>
 
@@ -128,37 +147,30 @@
 
 <script type="module">
 
-import Component from './fancy-pants/component.js';
-import { tracked } from './fancy-pants/tracking.js';
+import Component from './component.js';
+import { tracked } from './tracking.js';
 
-class MyCustomElement extends Component {
+class FooBar extends Component {
 
   constructor() {
     super();
-    this.count = tracked(0);
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-    this.timer = setInterval(() => this.count++, 1000);
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    clearInterval(this.timer);
+    this.foo = tracked(0);
+    this.shadow.querySelector('.go')
+      .addEventListener('click', () => { this.foo += 1 });
   }
 
   render() {
-    this.shadow.querySelector('output').value = this.count;
+    this.shadow.querySelector('.foo').value = this.foo;
+    this.shadow.querySelector('.bar').value = this.bar;
   }
 
-  static get template() {
-    return `<span>Counter: <output></output></span>`;
+  get bar() {
+    return `bar-${this.foo}`;
   }
 
 }
 
-MyCustomElement.register();
+FooBar.register('#different-id');
 
 </script>
 

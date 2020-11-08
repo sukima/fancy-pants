@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FancyPants component</title>
+  <title>FancyPants Hello World</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -105,262 +105,133 @@
 </div>
     <div id="main">
         <div
-            class="sidebar "
+            class="sidebar tutorials"
             id="sidebarNav"
         >
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-component.html">component</a></li><li><a href="module-renderer.html">renderer</a></li><li><a href="module-tracking.html">tracking</a></li></ul><h3>Classes</h3><ul><li><a href="module-component-Component.html">Component</a></li></ul></div>
+                    <div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-01-introduction.html">Introduction</a></li><li><a href="tutorial-02-hello-world.html">Hello World</a></li><li><a href="tutorial-90-examples.html">Examples</a><ul><li><a href="tutorial-example1.html">Example One</a></li><li><a href="tutorial-example2.html">Example Two</a></li><li><a href="tutorial-example3.html">Example Three</a></li><li><a href="tutorial-example4.html">Example Four</a></li><li><a href="tutorial-example5.html">Example Five</a></li><li><a href="tutorial-example6.html">Example Six</a></li><li><a href="tutorial-example7.html">Example Seven</a></li><li><a href="tutorial-example8.html">Example Eight</a></li><li><a href="tutorial-example9.html">Example Nine</a></li></ul></li></ul></div>
                 
             </nav>
         </div>
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p>Module</p>
-                    <h1>component</h1>
+                    <p>Tutorial</p>
+                    <h1>Hello World</h1>
                 </header>
-                
-
-
-
-
-<section>
-
-<header>
-    
-        
-    
-</header>
+                <section>
 
 <article>
-    <div class="container-overview">
-    
-        
+    <p>Like before we can make a simple Hello World example using the FancyPants
+system.</p>
+<pre class="prettyprint source lang-html"><code>&lt;select>
+  &lt;option value=&quot;&quot;>-- Pick One --&lt;/option>
+  &lt;option value=&quot;Jane&quot;>Jane&lt;/option>
+  &lt;option value=&quot;Alice&quot;>Alice&lt;/option>
+  &lt;option value=&quot;Bob&quot;>Bob&lt;/option>
+  &lt;option value=&quot;Charlie&quot;>Charlie&lt;/option>
+&lt;/select>
 
-        
-    
-    </div>
-    
-    
+&lt;hello-world>&lt;/hello-world>
+</code></pre>
+<pre class="prettyprint source lang-js"><code>import Component from '../component.js';
 
-    
-
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="module-component-Component.html">Component</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <div class='vertical-section'>
-            <h1>Methods</h1>
-            <div class="members">
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="~componentOf">
-        <a class="href-link" href="#~componentOf">#</a>
-        
-            
-                <span class='tag'>inner</span>
-            
-        
-        <span class="code-name">
-            
-                componentOf<span class="signature">(ElementClass)</span><span class="type-signature"></span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        <p>Construct a Component class that extends from a specific kind of HTMLElement.
-Use this if you want a custom element to work like a Component but extend
-from a more specific type.</p>
-<pre class="prettyprint source lang-js"><code>import { componentOf } from './fancy-pants/component.js';
-
-class MyComponent extends componentOf(HTMLParagraphElement) {
-  …
+class HelloWorld extends Component {
+  render() {
+    this.shadow.innerHTML = `
+      &lt;style>
+      span { background-color: #bada55; }
+      &lt;/style>
+      &lt;span>Hello ${this.name}&lt;/span>
+    `;
+  }
+  get name() {
+    return this.getAttribute('name') || 'World';
+  }
+  static get observedAttributes() {
+    return ['name'];
+  }
 }
 
-MyComponent.register();
+HelloWorld.register();
+
+document.querySelector('select').addEventListener('change', e => {
+  document.querySelector('hello-world').setAttribute('name', e.target.value);
+});
 </code></pre>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>ElementClass</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">HTMLElement</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>the HTMLElement the component class will extend from</p></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="component.js.html" class="button">View Source</a>
-            <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line37">line 37</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'><p>Component a FancyPants component that extends from ElementClass</p></div>
-    
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-            </div>
-        </div>
-    
-
-    
-
-    
+<p>In this example the re-rendering or update dynamic content is driven by the
+<code>setAttribute()</code> which is tracked and when it changes it will ask the rendering
+engine to run the component's <code>render()</code> function. In this case assigning
+a <em>new</em> <code>innerHTML</code>.</p>
+<p>With FancyPants any attributes defined in <code>observedAttributes</code> will be auto
+tracked.</p>
+<h2>Tracking</h2>
+<p>The power of FancyPants is in how it manages dirty tracking. How this works is
+highly technical and best described by Chris Garrett's blog post <a href="https://www.pzuraq.com/how-autotracking-works/">&quot;How
+Autotracking Works&quot;</a> (2020-02-26).</p>
+<p>For us it means that if a property is marked as <strong>tracked</strong> when it changes it
+will initiate a render loop where all Component's will run their <code>render()</code>
+functions <em>only</em> if those render functions depend on the thing that just
+changed.</p>
+<p>A simple example say we have an object every Component uses.</p>
+<pre class="prettyprint source lang-js"><code>const theFruit = activateTracking({
+  name: tracked(),
+  count: tracked()
+});
+</code></pre>
+<p>And a component that uses it.</p>
+<pre class="prettyprint source lang-js"><code>class MyComponent extends Component {
+  render() {
+    this.innerHTML = `${theFruit.name}: ${theFruit.count}`;
+  }
+}
+</code></pre>
+<p>Then the component's innerHTML would update when <code>theFruit</code> properties change.</p>
+<pre class="prettyprint source lang-js"><code>theFruit.name = 'Apples'; // schedules a render loop
+theFruit.count = 4; // schedules a render loop
+</code></pre>
+<p>This done by making the <code>name</code> and <code>count</code> properties getters/setters. That way
+we can track when they are either assigned (set) or consumed (get). Whith this
+information the system can determine which <code>render()</code> functions depend on which
+property and if they should run or not run depending on if one of its
+dependents changed or not.</p>
+<p>This even works if the dependency is indirect like this.</p>
+<pre class="prettyprint source lang-js"><code>function makeFruitString() {
+  return `${theFruit.name}: ${theFruit.count}`;
+}
+
+class MyComponent extends Component {
+  render() {
+    this.innerHTML = makeFruitString();
+  }
+}
+</code></pre>
+<p>In fact the system affords the ability to be even more granular if needed. In
+this example we mark separate methods to be autotracked and only the one which
+need to run will run.</p>
+<pre class="prettyprint source lang-js"><code>class MyComponent extends Component {
+  constructor() {
+    super();
+    this.doExpensiveDOMUpdateWithName = memoizeFunction(this.doExpensiveDOMUpdateWithName);
+    this.doExpensiveDOMUpdateWithCount = memoizeFunction(this.doExpensiveDOMUpdateWithCount);
+  }
+  render() {
+    this.doExpensiveDOMUpdateWithName();
+    this.doExpensiveDOMUpdateWithCount();
+  }
+  doExpensiveDOMUpdateWithName() { … }
+  doExpensiveDOMUpdateWithCount() { … }
+}
+</code></pre>
+<p>In this case when <code>theFruit.name = 'Orange'</code> happens the <code>render()</code> is called
+which will run both methods. But since only <code>name</code> changed only
+<code>doExpensiveDOMUpdateWithName()</code> is executed. <code>doExpensiveDOMUpdateWithCount()</code>
+is just a no-op unless <code>count</code> was also updated.</p>
 </article>
 
 </section>
-
-
-
 
             </div>
             

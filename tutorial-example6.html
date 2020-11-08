@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FancyPants Examples</title>
+  <title>FancyPants Example Six</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -72,7 +72,15 @@
                     <div class="dropdown-menu">
                         <div class="dropdown-content">
                         
-                            <a class="dropdown-item" href="tutorial-examples.html">
+                            <a class="dropdown-item" href="tutorial-01-introduction.html">
+                                Introduction
+                            </a>
+                        
+                            <a class="dropdown-item" href="tutorial-02-hello-world.html">
+                                Hello World
+                            </a>
+                        
+                            <a class="dropdown-item" href="tutorial-90-examples.html">
                                 Examples
                             </a>
                         
@@ -103,7 +111,7 @@
             
             <nav>
                 
-                    <div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-examples.html">Examples</a><ul><li><a href="tutorial-1.html">Example One</a></li><li><a href="tutorial-2.html">Example Two</a></li><li><a href="tutorial-3.html">Example Three</a></li><li><a href="tutorial-4.html">Example Four</a></li><li><a href="tutorial-5.html">Example Five</a></li><li><a href="tutorial-6.html">Example Six</a></li><li><a href="tutorial-7.html">Example Seven</a></li></ul></li></ul></div>
+                    <div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-01-introduction.html">Introduction</a></li><li><a href="tutorial-02-hello-world.html">Hello World</a></li><li><a href="tutorial-90-examples.html">Examples</a><ul><li><a href="tutorial-example1.html">Example One</a></li><li><a href="tutorial-example2.html">Example Two</a></li><li><a href="tutorial-example3.html">Example Three</a></li><li><a href="tutorial-example4.html">Example Four</a></li><li><a href="tutorial-example5.html">Example Five</a></li><li><a href="tutorial-example6.html">Example Six</a></li><li><a href="tutorial-example7.html">Example Seven</a></li><li><a href="tutorial-example8.html">Example Eight</a></li><li><a href="tutorial-example9.html">Example Nine</a></li></ul></li></ul></div>
                 
             </nav>
         </div>
@@ -111,26 +119,20 @@
             <div class="content">
                 <header class="page-title">
                     <p>Tutorial</p>
-                    <h1>Examples</h1>
+                    <h1>Example Six</h1>
                 </header>
                 <section>
 
 <article>
     <script type="module" src="./scripts/example-source.js"></script>
 
+<h2 class="[ tutorial ] [ subtitle ]">
+  Auto updating counter
+</h2>
+
 <example-source lang="html">
 
-<ol>
-  <li><example-link num="1">HTML <code>&lt;template&gt;</code></example-link></li>
-  <li><example-link num="2"><code>static template = `&hellip;`;</code> string</example-link></li>
-  <li><example-link num="3">HTML <code>&lt;template&gt;</code> with hardcoded ID</example-link></li>
-  <li><example-link num="4">Global tracking object using <code>tracked()</code></example-link></li>
-  <li><example-link num="5">Manual global tracking (lower level API)</example-link></li>
-  <li><example-link num="6">Auto updating counter</example-link></li>
-  <li><example-link num="7">Emoji randomizer (performance example)</example-link></li>
-</ol>
-
-<p>This page is also an example.</p>
+<my-custom-element></my-custom-element>
 
 </example-source>
 
@@ -138,48 +140,37 @@
 
 <script type="module">
 
-import Component from './fancy-pants/component.js';
+import Component from './component.js';
+import { tracked } from './tracking.js';
 
-const ONES = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
-const TENS = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
-const TEENS = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+class MyCustomElement extends Component {
 
-function convertTens(num) {
-  const { floor } = Math;
-  if (num < 10) {
-    return `${ONES[num]}`;
-  } else if (num >= 10 && num < 20) {
-    return `${TEENS[num - 10]}`;
-  } else {
-    return `${TENS[floor(num / 10)]} ${ONES[num % 10]}`;
+  constructor() {
+    super();
+    this.count = tracked(0);
   }
-}
 
-function capitalize(str) {
-  return str.replace(/^\w/, c => c.toUpperCase());
-}
+  connectedCallback() {
+    super.connectedCallback();
+    this.timer = setInterval(() => this.count++, 1000);
+  }
 
-class ExampleLink extends Component {
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    clearInterval(this.timer);
+  }
+
   render() {
-    let { num, word } = this;
-    this.shadow.innerHTML = ExampleLink.template
-      .replace(/{{(\w+)}}/g, (_, g1) => this[g1]);
+    this.shadow.querySelector('output').value = this.count;
   }
-  get num() {
-    return Number(this.getAttribute('num'));
-  }
-  get word() {
-    return capitalize(convertTens(this.num));
-  }
+
   static get template() {
-    return `<a href="tutorial-{{num}}.html">Example {{word}}</a> &mdash; <slot></slot>`;
+    return `<span>Counter: <output></output></span>`;
   }
-  static get observedAttributes() {
-    return ['num'];
-  }
+
 }
 
-ExampleLink.register();
+MyCustomElement.register();
 
 </script>
 

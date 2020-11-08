@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FancyPants Component</title>
+  <title>FancyPants renderer</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -72,7 +72,15 @@
                     <div class="dropdown-menu">
                         <div class="dropdown-content">
                         
-                            <a class="dropdown-item" href="tutorial-examples.html">
+                            <a class="dropdown-item" href="tutorial-01-introduction.html">
+                                Introduction
+                            </a>
+                        
+                            <a class="dropdown-item" href="tutorial-02-hello-world.html">
+                                Hello World
+                            </a>
+                        
+                            <a class="dropdown-item" href="tutorial-90-examples.html">
                                 Examples
                             </a>
                         
@@ -103,15 +111,15 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-component.html">component</a></li><li><a href="module-renderer.html">renderer</a></li><li><a href="module-tracking.html">tracking</a></li></ul><h3>Classes</h3><ul><li><a href="Component.html">Component</a></li><li><a href="module-component-Component.html">Component</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-component.html">component</a></li><li><a href="module-renderer.html">renderer</a></li><li><a href="module-tracking.html">tracking</a></li></ul><h3>Classes</h3><ul><li><a href="module-component-Component.html">Component</a></li></ul></div>
                 
             </nav>
         </div>
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p>Class</p>
-                    <h1>Component</h1>
+                    <p>Module</p>
+                    <h1>renderer</h1>
                 </header>
                 
 
@@ -122,7 +130,8 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Component<span class="signature">(ElementClass)</span><span class="type-signature"></span></h2>
+        
+            
         
     
 </header>
@@ -131,39 +140,131 @@
     <div class="container-overview">
     
         
-            <div class='vertical-section'>
-                <div class="members">
-                    <div class="member">
-                        <div class=name>
-                            <span class="tag">Constructor</span>
-                        </div>
-                        
+            <div class="description"><p>This is the global rendering cycle. It is built into the <a href="Component.html"><code>Component</code></a>
+implementation but can also be used outside of a Component.</p></div>
+        
+
+        
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="renderer.js.html" class="button">View Source</a>
+            <span>
+                <a href="renderer.js.html">renderer.js</a>, <a href="renderer.js.html#line1">line 1</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+    </div>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class='vertical-section'>
+            <h1>Methods</h1>
+            <div class="members">
+            
+                <div class="member">
 
 
     
-    <h4 class="name" id="Component">
-        <a class="href-link" href="#Component">#</a>
+    <h4 class="name" id=".registerRenderer">
+        <a class="href-link" href="#.registerRenderer">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
         
         <span class="code-name">
             
-                new Component<span class="signature">(ElementClass)</span><span class="type-signature"></span>
+                registerRenderer<span class="signature">(renderFn)</span><span class="type-signature"></span>
             
         </span>
     </h4>
     
 
     
-    
-    <div class="description">
-        <p>Construct a Component class that extends from a specific kind of HTMLElement.
-Use this if you want a custom element to work like a Component but extend
-from a more specific type.</p>
-<pre class="prettyprint source lang-js"><code>class MyComponent extends componentOf(HTMLParagraphElement) {
-  …
-}
-MyComponent.register();
-</code></pre>
-    </div>
     
 
 
@@ -200,13 +301,13 @@ MyComponent.register();
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>ElementClass</code></td>
+      <td class="name"><code>renderFn</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">HTMLElement</span>
+<span class="param-type">function</span>
 
 
   
@@ -216,7 +317,7 @@ MyComponent.register();
 
   
 
-  <td class="description last"><p>the HTMLElement the component class will extend from</p></td>
+  <td class="description last"><p>the function to add to the operations queue</p></td>
 </tr>
 
 
@@ -262,9 +363,9 @@ MyComponent.register();
 
     
         <p class="tag-source">
-            <a href="component.js.html" class="button">View Source</a>
+            <a href="renderer.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line35">line 35</a>
+                <a href="renderer.js.html">renderer.js</a>, <a href="renderer.js.html#line14">line 14</a>
             </span>
         </p>
     
@@ -287,75 +388,191 @@ MyComponent.register();
 
 
 
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
 
-<div class="columns">
-    
-    <div class='param-desc column is-7'><p>Component a FancyPants component that extends from ElementClass</p></div>
-    
-    
+
+
 </div>
-
-                
-        </div>
-    </div>
-
-
-
-
-
-                    </div>
-                </div>
-            </div>
-        
-    
-    </div>
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <div class='vertical-section'>
-            <h1>Members</h1>
-            <div class="members">
             
                 <div class="member">
 
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
+
+    
+    <h4 class="name" id=".scheduleRender">
+        <a class="href-link" href="#.scheduleRender">#</a>
         
-<span class="param-type">ShadowRoot</span>
-
-
-    </span>
-
-<h4 class="name" id="shadow">
-    <a class="href-link" href="#shadow">#</a>
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                scheduleRender<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
     
-    <span class="code-name">
-        shadow
-    </span>
+
     
-</h4>
+    
+    <div class="description">
+        <p>Will schedule a render for the next microtask loop</p>
+    </div>
+    
 
 
 
 
-<div class="description">
-    <p>Direct access to the Shadow DOM.</p>
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="renderer.js.html" class="button">View Source</a>
+            <span>
+                <a href="renderer.js.html">renderer.js</a>, <a href="renderer.js.html#line28">line 28</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".unregisterRenderer">
+        <a class="href-link" href="#.unregisterRenderer">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                unregisterRenderer<span class="signature">(renderFn)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>renderFn</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">function</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>the function to remove from the operations queue</p></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
 </div>
 
 
@@ -395,9 +612,9 @@ MyComponent.register();
 
     
         <p class="tag-source">
-            <a href="component.js.html" class="button">View Source</a>
+            <a href="renderer.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line51">line 51</a>
+                <a href="renderer.js.html">renderer.js</a>, <a href="renderer.js.html#line21">line 21</a>
             </span>
         </p>
     
@@ -407,12 +624,26 @@ MyComponent.register();
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
             
             </div>
         </div>
-    
-
     
 
     

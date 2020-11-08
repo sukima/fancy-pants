@@ -23,6 +23,10 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
 
   
+    <meta name="description" content="A performant JavaScript micro-lib for Custom Elements with reactive updates via dirty tracking">
+    <meta name="twitter:image:src" content="https://raw.githubusercontent.com/sukima/fancy-pants/main/static/images/logo.png" /><meta name="twitter:site" content="@sukima" /><meta name="twitter:card" content="summary" /><meta name="twitter:title" content="FancyPants" /><meta name="twitter:description" content="A performant JavaScript micro-lib for Custom Elements with reactive updates via dirty tracking" />
+    <meta property="og:image" content="https://raw.githubusercontent.com/sukima/fancy-pants/main/static/images/logo.png" /><meta property="og:site_name" content="FancyPants" /><meta property="og:type" content="object" /><meta property="og:title" content="FancyPants" /><meta property="og:url" content="https://github.com/sukima/fancy-pants" /><meta property="og:description" content="A performant JavaScript micro-lib for Custom Elements with reactive updates via dirty tracking" />
+  
 </head>
 
 
@@ -68,7 +72,15 @@
                     <div class="dropdown-menu">
                         <div class="dropdown-content">
                         
-                            <a class="dropdown-item" href="tutorial-index_.html">
+                            <a class="dropdown-item" href="tutorial-01-introduction.html">
+                                Introduction
+                            </a>
+                        
+                            <a class="dropdown-item" href="tutorial-02-hello-world.html">
+                                Hello World
+                            </a>
+                        
+                            <a class="dropdown-item" href="tutorial-90-examples.html">
                                 Examples
                             </a>
                         
@@ -99,7 +111,7 @@
             
             <nav>
                 
-                    <div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-index_.html">Examples</a><ul><li><a href="tutorial-1.html">Example One</a></li><li><a href="tutorial-2.html">Example Two</a></li><li><a href="tutorial-3.html">Example Three</a></li><li><a href="tutorial-4.html">Example Four</a></li><li><a href="tutorial-5.html">Example Five</a></li><li><a href="tutorial-6.html">Example Six</a></li><li><a href="tutorial-7.html">Example Seven</a></li></ul></li></ul></div>
+                    <div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-01-introduction.html">Introduction</a></li><li><a href="tutorial-02-hello-world.html">Hello World</a></li><li><a href="tutorial-90-examples.html">Examples</a><ul><li><a href="tutorial-example1.html">Example One</a></li><li><a href="tutorial-example2.html">Example Two</a></li><li><a href="tutorial-example3.html">Example Three</a></li><li><a href="tutorial-example4.html">Example Four</a></li><li><a href="tutorial-example5.html">Example Five</a></li><li><a href="tutorial-example6.html">Example Six</a></li><li><a href="tutorial-example7.html">Example Seven</a></li><li><a href="tutorial-example8.html">Example Eight</a></li><li><a href="tutorial-example9.html">Example Nine</a></li></ul></li></ul></div>
                 
             </nav>
         </div>
@@ -124,6 +136,8 @@
   <li><example-link num="5">Manual global tracking (lower level API)</example-link></li>
   <li><example-link num="6">Auto updating counter</example-link></li>
   <li><example-link num="7">Emoji randomizer (performance example)</example-link></li>
+  <li><example-link num="8">Iteration with tracked tabular data</example-link></li>
+  <li><example-link num="9">Selectable table</example-link></li>
 </ol>
 
 <p>This page is also an example.</p>
@@ -134,7 +148,7 @@
 
 <script type="module">
 
-import Component from './fancy-pants/component.js';
+import Component from './component.js';
 
 const ONES = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
 const TENS = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
@@ -168,7 +182,7 @@ class ExampleLink extends Component {
     return capitalize(convertTens(this.num));
   }
   static get template() {
-    return `<a href="tutorial-{{num}}.html">Example {{word}}</a> &mdash; <slot></slot>`;
+    return `<a href="tutorial-example{{num}}.html">Example {{word}}</a> &mdash; <slot></slot>`;
   }
   static get observedAttributes() {
     return ['num'];

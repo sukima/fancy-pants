@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FancyPants Example Three</title>
+  <title>FancyPants Example Five</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -72,7 +72,15 @@
                     <div class="dropdown-menu">
                         <div class="dropdown-content">
                         
-                            <a class="dropdown-item" href="tutorial-examples.html">
+                            <a class="dropdown-item" href="tutorial-01-introduction.html">
+                                Introduction
+                            </a>
+                        
+                            <a class="dropdown-item" href="tutorial-02-hello-world.html">
+                                Hello World
+                            </a>
+                        
+                            <a class="dropdown-item" href="tutorial-90-examples.html">
                                 Examples
                             </a>
                         
@@ -103,7 +111,7 @@
             
             <nav>
                 
-                    <div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-examples.html">Examples</a><ul><li><a href="tutorial-1.html">Example One</a></li><li><a href="tutorial-2.html">Example Two</a></li><li><a href="tutorial-3.html">Example Three</a></li><li><a href="tutorial-4.html">Example Four</a></li><li><a href="tutorial-5.html">Example Five</a></li><li><a href="tutorial-6.html">Example Six</a></li><li><a href="tutorial-7.html">Example Seven</a></li></ul></li></ul></div>
+                    <div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-01-introduction.html">Introduction</a></li><li><a href="tutorial-02-hello-world.html">Hello World</a></li><li><a href="tutorial-90-examples.html">Examples</a><ul><li><a href="tutorial-example1.html">Example One</a></li><li><a href="tutorial-example2.html">Example Two</a></li><li><a href="tutorial-example3.html">Example Three</a></li><li><a href="tutorial-example4.html">Example Four</a></li><li><a href="tutorial-example5.html">Example Five</a></li><li><a href="tutorial-example6.html">Example Six</a></li><li><a href="tutorial-example7.html">Example Seven</a></li><li><a href="tutorial-example8.html">Example Eight</a></li><li><a href="tutorial-example9.html">Example Nine</a></li></ul></li></ul></div>
                 
             </nav>
         </div>
@@ -111,19 +119,23 @@
             <div class="content">
                 <header class="page-title">
                     <p>Tutorial</p>
-                    <h1>Example Three</h1>
+                    <h1>Example Five</h1>
                 </header>
                 <section>
 
 <article>
     <script type="module" src="./scripts/example-source.js"></script>
 
+<h2 class="[ tutorial ] [ subtitle ]">
+  Manual global tracking (lower level API)
+</h2>
+
 <example-source lang="html">
 
 <p><foo-bar></foo-bar></p>
 <p><foo-bar></foo-bar></p>
 
-<template id="different-id">
+<template id="foo-bar">
   <button class="go">+1</button>
   <output class="foo"></output>
   <output class="bar"></output>
@@ -135,30 +147,42 @@
 
 <script type="module">
 
-import Component from './fancy-pants/component.js';
-import { tracked } from './fancy-pants/tracking.js';
+import Component from './component.js';
+import { tracked, dirtyTag, consumeTag, createTag } from './tracking.js';
+
+const globalTag = createTag();
+let globalValue = 0;
+
+function updateGlobalValue() {
+  dirtyTag(globalTag);
+  globalValue++;
+}
+
+function getGlobalValue() {
+  consumeTag(globalTag);
+  return globalValue;
+}
 
 class FooBar extends Component {
 
   constructor() {
     super();
-    this.foo = tracked(0);
     this.shadow.querySelector('.go')
-      .addEventListener('click', () => { this.foo += 1 });
+      .addEventListener('click', updateGlobalValue);
   }
 
   render() {
-    this.shadow.querySelector('.foo').value = this.foo;
+    this.shadow.querySelector('.foo').value = getGlobalValue();
     this.shadow.querySelector('.bar').value = this.bar;
   }
 
   get bar() {
-    return `bar-${this.foo}`;
+    return `bar-${getGlobalValue()}`;
   }
 
 }
 
-FooBar.register('#different-id');
+FooBar.register();
 
 </script>
 

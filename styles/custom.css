@@ -25,3 +25,8 @@ example-source {
 example-source + * {
   margin-top: 1rem;
 }
+
+.content .tutorial.subtitle {
+  font-size: 1em;
+  margin-top: 0;
+}
