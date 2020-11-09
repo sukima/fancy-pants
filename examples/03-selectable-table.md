@@ -53,15 +53,91 @@ class SelectableData extends Component {
     super();
     this.data = tracked(this.getInitialData());
   }
-  getInitialData() {
-  }
-  getTrackedSelectable(item) {
-    let name = …;
-    let count = …;
-    let isSelected = …;
-    return activateTracking({ name, count, isSelected: tracked(isSelected) });
-  }
+  …
 }
 
 SelectableData.register();
+```
+
+With this we import `Component` and `tracked`, Mark `this.data` as a tracked
+property and set its initial value to the results of `this.getInitialData()`.
+
+`getInitialData` will loop over the table grabbing the rows and convert them to
+objects that have the data as properties.
+
+```js
+getInitialData() {
+  let entries = [];
+  let items = this.querySelectorAll('tbody [itemscope]');
+  for (let item of items) {
+    let data = this.getItemData(item);
+    entries.push(data);
+  }
+  return entries;
+}
+createItemData(item) {
+  let entries = [...item.querySelectorAll('[itemprop]')].map(propNode => {
+    return [propNode.getAttribute('itemprop'), propNode.textContent];
+  });
+  return Object.fromEntries(entries);
+}
+```
+
+However, there is a gotcha. Because we are going to handle DOM events to check
+and uncheck the items we need a way to look up our data objects (which will have
+tracked properties) from the DOM nodes that we will have an event listener on.
+
+To do this we can register our data with a `WeakMap`.
+
+```js
+constructor() {
+  …
+  this.dataFrom = new WeakSet();
+}
+…
+getInitialData() {
+  …
+  for (let item of items) {
+    …
+    this.dataFrom.set(item, data);
+  }
+  …
+}
+```
+
+Let's add some checkboxes.
+
+```html
+<tbody>
+  <tr itemscope>
+    <td><input type="checkbox"></td>
+    …
+  </tr>
+  <tr itemscope>
+    <td><input type="checkbox"></td>
+    …
+  </tr>
+  <tr itemscope>
+    <td><input type="checkbox"></td>
+    …
+  </tr>
+  <tr itemscope>
+    <td><input type="checkbox"></td>
+    …
+  </tr>
+</tbody>
+```
+
+And add them as part of the data objects we created. But because the value of
+the checkboxes drive the rendering we need the checked status in the data
+objects to be tracked.
+
+```js
+getItemData(item) {
+  …
+  let checked = item.querySelector('input[type=checkbox]').checked;
+  return activateTracking(
+    Object.fromEntries([...entries, ['isChecked', tracked(checked)]])
+  );
+}
 ```
