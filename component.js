@@ -10,9 +10,10 @@ function dasherize(str) {
   return str.replace(/([a-z\d])([A-Z])/g, '$1-$2').toLowerCase();
 }
 
-function makeTemplateElement(html = '') {
+function makeTemplateElement(html) {
+  if (html === null) { return null; }
   let element = document.createElement('template');
-  element.innerHTML = html;
+  element.innerHTML = html ?? '';
   return element;
 }
 
@@ -87,8 +88,10 @@ function componentOf(ElementClass) {
     constructor() {
       super();
       let template = templates.get(this.tagName.toLowerCase());
-      this.shadow = this.attachShadow({ mode: 'open' });
-      this.shadow.appendChild(template.content.cloneNode(true));
+      if (template) {
+        this.shadow = this.attachShadow({ mode: 'open' });
+        this.shadow.appendChild(template.content.cloneNode(true));
+      }
       this[RENDER] = memoizeFunction(() => this.render());
       this[ATTRIBUTE_TAGS] = new Map(
         (this.constructor.observedAttributes ?? []).map(i => [i, createTag()])
@@ -218,6 +221,7 @@ function componentOf(ElementClass) {
     /**
     * Optional string version of the Shadow DOM template.
     * Defaults to `<slot></slot>`.
+    * Return `null` to **disable** the ShadowDOM (`this.shadow`).
     *
     * ```js
     * class MyComponent extends Component {
@@ -230,7 +234,7 @@ function componentOf(ElementClass) {
     * @member {string}
     */
     static get template() {
-      return '<slot></slot>';
+      return '<style>:host { all: inherit; }</style><slot></slot>';
     }
 
   }
