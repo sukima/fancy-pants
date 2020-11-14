@@ -1,10 +1,13 @@
+/**********************************************\
+*  FancyPants — customElements micro-lib   O   *
+*  MIT — Copyright © 2020 Devin Weaver    /|\  *
+*  https://sukima.github.io/fancy-pants/  </>  *
+\**********************************************/
 /**
  * This is the global rendering cycle. It is built into the {@link Component}
  * implementation but can also be used outside of a Component.
  * @module renderer
  */
-import { setOnTagDirtied } from './tracking.js';
-
 let renderScheduled = false;
 const renderOperations = new Set();
 
@@ -38,5 +41,3 @@ function executeRenderOperations() {
     renderScheduled = false;
   }
 }
-
-setOnTagDirtied(scheduleRender);

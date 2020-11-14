@@ -135,8 +135,6 @@
  * implementation but can also be used outside of a Component.
  * @module renderer
  */
-import { setOnTagDirtied } from './tracking.js';
-
 let renderScheduled = false;
 const renderOperations = new Set();
 
@@ -170,8 +168,6 @@ function executeRenderOperations() {
     renderScheduled = false;
   }
 }
-
-setOnTagDirtied(scheduleRender);
 </code></pre>
         </article>
     </section>

@@ -1,3 +1,8 @@
+/**********************************************\
+*  FancyPants — customElements micro-lib   O   *
+*  MIT — Copyright © 2020 Devin Weaver    /|\  *
+*  https://sukima.github.io/fancy-pants/  </>  *
+\**********************************************/
 /**
  * This is the auto-tracking system and is the main method to
  * [scheduleRender{}]{@link module:renderer.scheduleRender}.

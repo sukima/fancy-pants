@@ -1,6 +1,24 @@
+/**********************************************\
+*  FancyPants — customElements micro-lib   O   *
+*  MIT — Copyright © 2020 Devin Weaver    /|\  *
+*  https://sukima.github.io/fancy-pants/  </>  *
+\**********************************************/
 /** @module component */
-import { scheduleRender, registerRenderer, unregisterRenderer } from './renderer.js';
-import { activateTracking, memoizeFunction, createTag, dirtyTag, consumeTag } from './tracking.js';
+import {
+  activateTracking,
+  memoizeFunction,
+  createTag,
+  dirtyTag,
+  consumeTag,
+  setOnTagDirtied
+} from './tracking.js';
+import {
+  scheduleRender,
+  registerRenderer,
+  unregisterRenderer
+} from './renderer.js';
+
+setOnTagDirtied(scheduleRender);
 
 const ATTRIBUTE_TAGS = Symbol('attribute tags');
 const RENDER = Symbol('memoized render');
