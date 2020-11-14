@@ -10,7 +10,7 @@
     "cleverLinks": true,
     "default": {
       "staticFiles": {
-        "include": ["./lib", "./static"]
+        "include": ["./static"]
       }
     },
     "better-docs": {

@@ -1,0 +1,5 @@
+/**********************************************\
+*  FancyPants — customElements micro-lib   O   *
+*  MIT — Copyright © 2020 Devin Weaver    /|\  *
+*  https://sukima.github.io/fancy-pants/  </>  *
+\**********************************************/
