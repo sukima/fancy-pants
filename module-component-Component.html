@@ -139,8 +139,8 @@ parts of the custom element's DOM. You have access to both a ShadowDOM and
 the HTMLElement itself.</p>
 <p>You don't need to instantiate it yourself as this is done by the insertion
 of the custom element into the DOM.</p>
-<p>Use the <code>.register()</code> method to define the custom
-element and associate a template to the custom element.</p></div>
+<p>Use the <a href="module-component-Component.html#.register"><code>.register()</code></a> method to
+define the custom element and associate a template to the custom element.</p></div>
         
     
 </header>
@@ -369,7 +369,7 @@ field syntax instead.</p>
         <p class="tag-source">
             <a href="component.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line230">line 230</a>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line249">line 249</a>
             </span>
         </p>
     
@@ -458,7 +458,7 @@ Return <code>null</code> to <strong>disable</strong> the ShadowDOM (<code>this.s
         <p class="tag-source">
             <a href="component.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line249">line 249</a>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line268">line 268</a>
             </span>
         </p>
     
@@ -676,7 +676,7 @@ MyComponent.register(myTemplateNode);
         <p class="tag-source">
             <a href="component.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line203">line 203</a>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line222">line 222</a>
             </span>
         </p>
     
@@ -1096,7 +1096,7 @@ Removes this component instance from the renderer.</p>
         <p class="tag-source">
             <a href="component.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line185">line 185</a>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line204">line 204</a>
             </span>
         </p>
     
@@ -1118,6 +1118,133 @@ Removes this component instance from the renderer.</p>
 
 
 
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="track">
+        <a class="href-link" href="#track">#</a>
+        
+        <span class="code-name">
+            
+                track<span class="signature">()</span><span class="type-signature"> &rarr; {this}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>Activate tracking on this component. Called automatically during
+<a href="module-component-Component.html#connectedCallback"><code>.connectedCallback()</code></a>
+Use this if you want to assign to a tracked property prior to being
+appended to the DOM.</p>
+<pre class="prettyprint source lang-js"><code>let myComponent = document.createElement('my-component').track();
+myComponent.foobar = 'This is now tracked';
+document.body.appendChild(myComponent);
+</code></pre>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="component.js.html" class="button">View Source</a>
+            <span>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line188">line 188</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">this</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
 
 
 
