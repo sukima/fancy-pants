@@ -149,7 +149,7 @@ operations this module prepares use the
 <p>For example presume we have timer that updates a series of DOM nodes each
 second; the VanillaJS™ version might look something like the following:</p>
 <pre class="prettyprint source lang-js"><code>let attachEvents = () => {
-  let form = this.shadow.querySelector('#do-it-live-section');
+  let form = this.shadow.querySelector('#my-container');
   let handler1 = e => { e.preventDefault(); };
   let handler2 = e => { this.updateValues(e.currentTarget); };
   form.addEventListener('submit', handler1);
@@ -161,7 +161,7 @@ second; the VanillaJS™ version might look something like the following:</p>
 };
 
 let render = () => {
-  let form = this.shadow.querySelector('#do-it-live-section');
+  let form = this.shadow.querySelector('#my-container');
   form.dataset.state = this.state;
 };
 </code></pre>

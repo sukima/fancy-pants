@@ -17,7 +17,7 @@
  *
  * ```js
  * let attachEvents = () => {
- *   let form = this.shadow.querySelector('#do-it-live-section');
+ *   let form = this.shadow.querySelector('#my-container');
  *   let handler1 = e => { e.preventDefault(); };
  *   let handler2 = e => { this.updateValues(e.currentTarget); };
  *   form.addEventListener('submit', handler1);
@@ -29,7 +29,7 @@
  * };
  *
  * let render = () => {
- *   let form = this.shadow.querySelector('#do-it-live-section');
+ *   let form = this.shadow.querySelector('#my-container');
  *   form.dataset.state = this.state;
  * };
  * ```
