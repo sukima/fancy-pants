@@ -191,7 +191,7 @@ class Eventer {
     this[DATA] = { scope, selector, eventType, listener };
   }
   [ATTACH_EVENT]() {
-    let { scope, selector, eventType, listener } = this[DATA];
+    let { scope, selector, eventType, listener = () => {} } = this[DATA];
     let handler = event => {
       if (this.willPreventDefault) { event.preventDefault(); }
       if (this.willStopPropagation) { event.stopPropagation(); }
