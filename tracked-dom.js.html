@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FancyPants component</title>
+  <title>FancyPants tracked-dom.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -118,246 +120,63 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p>Module</p>
-                    <h1>component</h1>
+                    <p>Source</p>
+                    <h1>tracked-dom.js</h1>
                 </header>
                 
 
 
 
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * This is a [memoizeFunction()]{@link module:tracking.memoizeFunction} version
+ * of [simple-dom]{@link module:simple-dom} in that it wraps the render
+ * operations to be ganularally tracked.
+ *
+ * Best used when working with FancyPants [Components]{@link module:component~Component}
+ *
+ * ```js
+ * import Component from './fancy-pants/component.js';
+ * import dom from './fancy-pants/tracked-dom.js';
+ * import { tracked } from './fancy-pants/tracking.js';
+ *
+ * class MyComponent extends Component {
+ *   constructor() {
+ *     super();
+ *     let [render, attachEvents] = dom($ => {
+ *       $.scope(this.shadow);
+ *       $('#my-thing-1').data('state', () => this.state);
+ *       $('#my-thing-2').text(() => this.message);
+ *     });
+ *     this.render = render;
+ *     this.attachEvents = attachEvents;
+ *     this.state = tracked();
+ *     this.message = tracked();
+ *   }
+ *   connectedCallback() {
+ *     super.connectedCallback();
+ *     this.detachEvents = this.attachEvents();
+ *   }
+ *   disconnectedCallback() {
+ *     super.disconnectedCallback();
+ *     this.detachEvents();
+ *   }
+ * }
+ *
+ * MyComponent.register();
+ * ```
+ *
+ * @module tracked-dom
+ */
+import dom from './simple-dom.js';
+import { memoizeFunction } from './tracking.js';
 
-<section>
-
-<header>
-    
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-
-        
-    
-    </div>
-    
-    
-
-    
-
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="module-component-Component.html">Component</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <div class='vertical-section'>
-            <h1>Methods</h1>
-            <div class="members">
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="~componentOf">
-        <a class="href-link" href="#~componentOf">#</a>
-        
-            
-                <span class='tag'>inner</span>
-            
-        
-        <span class="code-name">
-            
-                componentOf<span class="signature">(ElementClass)</span><span class="type-signature"></span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        <p>Construct a Component class that extends from a specific kind of HTMLElement.
-Use this if you want a custom element to work like a Component but extend
-from a more specific type.</p>
-<pre class="prettyprint source lang-js"><code>import { componentOf } from './fancy-pants/component.js';
-
-class MyComponent extends componentOf(HTMLParagraphElement) {
-  …
-}
-
-MyComponent.register();
+export default dom.factory(memoizeFunction);
 </code></pre>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>ElementClass</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">HTMLElement</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>the HTMLElement the component class will extend from</p></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="component.js.html" class="button">View Source</a>
-            <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line51">line 51</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'><p>Component a FancyPants component that extends from ElementClass</p></div>
-    
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-            </div>
-        </div>
-    
-
-    
-
-    
-</article>
-
-</section>
+        </article>
+    </section>
 
 
 
