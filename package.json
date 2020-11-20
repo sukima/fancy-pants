@@ -6,7 +6,7 @@
   "author": "Devin Weaver (@sukima) <suki@tritarget.org> (https://tritarget.org/)",
   "license": "MIT",
   "scripts": {
-    "start": "serve docs",
+    "start": "serve --cors docs",
     "docs": "make",
     "lint:js": "eslint lib/*.js",
     "deploy": "yarn lint:js && make clean && NODE_ENV=production make && gh-pages -d docs",
