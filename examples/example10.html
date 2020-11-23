@@ -1,0 +1,69 @@
+<script type="module" src="./scripts/example-source.js"></script>
+
+<h2 class="[ tutorial ] [ subtitle ]">
+  Provider Component
+</h2>
+
+<example-source lang="html">
+
+<ticker-data>
+  <ticker-display></ticker-display>
+</ticker-data>
+
+</example-source>
+
+<h3>TickerData</h3>
+
+<example-source lang="javascript" strip-script>
+
+<script type="module">
+
+import Component from './component.js';
+import { tracked } from './tracking.js';
+
+class TickerData extends Component {
+  static get template() { return null; }
+  constructor() {
+    super();
+    this.count = tracked(0);
+  }
+  connectedCallback() {
+    super.connectedCallback();
+    this.ticker = setInterval(() => this.count++, 1000);
+  }
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    clearInterval(this.ticker);
+  }
+  yields() {
+    return { yieldedCount: this.count };
+  }
+}
+TickerData.register();
+
+</script>
+
+</example-source>
+
+<h3>TickerDisplay</h3>
+
+<example-source lang="javascript" strip-script>
+
+<script type="module">
+
+import Component from './component.js';
+
+class TickerDisplay extends Component {
+  static get template() { return '<time></time>'; }
+  render(attrs) {
+    let { yieldedCount } = attrs.tickerData;
+    let el = this.shadow.querySelector('time');
+    el.setAttribute('datetime', `PT${yieldedCount}S`);
+    el.textContent = `${yieldedCount} seconds`;
+  }
+}
+TickerDisplay.register();
+
+</script>
+
+</example-source>
