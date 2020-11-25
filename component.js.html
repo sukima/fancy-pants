@@ -155,11 +155,32 @@ function dasherize(str) {
   return str.replace(/([a-z\d])([A-Z])/g, '$1-$2').toLowerCase();
 }
 
+function camelize(str) {
+  return dasherize(str).replace(/-([a-z])/g, (_, g1) => g1.toUpperCase());
+}
+
 function makeTemplateElement(html) {
   if (html === null) { return null; }
   let element = document.createElement('template');
   element.innerHTML = html ?? '';
   return element;
+}
+
+function findYieldables(component) {
+  let attrs = {};
+  let callback = (id, yieldable) => Object.defineProperty(attrs, id, {
+    get() { return yieldable.yields(); }
+  });
+  let event = new CustomEvent('yields', { detail: callback });
+  component.dispatchEvent(event);
+  return attrs;
+}
+
+function yieldsResponder(component) {
+  let groupName = component.getAttribute('id') || camelize(component.tagName);
+  return function({ detail: callback }) {
+    callback(groupName, component);
+  };
 }
 
 /**
@@ -237,7 +258,7 @@ function componentOf(ElementClass) {
         this.shadow = this.attachShadow({ mode: 'open' });
         this.shadow.appendChild(template.content.cloneNode(true));
       }
-      this[RENDER] = memoizeFunction(() => this.render());
+      this[RENDER] = memoizeFunction(() => this.render(findYieldables(this)));
       this[ATTRIBUTE_TAGS] = new Map(
         (this.constructor.observedAttributes ?? []).map(i => [i, createTag()])
       );
@@ -261,6 +282,7 @@ function componentOf(ElementClass) {
      */
     connectedCallback() {
       this.track();
+      this.addEventListener('yields', yieldsResponder(this), true);
       registerRenderer(this[RENDER]);
       scheduleRender();
     }
@@ -332,8 +354,51 @@ function componentOf(ElementClass) {
      *   }
      * }
      * ```
+     *
+     * @param {object} attrs an object with all values which have been
+     * yielded by parent components index by their camelized name or id of the
+     * respective components
      */
     render() {}
+
+    /**
+     * Called during child components' rendering to ask for any yielded values.
+     * This is a method to pass tracked values to other components in it. Most
+     * cases this will be a component that has `null` for a template but it
+     * isn't required. The `render()` and the `yields()` are two separate ways
+     * to react to tracked changes but they can be used together. Anything
+     * returned from this hook will be passed to any child component's
+     * `render()` hook as named argument.
+     *
+     * ```html
+     * &lt;my-provider>
+     *   &lt;my-presenter>&lt;/my-presenter>
+     * &lt;/my-provider>
+     * ```
+     *
+     * ```js
+     * class MyProvider extends Component {
+     *   trackedValue = tracked();
+     *   static get template() { return null; }
+     *   yields() {
+     *     return { yieldedValue: this.trackedValue };
+     *   }
+     * }
+     * MyProvider.register();
+     *
+     * class MyPresenter extends Component {
+     *   render(attrs) {
+     *     let { yieldedValue } = attrs.myProvider;
+     *     this.shadow.textContent = yieldedValue;
+     *   }
+     * }
+     * MyPresenter.register();
+     * ```
+     *
+     * @tutorial example10
+     * @return any
+     */
+    yields() {}
 
     /**
      * Call this static method to define the component as a custom element with the browser.
