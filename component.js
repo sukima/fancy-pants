@@ -198,6 +198,11 @@ function componentOf(ElementClass) {
       return super.getAttribute(name);
     }
 
+    hasAttribute(name) {
+      consumeTag(this[ATTRIBUTE_TAGS].get(name));
+      return super.hasAttribute(name);
+    }
+
     /**
      * Activate tracking on this component. Called automatically during
      * [.connectedCallback()]{@link module:component~Component#connectedCallback}
