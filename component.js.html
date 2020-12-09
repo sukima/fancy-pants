@@ -149,7 +149,10 @@ setOnTagDirtied(scheduleRender);
 
 const ATTRIBUTE_TAGS = Symbol('attribute tags');
 const RENDER = Symbol('memoized render');
+const YIELDS = Symbol('yieldable identifier');
 const templates = new Map();
+const yieldables = new Map();
+const yieldableProxy = new Proxy(yieldables, { get: (t, p) => t.get(p)?.yields() });
 
 function dasherize(str) {
   return str.replace(/([a-z\d])([A-Z])/g, '$1-$2').toLowerCase();
@@ -164,23 +167,6 @@ function makeTemplateElement(html) {
   let element = document.createElement('template');
   element.innerHTML = html ?? '';
   return element;
-}
-
-function findYieldables(component) {
-  let attrs = {};
-  let detail = (id, yieldable) => Object.defineProperty(attrs, id, {
-    get() { return yieldable.yields(); }
-  });
-  let event = new CustomEvent('yields', { detail, bubbles: true, composed: true });
-  component.dispatchEvent(event);
-  return attrs;
-}
-
-function yieldsResponder(component) {
-  let groupName = component.getAttribute('id') || camelize(component.tagName);
-  return function({ detail: callback }) {
-    callback(groupName, component);
-  };
 }
 
 /**
@@ -258,10 +244,11 @@ function componentOf(ElementClass) {
         this.shadow = this.attachShadow({ mode: 'open' });
         this.shadow.appendChild(template.content.cloneNode(true));
       }
-      this[RENDER] = memoizeFunction(() => this.render(findYieldables(this)));
       this[ATTRIBUTE_TAGS] = new Map(
         (this.constructor.observedAttributes ?? []).map(i => [i, createTag()])
       );
+      this[YIELDS] = this.getAttribute('id') || camelize(this.tagName);
+      this[RENDER] = memoizeFunction(() => this.render(yieldableProxy));
     }
 
     /**
@@ -282,7 +269,7 @@ function componentOf(ElementClass) {
      */
     connectedCallback() {
       this.track();
-      this.addEventListener('yields', yieldsResponder(this), true);
+      yieldables.set(this[YIELDS], this);
       registerRenderer(this[RENDER]);
       scheduleRender();
     }
@@ -302,6 +289,7 @@ function componentOf(ElementClass) {
      * ```
      */
     disconnectedCallback() {
+      yieldables.delete(this[YIELDS]);
       unregisterRenderer(this[RENDER]);
     }
 
