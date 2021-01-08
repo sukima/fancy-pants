@@ -113,7 +113,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-component.html">component</a></li><li><a href="module-renderer.html">renderer</a></li><li><a href="module-tracked-dom.html">tracked-dom</a></li><li><a href="module-tracking.html">tracking</a></li></ul><h3>Classes</h3><ul><li><a href="module-component-Component.html">Component</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-component.html">component</a></li><li><a href="module-renderer.html">renderer</a></li><li><a href="module-tracking.html">tracking</a></li></ul><h3>Classes</h3><ul><li><a href="module-component-Component.html">Component</a></li></ul></div>
                 
             </nav>
         </div>
@@ -131,6 +131,16 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
+ * ```js
+ * // Unminified
+ * import { registerRenderer, unregisterRenderer, scheduleRender }
+ *   from 'https://sukima.github.io/fancy-pants/renderer.js';
+ *
+ * // Minified
+ * import { registerRenderer, unregisterRenderer, scheduleRender }
+ *   from 'https://sukima.github.io/fancy-pants/min/renderer.js';
+ * ```
+ *
  * This is the global rendering cycle. It is built into the {@link Component}
  * implementation but can also be used outside of a Component.
  * @module renderer

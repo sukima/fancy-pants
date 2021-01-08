@@ -111,7 +111,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-component.html">component</a></li><li><a href="module-renderer.html">renderer</a></li><li><a href="module-tracked-dom.html">tracked-dom</a></li><li><a href="module-tracking.html">tracking</a></li></ul><h3>Classes</h3><ul><li><a href="module-component-Component.html">Component</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-component.html">component</a></li><li><a href="module-renderer.html">renderer</a></li><li><a href="module-tracking.html">tracking</a></li></ul><h3>Classes</h3><ul><li><a href="module-component-Component.html">Component</a></li></ul></div>
                 
             </nav>
         </div>
@@ -140,7 +140,15 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>This is the global rendering cycle. It is built into the <a href="Component.html"><code>Component</code></a>
+            <div class="description"><pre class="prettyprint source lang-js"><code>// Unminified
+import { registerRenderer, unregisterRenderer, scheduleRender }
+  from 'https://sukima.github.io/fancy-pants/renderer.js';
+
+// Minified
+import { registerRenderer, unregisterRenderer, scheduleRender }
+  from 'https://sukima.github.io/fancy-pants/min/renderer.js';
+</code></pre>
+<p>This is the global rendering cycle. It is built into the <a href="Component.html"><code>Component</code></a>
 implementation but can also be used outside of a Component.</p></div>
         
 
@@ -365,7 +373,7 @@ implementation but can also be used outside of a Component.</p></div>
         <p class="tag-source">
             <a href="renderer.js.html" class="button">View Source</a>
             <span>
-                <a href="renderer.js.html">renderer.js</a>, <a href="renderer.js.html#line12">line 12</a>
+                <a href="renderer.js.html">renderer.js</a>, <a href="renderer.js.html#line22">line 22</a>
             </span>
         </p>
     
@@ -466,7 +474,7 @@ implementation but can also be used outside of a Component.</p></div>
         <p class="tag-source">
             <a href="renderer.js.html" class="button">View Source</a>
             <span>
-                <a href="renderer.js.html">renderer.js</a>, <a href="renderer.js.html#line26">line 26</a>
+                <a href="renderer.js.html">renderer.js</a>, <a href="renderer.js.html#line36">line 36</a>
             </span>
         </p>
     
@@ -614,7 +622,7 @@ implementation but can also be used outside of a Component.</p></div>
         <p class="tag-source">
             <a href="renderer.js.html" class="button">View Source</a>
             <span>
-                <a href="renderer.js.html">renderer.js</a>, <a href="renderer.js.html#line19">line 19</a>
+                <a href="renderer.js.html">renderer.js</a>, <a href="renderer.js.html#line29">line 29</a>
             </span>
         </p>
     

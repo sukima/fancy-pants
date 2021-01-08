@@ -4,8 +4,18 @@
 *  https://sukima.github.io/fancy-pants/  </>  *
 \**********************************************/
 /**
+ * ```js
+ * // Unminified
+ * import { tracked, activateTracking }
+ *   from 'https://sukima.github.io/fancy-pants/tracking.js';
+ *
+ * // Minified
+ * import { tracked, activateTracking }
+ *   from 'https://sukima.github.io/fancy-pants/min/tracking.js';
+ * ```
+ *
  * This is the auto-tracking system and is the main method to
- * [scheduleRender{}]{@link module:renderer.scheduleRender}.
+ * [scheduleRender]{@link module:renderer.scheduleRender}.
  * @module tracking
  */
 const REVISION = Symbol('REVISION');

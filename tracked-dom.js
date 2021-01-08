@@ -4,6 +4,14 @@
 *  https://sukima.github.io/fancy-pants/  </>  *
 \**********************************************/
 /**
+ * ```js
+ * // Unminified
+ * import dom from 'https://sukima.github.io/fancy-pants/tracked-dom.js';
+ *
+ * // Minified
+ * import dom from 'https://sukima.github.io/fancy-pants/min/tracked-dom.js';
+ * ```
+ *
  * This is a [memoizeFunction()]{@link module:tracking.memoizeFunction} version
  * of [simple-dom]{@link module:simple-dom} in that it wraps the render
  * operations to be ganularally tracked.

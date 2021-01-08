@@ -111,7 +111,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-component.html">component</a></li><li><a href="module-renderer.html">renderer</a></li><li><a href="module-tracked-dom.html">tracked-dom</a></li><li><a href="module-tracking.html">tracking</a></li></ul><h3>Classes</h3><ul><li><a href="module-component-Component.html">Component</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-component.html">component</a></li><li><a href="module-renderer.html">renderer</a></li><li><a href="module-tracking.html">tracking</a></li></ul><h3>Classes</h3><ul><li><a href="module-component-Component.html">Component</a></li></ul></div>
                 
             </nav>
         </div>
@@ -152,7 +152,10 @@ micro-lib to make writing <strong>custom elements</strong> easier?</p>
 <p>No?! … oh guess it was just me. Well it is done now might as well show it.</p>
 <p>This <em>micro-lib</em> is an attempt to introduce some very modern ECMAScript ideas
 and allow you to make small and yet <em>performant</em> custom elements.</p>
-<pre class="prettyprint source lang-js"><code>class MyCustomElement extends Component {
+<pre class="prettyprint source lang-js"><code>import Component from 'https://sukima.github.io/fancy-pants/min/component.js';
+import { tracked } from 'https://sukima.github.io/fancy-pants/min/tracking.js';
+
+class MyCustomElement extends Component {
 
   // Whenever this value changes it will schedule a render cycle
   count = tracked(0);
@@ -194,6 +197,17 @@ modern JavaScript support.</p>
   }
 }
 </code></pre>
+<h2>Locations</h2>
+<h4>Minified</h4>
+<ul>
+<li><code>import Component from 'https://sukima.github.io/fancy-pants/min/component.js';</code></li>
+<li><code>import { tracked, activateTracking } from 'https://sukima.github.io/fancy-pants/min/tracking.js';</code></li>
+</ul>
+<h4>Unminified</h4>
+<ul>
+<li><code>import Component from 'https://sukima.github.io/fancy-pants/component.js';</code></li>
+<li><code>import { tracked, activateTracking } from 'https://sukima.github.io/fancy-pants/tracking.js';</code></li>
+</ul>
 <h2>Why use this</h2>
 <ul>
 <li>Your project is large enough to benefit from using custom elements but not

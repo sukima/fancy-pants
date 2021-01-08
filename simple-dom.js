@@ -4,6 +4,14 @@
 *  https://sukima.github.io/fancy-pants/  </>  *
 \**********************************************/
 /**
+ * ```js
+ * // Unminified
+ * import dom from 'https://sukima.github.io/fancy-pants/simple-dom.js';
+ *
+ * // Minified
+ * import dom from 'https://sukima.github.io/fancy-pants/min/simple-dom.js';
+ * ```
+ *
  * This is an **optional** module that might clean up a little boiler plate
  * when it comes to writing render functions and attaching events.
  *

@@ -4,6 +4,16 @@
 *  https://sukima.github.io/fancy-pants/  </>  *
 \**********************************************/
 /**
+ * ```js
+ * // Unminified
+ * import { registerRenderer, unregisterRenderer, scheduleRender }
+ *   from 'https://sukima.github.io/fancy-pants/renderer.js';
+ *
+ * // Minified
+ * import { registerRenderer, unregisterRenderer, scheduleRender }
+ *   from 'https://sukima.github.io/fancy-pants/min/renderer.js';
+ * ```
+ *
  * This is the global rendering cycle. It is built into the {@link Component}
  * implementation but can also be used outside of a Component.
  * @module renderer

@@ -111,7 +111,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-component.html">component</a></li><li><a href="module-renderer.html">renderer</a></li><li><a href="module-tracked-dom.html">tracked-dom</a></li><li><a href="module-tracking.html">tracking</a></li></ul><h3>Classes</h3><ul><li><a href="module-component-Component.html">Component</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-component.html">component</a></li><li><a href="module-renderer.html">renderer</a></li><li><a href="module-tracking.html">tracking</a></li></ul><h3>Classes</h3><ul><li><a href="module-component-Component.html">Component</a></li></ul></div>
                 
             </nav>
         </div>
@@ -191,15 +191,18 @@
     
     
     <div class="description">
-        <p>Construct a Component class that extends from a specific kind of HTMLElement.
+        <pre class="prettyprint source lang-js"><code>// Unminified
+import { componentOf } from 'https://sukima.github.io/fancy-pants/component.js';
+
+// Minified
+import { componentOf } from 'https://sukima.github.io/fancy-pants/min/component.js';
+</code></pre>
+<p>Construct a Component class that extends from a specific kind of HTMLElement.
 Use this if you want a custom element to work like a Component but extend
 from a more specific type.</p>
-<pre class="prettyprint source lang-js"><code>import { componentOf } from './fancy-pants/component.js';
-
-class MyComponent extends componentOf(HTMLParagraphElement) {
+<pre class="prettyprint source lang-js"><code>class MyComponent extends componentOf(HTMLParagraphElement) {
   …
 }
-
 MyComponent.register();
 </code></pre>
     </div>
@@ -303,7 +306,7 @@ MyComponent.register();
         <p class="tag-source">
             <a href="component.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line58">line 58</a>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line63">line 63</a>
             </span>
         </p>
     
