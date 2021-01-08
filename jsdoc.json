@@ -5,6 +5,9 @@
     "template": "node_modules/better-docs",
     "readme": "./README.md"
   },
+  "source": {
+    "exclude": ["lib/simple-dom.js", "lib/tracked-dom.js"]
+  },
   "plugins": ["plugins/markdown"],
   "templates": {
     "cleverLinks": true,
