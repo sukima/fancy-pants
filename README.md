@@ -10,6 +10,9 @@ This *micro-lib* is an attempt to introduce some very modern ECMAScript ideas
 and allow you to make small and yet *performant* custom elements.
 
 ```js
+import Component from 'https://sukima.github.io/fancy-pants/min/component.js';
+import { tracked } from 'https://sukima.github.io/fancy-pants/min/tracking.js';
+
 class MyCustomElement extends Component {
 
   // Whenever this value changes it will schedule a render cycle
@@ -56,6 +59,18 @@ class MyCustomElement extends Component {
   }
 }
 ```
+
+## Locations
+
+#### Minified
+
+* `import Component from 'https://sukima.github.io/fancy-pants/min/component.js';`
+* `import { tracked, activateTracking } from 'https://sukima.github.io/fancy-pants/min/tracking.js';`
+
+#### Unminified
+
+* `import Component from 'https://sukima.github.io/fancy-pants/component.js';`
+* `import { tracked, activateTracking } from 'https://sukima.github.io/fancy-pants/tracking.js';`
 
 ## Why use this
 
