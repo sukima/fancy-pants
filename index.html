@@ -145,15 +145,15 @@
 
 
     <section>
-        <article><p style="text-align: center;"><img src="https://sukima.github.io/fancy-pants/images/logo.png" width="128" style="border-radius: 24px;" alt="FancyPants logo"></p>
+        <article><p style="text-align: center;"><img src="https://fancy-pants.js.org/images/logo.png" width="128" style="border-radius: 24px;" alt="FancyPants logo"></p>
 <p>Have you ever been working on a simple JavaScript project like a bookmarklet or
 tiny static site and thought to yourself if only you could have a backbone like
 micro-lib to make writing <strong>custom elements</strong> easier?</p>
 <p>No?! … oh guess it was just me. Well it is done now might as well show it.</p>
 <p>This <em>micro-lib</em> is an attempt to introduce some very modern ECMAScript ideas
 and allow you to make small and yet <em>performant</em> custom elements.</p>
-<pre class="prettyprint source lang-js"><code>import Component from 'https://sukima.github.io/fancy-pants/min/component.js';
-import { tracked } from 'https://sukima.github.io/fancy-pants/min/tracking.js';
+<pre class="prettyprint source lang-js"><code>import Component from 'https://fancy-pants.js.org/min/component.js';
+import { tracked } from 'https://fancy-pants.js.org/min/tracking.js';
 
 class MyCustomElement extends Component {
 
@@ -186,7 +186,7 @@ class MyCustomElement extends Component {
 
 MyCustomElement.register();
 </code></pre>
-<p><a href="https://sukima.github.io/fancy-pants/tutorial-6.html">demo</a></p>
+<p><a href="https://fancy-pants.js.org/tutorial-6.html">demo</a></p>
 <p><em>NOTE:</em> for <strong>Safari Mobile</strong> you will have to assign <code>tracked()</code> properties in
 the <code>constructor</code> instead of as a field since Apple is dragging their feet on
 modern JavaScript support.</p>
@@ -200,13 +200,13 @@ modern JavaScript support.</p>
 <h2>Locations</h2>
 <h4>Minified</h4>
 <ul>
-<li><code>import Component from 'https://sukima.github.io/fancy-pants/min/component.js';</code></li>
-<li><code>import { tracked, activateTracking } from 'https://sukima.github.io/fancy-pants/min/tracking.js';</code></li>
+<li><code>import Component from 'https://fancy-pants.js.org/min/component.js';</code></li>
+<li><code>import { tracked, activateTracking } from 'https://fancy-pants.js.org/min/tracking.js';</code></li>
 </ul>
 <h4>Unminified</h4>
 <ul>
-<li><code>import Component from 'https://sukima.github.io/fancy-pants/component.js';</code></li>
-<li><code>import { tracked, activateTracking } from 'https://sukima.github.io/fancy-pants/tracking.js';</code></li>
+<li><code>import Component from 'https://fancy-pants.js.org/component.js';</code></li>
+<li><code>import { tracked, activateTracking } from 'https://fancy-pants.js.org/tracking.js';</code></li>
 </ul>
 <h2>Why use this</h2>
 <ul>
@@ -263,8 +263,8 @@ from a template and defines a render function that gets memoized.</p>
 <h2>Documentation</h2>
 <p>Each part is split into three files. Import the ones as you need them. Here is
 a basic overview of how this system works. There is also
-<a href="https://sukima.github.io/fancy-pants/">detailed API docs</a></p>
-<p>Please check out the <a href="https://sukima.github.io/fancy-pants/tutorial-examples.html">examples</a> (view source) as they do not use any
+<a href="https://fancy-pants.js.org/">detailed API docs</a></p>
+<p>Please check out the <a href="https://fancy-pants.js.org/tutorial-examples.html">examples</a> (view source) as they do not use any
 minification and are easily digestible.</p>
 <h3>Component</h3>
 <p>First create an HTML template. This can either be a <code>&lt;template&gt;</code> element or
@@ -365,7 +365,7 @@ changes use <code>memoizeFunction()</code>.</p>
 <pre class="prettyprint source lang-js"><code>import { memoizeFunction } from 'fancy-pants/tracking.js';
 let optimised = memoizeFunction(() => { … });
 </code></pre>
-<p>For more specific usage see the many <a href="https://sukima.github.io/fancy-pants/tutorial-examples.html">Examples</a>.</p></article>
+<p>For more specific usage see the many <a href="https://fancy-pants.js.org/tutorial-examples.html">Examples</a>.</p></article>
     </section>
 
 

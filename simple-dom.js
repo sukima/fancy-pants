@@ -1,15 +1,15 @@
 /**********************************************\
 *  FancyPants — customElements micro-lib   O   *
 *  MIT — Copyright © 2020 Devin Weaver    /|\  *
-*  https://sukima.github.io/fancy-pants/  </>  *
+*  https://fancy-pants.js.org/            </>  *
 \**********************************************/
 /**
  * ```js
  * // Unminified
- * import dom from 'https://sukima.github.io/fancy-pants/simple-dom.js';
+ * import dom from 'https://fancy-pants.js.org/simple-dom.js';
  *
  * // Minified
- * import dom from 'https://sukima.github.io/fancy-pants/min/simple-dom.js';
+ * import dom from 'https://fancy-pants.js.org/min/simple-dom.js';
  * ```
  *
  * This is an **optional** module that might clean up a little boiler plate

@@ -1,7 +1,7 @@
 /**********************************************\
 *  FancyPants — customElements micro-lib   O   *
 *  MIT — Copyright © 2020 Devin Weaver    /|\  *
-*  https://sukima.github.io/fancy-pants/  </>  *
+*  https://fancy-pants.js.org/            </>  *
 \**********************************************/
 /** @module component */
 import {
@@ -45,10 +45,10 @@ function makeTemplateElement(html) {
 /**
  * ```js
  * // Unminified
- * import { componentOf } from 'https://sukima.github.io/fancy-pants/component.js';
+ * import { componentOf } from 'https://fancy-pants.js.org/component.js';
  *
  * // Minified
- * import { componentOf } from 'https://sukima.github.io/fancy-pants/min/component.js';
+ * import { componentOf } from 'https://fancy-pants.js.org/min/component.js';
  * ```
  *
  * Construct a Component class that extends from a specific kind of HTMLElement.
@@ -70,10 +70,10 @@ function componentOf(ElementClass) {
   /**
    * ```js
    * // Unminified
-   * import Component from 'https://sukima.github.io/fancy-pants/component.js';
+   * import Component from 'https://fancy-pants.js.org/component.js';
    *
    * // Minified
-   * import Component from 'https://sukima.github.io/fancy-pants/min/component.js';
+   * import Component from 'https://fancy-pants.js.org/min/component.js';
    * ```
    *
    * This is the main class for using the FancyPants system. When extended it

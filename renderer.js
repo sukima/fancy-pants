@@ -1,17 +1,17 @@
 /**********************************************\
 *  FancyPants — customElements micro-lib   O   *
 *  MIT — Copyright © 2020 Devin Weaver    /|\  *
-*  https://sukima.github.io/fancy-pants/  </>  *
+*  https://fancy-pants.js.org/            </>  *
 \**********************************************/
 /**
  * ```js
  * // Unminified
  * import { registerRenderer, unregisterRenderer, scheduleRender }
- *   from 'https://sukima.github.io/fancy-pants/renderer.js';
+ *   from 'https://fancy-pants.js.org/renderer.js';
  *
  * // Minified
  * import { registerRenderer, unregisterRenderer, scheduleRender }
- *   from 'https://sukima.github.io/fancy-pants/min/renderer.js';
+ *   from 'https://fancy-pants.js.org/min/renderer.js';
  * ```
  *
  * This is the global rendering cycle. It is built into the {@link Component}

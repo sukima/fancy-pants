@@ -1,17 +1,15 @@
 /**********************************************\
 *  FancyPants — customElements micro-lib   O   *
 *  MIT — Copyright © 2020 Devin Weaver    /|\  *
-*  https://sukima.github.io/fancy-pants/  </>  *
+*  https://fancy-pants.js.org/            </>  *
 \**********************************************/
 /**
  * ```js
  * // Unminified
- * import { tracked, activateTracking }
- *   from 'https://sukima.github.io/fancy-pants/tracking.js';
+ * import { tracked, activateTracking } from 'https://fancy-pants.js.org/tracking.js';
  *
  * // Minified
- * import { tracked, activateTracking }
- *   from 'https://sukima.github.io/fancy-pants/min/tracking.js';
+ * import { tracked, activateTracking } from 'https://fancy-pants.js.org/min/tracking.js';
  * ```
  *
  * This is the auto-tracking system and is the main method to

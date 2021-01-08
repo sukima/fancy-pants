@@ -1,15 +1,15 @@
 /**********************************************\
 *  FancyPants — customElements micro-lib   O   *
 *  MIT — Copyright © 2020 Devin Weaver    /|\  *
-*  https://sukima.github.io/fancy-pants/  </>  *
+*  https://fancy-pants.js.org/            </>  *
 \**********************************************/
 /**
  * ```js
  * // Unminified
- * import dom from 'https://sukima.github.io/fancy-pants/tracked-dom.js';
+ * import dom from 'https://fancy-pants.js.org/tracked-dom.js';
  *
  * // Minified
- * import dom from 'https://sukima.github.io/fancy-pants/min/tracked-dom.js';
+ * import dom from 'https://fancy-pants.js.org/min/tracked-dom.js';
  * ```
  *
  * This is a [memoizeFunction()]{@link module:tracking.memoizeFunction} version
