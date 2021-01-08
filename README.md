@@ -1,4 +1,4 @@
-<p style="text-align: center;"><img src="https://sukima.github.io/fancy-pants/images/logo.png" width="128" style="border-radius: 24px;" alt="FancyPants logo"></p>
+<p style="text-align: center;"><img src="https://fancy-pants.js.org/images/logo.png" width="128" style="border-radius: 24px;" alt="FancyPants logo"></p>
 
 Have you ever been working on a simple JavaScript project like a bookmarklet or
 tiny static site and thought to yourself if only you could have a backbone like
@@ -10,8 +10,8 @@ This *micro-lib* is an attempt to introduce some very modern ECMAScript ideas
 and allow you to make small and yet *performant* custom elements.
 
 ```js
-import Component from 'https://sukima.github.io/fancy-pants/min/component.js';
-import { tracked } from 'https://sukima.github.io/fancy-pants/min/tracking.js';
+import Component from 'https://fancy-pants.js.org/min/component.js';
+import { tracked } from 'https://fancy-pants.js.org/min/tracking.js';
 
 class MyCustomElement extends Component {
 
@@ -45,7 +45,7 @@ class MyCustomElement extends Component {
 MyCustomElement.register();
 ```
 
-[demo](https://sukima.github.io/fancy-pants/tutorial-6.html)
+[demo](https://fancy-pants.js.org/tutorial-6.html)
 
 *NOTE:* for **Safari Mobile** you will have to assign `tracked()` properties in
 the `constructor` instead of as a field since Apple is dragging their feet on
@@ -64,13 +64,13 @@ class MyCustomElement extends Component {
 
 #### Minified
 
-* `import Component from 'https://sukima.github.io/fancy-pants/min/component.js';`
-* `import { tracked, activateTracking } from 'https://sukima.github.io/fancy-pants/min/tracking.js';`
+* `import Component from 'https://fancy-pants.js.org/min/component.js';`
+* `import { tracked, activateTracking } from 'https://fancy-pants.js.org/min/tracking.js';`
 
 #### Unminified
 
-* `import Component from 'https://sukima.github.io/fancy-pants/component.js';`
-* `import { tracked, activateTracking } from 'https://sukima.github.io/fancy-pants/tracking.js';`
+* `import Component from 'https://fancy-pants.js.org/component.js';`
+* `import { tracked, activateTracking } from 'https://fancy-pants.js.org/tracking.js';`
 
 ## Why use this
 
@@ -302,5 +302,5 @@ let optimised = memoizeFunction(() => { … });
 
 For more specific usage see the many [Examples][examples].
 
-[examples]: https://sukima.github.io/fancy-pants/tutorial-examples.html
-[api]: https://sukima.github.io/fancy-pants/
+[examples]: https://fancy-pants.js.org/tutorial-examples.html
+[api]: https://fancy-pants.js.org/
