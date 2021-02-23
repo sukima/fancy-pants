@@ -1,4 +1,7 @@
-<p style="text-align: center;"><img src="https://fancy-pants.js.org/images/logo.png" width="128" style="border-radius: 24px;" alt="FancyPants logo"></p>
+<p style="display: flex; flex-direction: column; align-items: center;">
+  <img src="https://fancy-pants.js.org/images/logo.png" width="128" style="border-radius: 24px;" alt="FancyPants logo">
+  <span style="font-family: monospace; margin-top: 0.5rem;">Version 1.7.0</span>
+</p>
 
 Have you ever been working on a simple JavaScript project like a bookmarklet or
 tiny static site and thought to yourself if only you could have a backbone like

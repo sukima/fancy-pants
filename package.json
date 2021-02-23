@@ -10,7 +10,7 @@
     "docs": "make",
     "lint:js": "eslint lib/*.js",
     "deploy": "yarn lint:js && make clean && NODE_ENV=production make && gh-pages -d docs",
-    "watch": "find lib examples static jsdoc.json -type f | entr make"
+    "watch": "find lib examples static jsdoc.json preamble.txt README.md -type f | entr make"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
