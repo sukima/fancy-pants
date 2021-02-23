@@ -203,7 +203,7 @@ class FruitTable extends Component {
   }
 
   makeEmptyRow() {
-    return this.makeR(FruitTable.emptyTemplate);
+    return this.makeRow(FruitTable.emptyTemplate);
   }
 
   handleAction(event, fruit) {
@@ -259,7 +259,7 @@ class FruitTable extends Component {
     `;
   }
 
-  static get template() {
+  static get shadow() {
     return `
       <style>
       .centered { text-align: center; }
@@ -316,7 +316,7 @@ class FruitCreator extends Component {
       count: formData.get('count')
     });
   }
-  static get template() {
+  static get shadow() {
     return `
       <form>
         <fieldset>

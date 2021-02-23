@@ -249,7 +249,7 @@ field syntax instead.</p>
         <p class="tag-source">
             <a href="component.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line85">line 85</a>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line90">line 90</a>
             </span>
         </p>
     
@@ -299,6 +299,95 @@ field syntax instead.</p>
         <div class='vertical-section'>
             <h1>Members</h1>
             <div class="members">
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">string</span>
+
+
+    </span>
+
+<h4 class="name" id=".shadow">
+    <a class="href-link" href="#.shadow">#</a>
+    
+        
+            <span class='tag'>static</span>
+        
+    
+    <span class="code-name">
+        shadow
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <p>Optional string version of the Shadow DOM template.
+Defaults to <code>&lt;slot&gt;&lt;/slot&gt;</code>.
+Return <code>null</code> to <strong>disable</strong> the ShadowDOM (<code>this.shadow</code>).</p>
+<pre class="prettyprint source lang-js"><code>class MyComponent extends Component {
+  static get shadow() {
+    return `&lt;p>lorem ipsum&lt;/p>`;
+  }
+}
+</code></pre>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="component.js.html" class="button">View Source</a>
+            <span>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line356">line 356</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
             
                 <div class="member">
 
@@ -375,7 +464,7 @@ field syntax instead.</p>
         <p class="tag-source">
             <a href="component.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line320">line 320</a>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line337">line 337</a>
             </span>
         </p>
     
@@ -414,9 +503,9 @@ field syntax instead.</p>
 
 
 <div class="description">
-    <p>Optional string version of the Shadow DOM template.
-Defaults to <code>&lt;slot&gt;&lt;/slot&gt;</code>.
-Return <code>null</code> to <strong>disable</strong> the ShadowDOM (<code>this.shadow</code>).</p>
+    <p>Optional string version of the innerHTML template.
+Defaults to <code>null</code>.
+Return <code>null</code> to <strong>disable</strong> appendChild on construction.</p>
 <pre class="prettyprint source lang-js"><code>class MyComponent extends Component {
   static get template() {
     return `&lt;p>lorem ipsum&lt;/p>`;
@@ -464,7 +553,7 @@ Return <code>null</code> to <strong>disable</strong> the ShadowDOM (<code>this.s
         <p class="tag-source">
             <a href="component.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line339">line 339</a>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line375">line 375</a>
             </span>
         </p>
     
@@ -507,7 +596,8 @@ Return <code>null</code> to <strong>disable</strong> the ShadowDOM (<code>this.s
     
     
     <div class="description">
-        <p>Call this static method to define the component as a custom element with the browser.</p>
+        <p>Call this static method to define the component as a custom element with
+the browser.</p>
 <pre class="prettyprint source lang-js"><code>class MyComponent extends Component {
   …
 }
@@ -516,6 +606,10 @@ MyComponent.register();
 MyComponent.register('#selector');
 MyComponent.register(myTemplateNode);
 </code></pre>
+<p>When defining a template, register will look for a <code>&lt;template&gt;</code> element
+that matches the kabob-case of the component's class name. The shadow
+DOM can be used instead by adding the <code>data-shadow</code> attribute to the
+template element.</p>
     </div>
     
 
@@ -593,7 +687,8 @@ MyComponent.register(myTemplateNode);
       </td>
   
 
-  <td class="description last"><p>optional template element or selector</p></td>
+  <td class="description last"><p>optional template
+element or selector</p></td>
 </tr>
 
 
@@ -634,7 +729,8 @@ MyComponent.register(myTemplateNode);
       </td>
   
 
-  <td class="description last"><p>optional scope for the template selector</p></td>
+  <td class="description last"><p>optional scope for the template
+selector</p></td>
 </tr>
 
 
@@ -682,7 +778,7 @@ MyComponent.register(myTemplateNode);
         <p class="tag-source">
             <a href="component.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line293">line 293</a>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line310">line 310</a>
             </span>
         </p>
     
@@ -785,7 +881,7 @@ MyComponent.register(myTemplateNode);
         <p class="tag-source">
             <a href="component.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line188">line 188</a>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line197">line 197</a>
             </span>
         </p>
     
@@ -893,7 +989,7 @@ First render is scheduled after this callback.</p>
         <p class="tag-source">
             <a href="component.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line151">line 151</a>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line160">line 160</a>
             </span>
         </p>
     
@@ -999,7 +1095,7 @@ Removes this component instance from the renderer.</p>
         <p class="tag-source">
             <a href="component.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line172">line 172</a>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line181">line 181</a>
             </span>
         </p>
     
@@ -1155,7 +1251,7 @@ respective components</p></td>
         <p class="tag-source">
             <a href="component.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line236">line 236</a>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line245">line 245</a>
             </span>
         </p>
     
@@ -1259,7 +1355,7 @@ document.body.appendChild(myComponent);
         <p class="tag-source">
             <a href="component.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line216">line 216</a>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line225">line 225</a>
             </span>
         </p>
     
@@ -1330,18 +1426,18 @@ document.body.appendChild(myComponent);
     <div class="description">
         <p>Called during child components' rendering to ask for any yielded values.
 This is a method to pass tracked values to other components in it. Most
-cases this will be a component that has <code>null</code> for a template but it
-isn't required. The <code>render()</code> and the <code>yields()</code> are two separate ways
-to react to tracked changes but they can be used together. Anything
-returned from this hook will be passed to any child component's
-<code>render()</code> hook as named argument.</p>
+cases this will be a component that has <code>null</code> for the shadow and
+template but it isn't required. The <code>render()</code> and the <code>yields()</code> are
+two separate ways to react to tracked changes but they can be used
+together. Anything returned from this hook will be passed to any child
+component's <code>render()</code> hook as named argument.</p>
 <pre class="prettyprint source lang-html"><code>&lt;my-provider>
   &lt;my-presenter>&lt;/my-presenter>
 &lt;/my-provider>
 </code></pre>
 <pre class="prettyprint source lang-js"><code>class MyProvider extends Component {
   trackedValue = tracked();
-  static get template() { return null; }
+  static get shadow() { return null; }
   yields() {
     return { yieldedValue: this.trackedValue };
   }
@@ -1413,7 +1509,7 @@ MyPresenter.register();
         <p class="tag-source">
             <a href="component.js.html" class="button">View Source</a>
             <span>
-                <a href="component.js.html">component.js</a>, <a href="component.js.html#line275">line 275</a>
+                <a href="component.js.html">component.js</a>, <a href="component.js.html#line284">line 284</a>
             </span>
         </p>
     

@@ -1,7 +1,7 @@
 /**********************************************\
 *  FancyPants — customElements micro-lib   O   *
 *  MIT — Copyright © 2020 Devin Weaver    /|\  *
-*  https://fancy-pants.js.org/            </>  *
+*  https://fancy-pants.js.org/   v2.0.0   </>  *
 \**********************************************/
 /** @module component */
 import {
@@ -35,10 +35,15 @@ function camelize(str) {
   return dasherize(str).replace(/-([a-z])/g, (_, g1) => g1.toUpperCase());
 }
 
-function makeTemplateElement(html) {
-  if (html === null) { return null; }
+function makeTemplateElement({ template, shadow }) {
+  if (template === null && shadow === null) { return null; }
   let element = document.createElement('template');
-  element.innerHTML = html ?? '';
+  if (template) {
+    element.innerHTML = template;
+  } else if (shadow) {
+    element.innerHTML = shadow;
+    element.dataset.shadow = true;
+  }
   return element;
 }
 
@@ -127,8 +132,12 @@ function componentOf(ElementClass) {
       super();
       let template = templates.get(this.tagName.toLowerCase());
       if (template) {
-        this.shadow = this.attachShadow({ mode: 'open' });
-        this.shadow.appendChild(template.content.cloneNode(true));
+        if (template.dataset.shadow === undefined) {
+          this.appendChild(template.content.cloneNode(true));
+        } else {
+          this.shadow = this.attachShadow({ mode: 'open' });
+          this.shadow.appendChild(template.content.cloneNode(true));
+        }
       }
       this[ATTRIBUTE_TAGS] = new Map(
         (this.constructor.observedAttributes ?? []).map(i => [i, createTag()])
@@ -243,11 +252,11 @@ function componentOf(ElementClass) {
     /**
      * Called during child components' rendering to ask for any yielded values.
      * This is a method to pass tracked values to other components in it. Most
-     * cases this will be a component that has `null` for a template but it
-     * isn't required. The `render()` and the `yields()` are two separate ways
-     * to react to tracked changes but they can be used together. Anything
-     * returned from this hook will be passed to any child component's
-     * `render()` hook as named argument.
+     * cases this will be a component that has `null` for the shadow and
+     * template but it isn't required. The `render()` and the `yields()` are
+     * two separate ways to react to tracked changes but they can be used
+     * together. Anything returned from this hook will be passed to any child
+     * component's `render()` hook as named argument.
      *
      * ```html
      * <my-provider>
@@ -258,7 +267,7 @@ function componentOf(ElementClass) {
      * ```js
      * class MyProvider extends Component {
      *   trackedValue = tracked();
-     *   static get template() { return null; }
+     *   static get shadow() { return null; }
      *   yields() {
      *     return { yieldedValue: this.trackedValue };
      *   }
@@ -280,7 +289,8 @@ function componentOf(ElementClass) {
     yields() {}
 
     /**
-     * Call this static method to define the component as a custom element with the browser.
+     * Call this static method to define the component as a custom element with
+     * the browser.
      *
      * ```js
      * class MyComponent extends Component {
@@ -292,8 +302,15 @@ function componentOf(ElementClass) {
      * MyComponent.register(myTemplateNode);
      * ```
      *
-     * @param {HTMLElement|string|undefined} [templatable] optional template element or selector
-     * @param {Queryable} [queryable=document] optional scope for the template selector
+     * When defining a template, register will look for a `<template>` element
+     * that matches the kabob-case of the component's class name. The shadow
+     * DOM can be used instead by adding the `data-shadow` attribute to the
+     * template element.
+     *
+     * @param {HTMLElement|string|undefined} [templatable] optional template
+     * element or selector
+     * @param {Queryable} [queryable=document] optional scope for the template
+     * selector
      */
     static register(templatable, queryable = document) {
       let templateFactory;
@@ -303,7 +320,7 @@ function componentOf(ElementClass) {
         templateFactory = () => templatable;
       } else {
         let templateEl = queryable.querySelector(`template#${this.tagName}`);
-        templateFactory = () => templateEl ?? makeTemplateElement(this.template);
+        templateFactory = () => templateEl ?? makeTemplateElement(this);
       }
       templates.set(this.tagName, templateFactory());
       customElements.define(this.tagName, this);
@@ -333,6 +350,25 @@ function componentOf(ElementClass) {
      *
      * ```js
      * class MyComponent extends Component {
+     *   static get shadow() {
+     *     return `<p>lorem ipsum</p>`;
+     *   }
+     * }
+     * ```
+     *
+     * @member {string}
+     */
+    static get shadow() {
+      return '<style>:host { all: inherit; }</style><slot></slot>';
+    }
+
+    /**
+     * Optional string version of the innerHTML template.
+     * Defaults to `null`.
+     * Return `null` to **disable** appendChild on construction.
+     *
+     * ```js
+     * class MyComponent extends Component {
      *   static get template() {
      *     return `<p>lorem ipsum</p>`;
      *   }
@@ -342,7 +378,7 @@ function componentOf(ElementClass) {
      * @member {string}
      */
     static get template() {
-      return '<style>:host { all: inherit; }</style><slot></slot>';
+      return null;
     }
 
   }

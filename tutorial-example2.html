@@ -127,7 +127,7 @@
     <script type="module" src="./scripts/example-source.js"></script>
 
 <h2 class="[ tutorial ] [ subtitle ]">
-  <code>static template = `&hellip;`;</code> string
+  <code>static shadow = `&hellip;`;</code> string
 </h2>
 
 <example-source lang="html">
@@ -162,7 +162,7 @@ class FooBar extends Component {
     return `bar-${this.foo}`;
   }
 
-  static get template() {
+  static get shadow() {
     return `
       <button class="go">+1</button>
       <output class="foo"></output>

@@ -130,7 +130,7 @@
 
 <ol>
   <li><example-link num="1">HTML <code>&lt;template&gt;</code></example-link></li>
-  <li><example-link num="2"><code>static template = `&hellip;`;</code> string</example-link></li>
+  <li><example-link num="2"><code>static shadow = `&hellip;`;</code> string</example-link></li>
   <li><example-link num="3">HTML <code>&lt;template&gt;</code> with hardcoded ID</example-link></li>
   <li><example-link num="4">Global tracking object using <code>tracked()</code></example-link></li>
   <li><example-link num="5">Manual global tracking (lower level API)</example-link></li>
@@ -173,7 +173,7 @@ function capitalize(str) {
 class ExampleLink extends Component {
   render() {
     let { num, word } = this;
-    this.shadow.innerHTML = ExampleLink.template
+    this.shadow.innerHTML = ExampleLink.shadow
       .replace(/{{(\w+)}}/g, (_, g1) => this[g1]);
   }
   get num() {
@@ -182,7 +182,7 @@ class ExampleLink extends Component {
   get word() {
     return capitalize(convertTens(this.num));
   }
-  static get template() {
+  static get shadow() {
     return `<a href="tutorial-example{{num}}.html">Example {{word}}</a> &mdash; <slot></slot>`;
   }
   static get observedAttributes() {

@@ -148,7 +148,7 @@ import Component from './component.js';
 import { tracked } from './tracking.js';
 
 class TickerData extends Component {
-  static get template() { return null; }
+  static get shadow() { return null; }
   constructor() {
     super();
     this.count = tracked(0);
@@ -180,7 +180,7 @@ TickerData.register();
 import Component from './component.js';
 
 class TickerDisplay extends Component {
-  static get template() { return '<time></time>'; }
+  static get shadow() { return '<time></time>'; }
   render(attrs) {
     let { yieldedCount } = attrs.tickerData;
     let el = this.shadow.querySelector('time');

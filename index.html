@@ -145,7 +145,10 @@
 
 
     <section>
-        <article><p style="text-align: center;"><img src="https://fancy-pants.js.org/images/logo.png" width="128" style="border-radius: 24px;" alt="FancyPants logo"></p>
+        <article><p style="display: flex; flex-direction: column; align-items: center;">
+  <img src="https://fancy-pants.js.org/images/logo.png" width="128" style="border-radius: 24px;" alt="FancyPants logo">
+  <span style="font-family: monospace; margin-top: 0.5rem;">Version 2.0.0</span>
+</p>
 <p>Have you ever been working on a simple JavaScript project like a bookmarklet or
 tiny static site and thought to yourself if only you could have a backbone like
 micro-lib to make writing <strong>custom elements</strong> easier?</p>
@@ -178,7 +181,7 @@ class MyCustomElement extends Component {
   }
 
   // Use this innerHTML to create the Shadow DOM
-  static get template() {
+  static get shadow() {
     return `&lt;span>Counter: &lt;output>&lt;/output>&lt;/span>`;
   }
 
@@ -186,7 +189,7 @@ class MyCustomElement extends Component {
 
 MyCustomElement.register();
 </code></pre>
-<p><a href="https://fancy-pants.js.org/tutorial-6.html">demo</a></p>
+<p><a href="https://fancy-pants.js.org/tutorial-example6.html">demo</a></p>
 <p><em>NOTE:</em> for <strong>Safari Mobile</strong> you will have to assign <code>tracked()</code> properties in
 the <code>constructor</code> instead of as a field since Apple is dragging their feet on
 modern JavaScript support.</p>
