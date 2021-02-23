@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright © 2020 Devin Weaver, https://tritarget.org <suki@tritarget.org>
+Copyright © 2021 Devin Weaver, https://tritarget.org <suki@tritarget.org>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the “Software”), to deal
