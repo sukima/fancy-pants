@@ -39,7 +39,7 @@ class MyCustomElement extends Component {
   }
 
   // Use this innerHTML to create the Shadow DOM
-  static get template() {
+  static get shadow() {
     return `<span>Counter: <output></output></span>`;
   }
 
@@ -48,7 +48,7 @@ class MyCustomElement extends Component {
 MyCustomElement.register();
 ```
 
-[demo](https://fancy-pants.js.org/tutorial-6.html)
+[demo](https://fancy-pants.js.org/tutorial-example6.html)
 
 *NOTE:* for **Safari Mobile** you will have to assign `tracked()` properties in
 the `constructor` instead of as a field since Apple is dragging their feet on

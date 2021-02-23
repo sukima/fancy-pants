@@ -74,7 +74,7 @@ FpsMeter.register();
 
 </script>
 
-<template id="fps-meter">
+<template id="fps-meter" data-shadow>
   <span id="kFps"></span>
   <progress id="kpFps" value="0" min="0" max="100" style="vertical-align:middle"></progress>
 </template>
@@ -115,7 +115,7 @@ document.querySelector('#emojiCount')
 <!-- HTML {{{2 -->
 <example-source lang="html">
 
-<template id="blinkn-lights">
+<template id="blinkn-lights" data-shadow>
   <style>
     :host {
       display: grid;
@@ -227,7 +227,7 @@ BlinknLights.register();
 <!-- HTML {{{2 -->
 <example-source lang="html">
 
-<template id="blinkn-light">
+<template id="blinkn-light" data-shadow>
   <style>
     :host {
       font-size: var(--emoji-size, inherit);
@@ -299,7 +299,7 @@ class PlayPauseButton extends Component {
     let id = this.getAttribute('for');
     return document.querySelector(`#${id}`);
   }
-  static get template() {
+  static get shadow() {
     return `<button type="button"></button>`;
   }
 }
