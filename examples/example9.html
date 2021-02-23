@@ -153,7 +153,7 @@ class SelectAll extends Component {
     let isNone = !isIndeterminate && indeterminateCheck.has(false);
     return { isAll, isNone, isIndeterminate };
   }
-  static get template() {
+  static get shadow() {
     return `
       <input type="checkbox" id="select-all">
       <label for="select-all">Select all</label>
@@ -192,7 +192,7 @@ class DownloadButton extends Component {
     let disabled = this.selectionData.every(i => !i.isChecked);
     this.shadow.querySelector('button').disabled = disabled;
   }
-  static get template() {
+  static get shadow() {
     return '<button type="button">Download data</button>';
   }
 }
