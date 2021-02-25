@@ -1,7 +1,7 @@
 /**********************************************\
 *  FancyPants — customElements micro-lib   O   *
 *  MIT — Copyright © 2021 Devin Weaver    /|\  *
-*  https://fancy-pants.js.org/   v2.0.0   </>  *
+*  https://fancy-pants.js.org/   v2.1.0   </>  *
 \**********************************************/
 /** @module component */
 import {
@@ -45,6 +45,19 @@ function makeTemplateElement({ template, shadow }) {
     element.dataset.shadow = true;
   }
   return element;
+}
+
+function appendWithSlotableContent(target, content) {
+  target.querySelectorAll('[slot]').forEach(node => {
+    let slotName = node.getAttribute('slot');
+    let slot = content.querySelector(`slot[name="${slotName}"]`);
+    if (!slot) { return; }
+    slot.after(node);
+    node.removeAttribute('slot');
+  });
+  content.querySelector('slot:not([name])')?.after(...target.childNodes);
+  content.querySelectorAll('slot').forEach(node => node.remove());
+  target.append(content);
 }
 
 /**
@@ -133,7 +146,7 @@ function componentOf(ElementClass) {
       let template = templates.get(this.tagName.toLowerCase());
       if (template) {
         if (template.dataset.shadow === undefined) {
-          this.appendChild(template.content.cloneNode(true));
+          appendWithSlotableContent(this, template.content.cloneNode(true));
         } else {
           this.shadow = this.attachShadow({ mode: 'open' });
           this.shadow.appendChild(template.content.cloneNode(true));
