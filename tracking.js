@@ -1,7 +1,7 @@
 /**********************************************\
 *  FancyPants — customElements micro-lib   O   *
 *  MIT — Copyright © 2021 Devin Weaver    /|\  *
-*  https://fancy-pants.js.org/   v2.1.0   </>  *
+*  https://fancy-pants.js.org/   v2.2.0   </>  *
 \**********************************************/
 /**
  * ```js
@@ -29,8 +29,8 @@ class Tag {
 }
 
 class TrackedProperty {
-  constructor(initialValue) {
-    this.initialValue = initialValue;
+  constructor(initializer) {
+    this.initializer = initializer;
   }
 }
 
@@ -122,13 +122,13 @@ function isTrackedPropertyDescriptor(descriptor) {
   return descriptor.value instanceof TrackedProperty;
 }
 
-function trackedDescriptor(initialValue) {
+function trackedDescriptor(initializer = () => {}) {
   let tags = new WeakMap();
   let values = new WeakMap();
   return {
     get() {
       if (!values.has(this)) {
-        values.set(this, initialValue);
+        values.set(this, initializer.call(this));
         tags.set(this, createTag());
       }
       consumeTag(tags.get(this));
@@ -150,13 +150,16 @@ function trackedDescriptor(initialValue) {
  * [activateTracking]{@link module:tracking.activateTracking} converts them
  * into getters and setters,
  *
- * @param {any} [initialValue] any initial value the tracked property will have
+ * @param {any} [initialValue] any initial value the tracked property will
+ * have. Pass a function to have it execute on initialization.
  * @return {TrackedProperty} an internal representatino of a tracked property.
  * Object must be activated with {@link tracking.activateTracking} to be of any
  * use.
  */
 export function tracked(initialValue) {
-  return new TrackedProperty(initialValue);
+  return new TrackedProperty(
+    typeof initialValue === 'function' ? initialValue : () => initialValue
+  );
 }
 
 /**
@@ -166,7 +169,7 @@ export function tracked(initialValue) {
  *
  * ```js
  * let obj = {};
- * defineTrackedProp(ctx, 'foobar', 'FOO');
+ * defineTrackedProp(ctx, 'foobar', () => 'FOO');
  * ```
  *
  * Is the same as
@@ -179,10 +182,11 @@ export function tracked(initialValue) {
  *
  * @param {Object} ctx the object to assign a tracked getter/setter on
  * @param {string} propName the name of the tracked property
- * @param {any} [initialValue] the initial value of the tracked property
+ * @param {function} [initializer] a function that returns the property's
+ * initial value.
  */
-export function defineTrackedProp(ctx, propName, initialValue) {
-  Reflect.defineProperty(ctx, propName, trackedDescriptor(initialValue));
+export function defineTrackedProp(ctx, propName, initializer) {
+  Reflect.defineProperty(ctx, propName, trackedDescriptor(initializer));
 }
 
 /**
@@ -206,7 +210,7 @@ export function activateTracking(ctx) {
   for (let prop of Reflect.ownKeys(ctx)) {
     let descriptor = Reflect.getOwnPropertyDescriptor(ctx, prop);
     if (!isTrackedPropertyDescriptor(descriptor)) { continue; }
-    defineTrackedProp(ctx, prop, descriptor.value.initialValue);
+    defineTrackedProp(ctx, prop, descriptor.value.initializer);
   }
   return ctx;
 }

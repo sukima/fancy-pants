@@ -384,7 +384,7 @@ objects.</p></td>
         <p class="tag-source">
             <a href="tracking.js.html" class="button">View Source</a>
             <span>
-                <a href="tracking.js.html">tracking.js</a>, <a href="tracking.js.html#line200">line 200</a>
+                <a href="tracking.js.html">tracking.js</a>, <a href="tracking.js.html#line204">line 204</a>
             </span>
         </p>
     
@@ -727,7 +727,7 @@ for <a href="module-tracking.html#.dirtyTag"><code>dirtyTag</code></a> and
         
         <span class="code-name">
             
-                defineTrackedProp<span class="signature">(ctx, propName, initialValue<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
+                defineTrackedProp<span class="signature">(ctx, propName, initializer<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
             
         </span>
     </h4>
@@ -740,7 +740,7 @@ for <a href="module-tracking.html#.dirtyTag"><code>dirtyTag</code></a> and
 of <code>tracked</code> and
 <code>activateTracking</code></p>
 <pre class="prettyprint source lang-js"><code>let obj = {};
-defineTrackedProp(ctx, 'foobar', 'FOO');
+defineTrackedProp(ctx, 'foobar', () => 'FOO');
 </code></pre>
 <p>Is the same as</p>
 <pre class="prettyprint source lang-js"><code>let obj = activateTracking({
@@ -852,13 +852,13 @@ defineTrackedProp(ctx, 'foobar', 'FOO');
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>initialValue</code></td>
+      <td class="name"><code>initializer</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">any</span>
+<span class="param-type">function</span>
 
 
   
@@ -878,7 +878,8 @@ defineTrackedProp(ctx, 'foobar', 'FOO');
 
   
 
-  <td class="description last"><p>the initial value of the tracked property</p></td>
+  <td class="description last"><p>a function that returns the property's
+initial value.</p></td>
 </tr>
 
 
@@ -926,7 +927,7 @@ defineTrackedProp(ctx, 'foobar', 'FOO');
         <p class="tag-source">
             <a href="tracking.js.html" class="button">View Source</a>
             <span>
-                <a href="tracking.js.html">tracking.js</a>, <a href="tracking.js.html#line179">line 179</a>
+                <a href="tracking.js.html">tracking.js</a>, <a href="tracking.js.html#line183">line 183</a>
             </span>
         </p>
     
@@ -1527,7 +1528,8 @@ into getters and setters,</p>
 
   
 
-  <td class="description last"><p>any initial value the tracked property will have</p></td>
+  <td class="description last"><p>any initial value the tracked property will
+have. Pass a function to have it execute on initialization.</p></td>
 </tr>
 
 
@@ -1575,7 +1577,7 @@ into getters and setters,</p>
         <p class="tag-source">
             <a href="tracking.js.html" class="button">View Source</a>
             <span>
-                <a href="tracking.js.html">tracking.js</a>, <a href="tracking.js.html#line153">line 153</a>
+                <a href="tracking.js.html">tracking.js</a>, <a href="tracking.js.html#line154">line 154</a>
             </span>
         </p>
     
