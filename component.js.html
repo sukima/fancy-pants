@@ -485,8 +485,7 @@ function componentOf(ElementClass) {
 
     /**
      * Optional string version of the Shadow DOM template.
-     * Defaults to `&lt;slot>&lt;/slot>`.
-     * Return `null` to **disable** the ShadowDOM (`this.shadow`).
+     * Defaults to null.
      *
      * ```js
      * class MyComponent extends Component {
@@ -499,7 +498,7 @@ function componentOf(ElementClass) {
      * @member {string}
      */
     static get shadow() {
-      return '&lt;style>:host { all: inherit; }&lt;/style>&lt;slot>&lt;/slot>';
+      return null;
     }
 
     /**

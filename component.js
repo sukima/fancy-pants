@@ -1,7 +1,7 @@
 /**********************************************\
 *  FancyPants — customElements micro-lib   O   *
 *  MIT — Copyright © 2021 Devin Weaver    /|\  *
-*  https://fancy-pants.js.org/   v2.2.0   </>  *
+*  https://fancy-pants.js.org/   v2.3.0   </>  *
 \**********************************************/
 /** @module component */
 import {
@@ -358,8 +358,7 @@ function componentOf(ElementClass) {
 
     /**
      * Optional string version of the Shadow DOM template.
-     * Defaults to `<slot></slot>`.
-     * Return `null` to **disable** the ShadowDOM (`this.shadow`).
+     * Defaults to null.
      *
      * ```js
      * class MyComponent extends Component {
@@ -372,7 +371,7 @@ function componentOf(ElementClass) {
      * @member {string}
      */
     static get shadow() {
-      return '<style>:host { all: inherit; }</style><slot></slot>';
+      return null;
     }
 
     /**
