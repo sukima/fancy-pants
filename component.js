@@ -1,7 +1,7 @@
 /**********************************************\
 *  FancyPants — customElements micro-lib   O   *
 *  MIT — Copyright © 2021 Devin Weaver    /|\  *
-*  https://fancy-pants.js.org/   v2.3.0   </>  *
+*  https://fancy-pants.js.org/   v2.4.0   </>  *
 \**********************************************/
 /** @module component */
 import {
@@ -50,10 +50,7 @@ function makeTemplateElement({ template, shadow }) {
 function appendWithSlotableContent(target, content) {
   target.querySelectorAll('[slot]').forEach(node => {
     let slotName = node.getAttribute('slot');
-    let slot = content.querySelector(`slot[name="${slotName}"]`);
-    if (!slot) { return; }
-    slot.after(node);
-    node.removeAttribute('slot');
+    content.querySelector(`slot[name="${slotName}"]`)?.after(node);
   });
   content.querySelector('slot:not([name])')?.after(...target.childNodes);
   content.querySelectorAll('slot').forEach(node => node.remove());
@@ -299,7 +296,9 @@ function componentOf(ElementClass) {
      * @tutorial example10
      * @return any
      */
-    yields() {}
+    yields() {
+      return this;
+    }
 
     /**
      * Call this static method to define the component as a custom element with
