@@ -1,6 +1,6 @@
 {
   "name": "fancy-pants",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "A performant JavaScript Micro-lib for Custom Elements with reactive updates via dirty tracking",
   "repository": "git@github.com:sukima/fancy-pants.git",
   "author": "Devin Weaver (@sukima) <suki@tritarget.org> (https://tritarget.org/)",
