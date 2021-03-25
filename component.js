@@ -1,7 +1,7 @@
 /**********************************************\
 *  FancyPants — customElements micro-lib   O   *
 *  MIT — Copyright © 2021 Devin Weaver    /|\  *
-*  https://fancy-pants.js.org/   v2.4.0   </>  *
+*  https://fancy-pants.js.org/   v2.5.0   </>  *
 \**********************************************/
 /** @module component */
 import {
@@ -22,18 +22,13 @@ setOnTagDirtied(scheduleRender);
 
 const ATTRIBUTE_TAGS = Symbol('attribute tags');
 const RENDER = Symbol('memoized render');
-const YIELDS = Symbol('yieldable identifier');
 const templates = new Map();
-const yieldables = new Map();
-const yieldableProxy = new Proxy(yieldables, { get: (t, p) => t.get(p)?.yields() });
 
-function dasherize(str) {
-  return str.replace(/([a-z\d])([A-Z])/g, '$1-$2').toLowerCase();
-}
-
-function camelize(str) {
-  return dasherize(str).replace(/-([a-z])/g, (_, g1) => g1.toUpperCase());
-}
+const dasherize = (str) => str.replace(/([a-z\d])([A-Z])/g, '$1-$2').toLowerCase();
+const findClosest = (t, s) => t.closest(`#${s}`) ?? t.closest(s);
+const yieldableProxy = (self) => new Proxy(self, {
+  get: (t, p) => findClosest(t, dasherize(p))?.yields?.(),
+});
 
 function makeTemplateElement({ template, shadow }) {
   if (template === null && shadow === null) { return null; }
@@ -152,8 +147,7 @@ function componentOf(ElementClass) {
       this[ATTRIBUTE_TAGS] = new Map(
         (this.constructor.observedAttributes ?? []).map(i => [i, createTag()])
       );
-      this[YIELDS] = this.getAttribute('id') || camelize(this.tagName);
-      this[RENDER] = memoizeFunction(() => this.render(yieldableProxy));
+      this[RENDER] = memoizeFunction(() => this.render(yieldableProxy(this)));
     }
 
     /**
@@ -174,7 +168,6 @@ function componentOf(ElementClass) {
      */
     connectedCallback() {
       this.track();
-      yieldables.set(this[YIELDS], this);
       registerRenderer(this[RENDER]);
       scheduleRender();
     }
@@ -194,7 +187,6 @@ function componentOf(ElementClass) {
      * ```
      */
     disconnectedCallback() {
-      yieldables.delete(this[YIELDS]);
       unregisterRenderer(this[RENDER]);
     }
 
