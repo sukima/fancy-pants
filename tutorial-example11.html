@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FancyPants Example Three (HTML template custom ID)</title>
+  <title>FancyPants Example Ten (Modal dialog)</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -119,62 +119,196 @@
             <div class="content">
                 <header class="page-title">
                     <p>Tutorial</p>
-                    <h1>Example Three (HTML template custom ID)</h1>
+                    <h1>Example Ten (Modal dialog)</h1>
                 </header>
                 <section>
 
 <article>
-    <script type="module" src="./scripts/example-source.js"></script>
+    <style>
+  simple-modal {
+    display: none;
+    --simple-modal-padding: 1rem;
+  }
+
+  simple-modal[open] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #0006;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  simple-modal dialog {
+    max-width: 70vw;
+    max-height: 80vh;
+    box-shadow: 4px 4px 6px black;
+    border: thin solid black;
+    border-radius: 6px;
+    position: relative;
+    padding: var(--simple-modal-padding);
+    overflow: auto;
+  }
+
+  simple-modal header h1 {
+    margin-top: 0;
+  }
+
+  simple-modal header button {
+    position: absolute;
+    right: var(--simple-modal-padding);
+    top: var(--simple-modal-padding);
+  }
+
+  .btn-group {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .btn-group > * {
+    width: 100%;
+  }
+
+  .btn-group > * + * {
+    margin-left: 1rem;
+  }
+</style>
+
+<script type="module" src="./scripts/example-source.js"></script>
 
 <h2 class="[ tutorial ] [ subtitle ]">
-  HTML <code>&lt;template&gt;</code> with hardcoded ID
+  Modal dialog
 </h2>
 
 <example-source lang="html">
 
-<p><foo-bar></foo-bar></p>
-<p><foo-bar></foo-bar></p>
+<button type="button" id="open-modal">Open example modal</button>
 
-<template id="different-id" data-shadow>
-  <button class="go">+1</button>
-  <output class="foo"></output>
-  <output class="bar"></output>
-</template>
+<simple-modal id="my-modal">
+  <span slot="header">Lorem Ipsum</span>
+  <div slot="content">
+    <p>You can dismiss this modal by the buttons or pressing <kbd>Escape</kbd>. All form elements are removed from tab index except those in the modal. Result of closing model is printed to the console.</p>
+    <p>Do you like waffles?</p>
+  </div>
+  <div class="btn-group" slot="footer">
+    <button type="button" data-action="reject">No</button>
+    <button type="button" data-action="confirm">Yes</button>
+  </div>
+</simple-modal>
 
 </example-source>
 
-<example-source lang="js" strip-script>
+<h3>SimpleModal</h3>
+
+<example-source lang="javascript" strip-script>
 
 <script type="module">
 
-import Component from './component.js';
-import { tracked } from './tracking.js';
+import $ from 'https://tritarget.org/cdn/simple-dom.js';
+import Component from 'https://fancy-pants.js.org/min/component.js';
+import { confineTabbing, releaseTabbing } from 'https://tritarget.org/cdn/tabbing.js';
 
-class FooBar extends Component {
+const uniqueId = (() => {
+  let lastId = 0;
+  return () => lastId++;
+})();
 
+class SimpleModal extends Component {
+  dialog = $(this).dialog;
+  releaseKeyboard = () => {};
+  modalResolver = { resolve() {}, reject() {} };
   constructor() {
     super();
-    this.foo = tracked(0);
-    this.shadow.querySelector('.go')
-      .addEventListener('click', () => { this.foo += 1 });
+    this.id = this.id || `simple-model${uniqueId()}`;
+    $(this).on.click(e => this.handleAction(e));
   }
-
+  handleAction(event) {
+    event.stopPropagation();
+    let { action } = event.target.dataset;
+    if (['cancel', 'confirm', 'reject', 'error'].includes(action)) {
+      this[action]();
+    } else if (event.target === this) {
+      this.cancel();
+    }
+  }
+  trapKeyboard() {
+    const keyboardHandler = e => {
+      switch (e.key) {
+        case 'Escape': return this.cancel();
+        default: // ignore
+      }
+    };
+    this.releaseKeyboard = $.on.keydown(keyboardHandler, true);
+  }
+  open() {
+    let lastFocusedElement = new WeakRef(document.activeElement);
+    return new Promise((resolve, reject) => {
+      this.modalResolver = { resolve, reject };
+      confineTabbing(this.dialog);
+      this.trapKeyboard();
+      this.setAttribute('open', '');
+      this.dialog.focus({ preventScroll: true });
+    }).finally(() => {
+      releaseTabbing();
+      this.releaseKeyboard();
+      this.removeAttribute('open');
+      lastFocusedElement.deref()?.focus();
+    });
+  }
+  cancel(value) {
+    this.modalResolver.resolve({ reason: 'cancelled', value });
+  }
+  confirm(value) {
+    this.modalResolver.resolve({ reason: 'confirmed', value });
+  }
+  reject(value) {
+    this.modalResolver.resolve({ reason: 'rejected', value });
+  }
+  error(error) {
+    this.modalResolver.reject(error);
+  }
   render() {
-    this.shadow.querySelector('.foo').value = this.foo;
-    this.shadow.querySelector('.bar').value = this.bar;
+    let ariaLabelId = `${this.id}-title`;
+    this.dialog['header h1'].id = ariaLabelId;
+    this.dialog.setAttribute('aria-labelledby', ariaLabelId);
+    this.dialog.toggleAttribute('open', this.hasAttribute('open'));
   }
-
-  get bar() {
-    return `bar-${this.foo}`;
+  static get observedAttributes() {
+    return ['open'];
   }
-
+  static get template() {
+    return `
+      <dialog>
+        <header>
+          <button type="button" aria-label="dismiss" data-action="cancel">&cross;</button>
+          <h1><slot name="header"></slot></h1>
+        </header>
+        <section><slot name="content"></slot></section>
+        <footer><slot name="footer"></slot></footer>
+      </dialog>
+    `;
+  }
 }
-
-FooBar.register('#different-id');
+SimpleModal.register();
 
 </script>
 
 </example-source>
+
+<script type="module">
+
+import $ from 'https://tritarget.org/cdn/simple-dom.js';
+
+$['#open-modal'].on.click(async (e) => {
+  e.preventDefault();
+  let { reason } = await $['#my-modal'].open();
+  console.log(`Modal was ${reason}`);
+});
+
+</script>
 
 </article>
 
