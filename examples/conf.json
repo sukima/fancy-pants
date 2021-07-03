@@ -7,36 +7,51 @@
   },
   "90-examples": {
     "title": "Examples",
-    "children": ["example1", "example2", "example3", "example4", "example5", "example6", "example7", "example8", "example9", "example10"]
+    "children": [
+      "example1",
+      "example2",
+      "example3",
+      "example4",
+      "example5",
+      "example6",
+      "example7",
+      "example8",
+      "example9",
+      "example10",
+      "example11"
+    ]
   },
   "example1": {
-    "title": "Example One"
+    "title": "Example One (HTML template)"
   },
   "example2": {
-    "title": "Example Two"
+    "title": "Example Two (shadow JS template)"
   },
   "example3": {
-    "title": "Example Three"
+    "title": "Example Three (HTML template custom ID)"
   },
   "example4": {
-    "title": "Example Four"
+    "title": "Example Four (Global tracking)"
   },
   "example5": {
-    "title": "Example Five"
+    "title": "Example Five (Manual tracking)"
   },
   "example6": {
-    "title": "Example Six"
+    "title": "Example Six (Counter)"
   },
   "example7": {
-    "title": "Example Seven"
+    "title": "Example Seven (Emojies)"
   },
   "example8": {
-    "title": "Example Eight"
+    "title": "Example Eight (Tables)"
   },
   "example9": {
-    "title": "Example Nine"
+    "title": "Example Nine (Select all)"
   },
   "example10": {
-    "title": "Example Ten"
+    "title": "Example Ten (Providers)"
+  },
+  "example11": {
+    "title": "Example Ten (Modal dialog)"
   }
 }
