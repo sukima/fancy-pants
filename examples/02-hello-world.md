@@ -18,7 +18,7 @@ import Component from '../component.js';
 
 class HelloWorld extends Component {
   render() {
-    this.shadow.innerHTML = `
+    this.innerHTML = `
       <style>
       span { background-color: #bada55; }
       </style>

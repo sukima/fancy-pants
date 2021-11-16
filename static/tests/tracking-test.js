@@ -81,6 +81,10 @@ module('tracking', function (hooks) {
       assert.strictEqual(subject.value, 'BAR');
       assert.strictEqual(subject.revision, originalRevision + 1, 'revision');
       assert.strictEqual(scheduleRerenderCount, 1, 'renderer called');
+      subject.value = 'BAR';
+      assert.strictEqual(subject.value, 'BAR');
+      assert.strictEqual(subject.revision, originalRevision + 1, 'revision');
+      assert.strictEqual(scheduleRerenderCount, 1, 'renderer called');
     });
 
     test('#dirty()', function (assert) {

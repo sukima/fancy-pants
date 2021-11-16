@@ -22,27 +22,30 @@
 <script type="module">
 
 import Component from './component.js';
-import { tracked, dirtyTag, consumeTag, createTag } from './tracking.js';
+import { Tracked } from './tracking.js';
 
-const globalTag = createTag();
-let globalValue = 0;
+let globalTracked = new Tracked(0);
 
 function updateGlobalValue() {
-  dirtyTag(globalTag);
-  globalValue++;
+  globalTracked.value++;
 }
 
 function getGlobalValue() {
-  consumeTag(globalTag);
-  return globalValue;
+  return globalTracked.value;
 }
 
 class FooBar extends Component {
 
-  constructor() {
-    super();
+  connectedCallback() {
+    super.connectedCallback();
     this.shadow.querySelector('.go')
       .addEventListener('click', updateGlobalValue);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.shadow.querySelector('.go')
+      .removeEventListener('click', updateGlobalValue);
   }
 
   render() {
