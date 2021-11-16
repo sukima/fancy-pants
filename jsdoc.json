@@ -21,6 +21,10 @@
       "head": "<meta name=\"description\" content=\"A performant JavaScript micro-lib for Custom Elements with reactive updates via dirty tracking\">\n    <meta name=\"twitter:image:src\" content=\"https://raw.githubusercontent.com/sukima/fancy-pants/main/static/images/logo.png\" /><meta name=\"twitter:site\" content=\"@sukima\" /><meta name=\"twitter:card\" content=\"summary\" /><meta name=\"twitter:title\" content=\"FancyPants\" /><meta name=\"twitter:description\" content=\"A performant JavaScript micro-lib for Custom Elements with reactive updates via dirty tracking\" />\n    <meta property=\"og:image\" content=\"https://raw.githubusercontent.com/sukima/fancy-pants/main/static/images/logo.png\" /><meta property=\"og:site_name\" content=\"FancyPants\" /><meta property=\"og:type\" content=\"object\" /><meta property=\"og:title\" content=\"FancyPants\" /><meta property=\"og:url\" content=\"https://github.com/sukima/fancy-pants\" /><meta property=\"og:description\" content=\"A performant JavaScript micro-lib for Custom Elements with reactive updates via dirty tracking\" />",
       "navLinks": [
         {
+          "label": "Test Suite",
+          "href": "./tests/"
+        },
+        {
           "label": "Github",
           "href": "https://github.com/sukima/fancy-pants"
         }
