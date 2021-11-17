@@ -197,16 +197,6 @@ class MyCustomElement extends Component {
 MyCustomElement.register();
 </code></pre>
 <p><a href="https://fancy-pants.js.org/tutorial-example6.html">demo</a></p>
-<p><em>NOTE:</em> for <strong>Safari Mobile</strong> you will have to assign <code>tracked()</code> properties in
-the <code>constructor</code> instead of as a field since Apple is dragging their feet on
-modern JavaScript support.</p>
-<pre class="prettyprint source lang-javascript"><code>class MyCustomElement extends Component {
-  constructor() {
-    super();
-    this.count = tracked(0);
-  }
-}
-</code></pre>
 <h2>Locations</h2>
 <h4>Minified</h4>
 <ul>
