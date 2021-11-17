@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FancyPants tracking</title>
+  <title>FancyPants Cache</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -125,8 +125,8 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p>Module</p>
-                    <h1>tracking</h1>
+                    <p>Class</p>
+                    <h1>Cache</h1>
                 </header>
                 
 
@@ -137,8 +137,19 @@
 
 <header>
     
+        <h2><span class="attribs"><span class="type-signature"></span></span>
+            <span class="ancestors"><a href="module-tracking.html">tracking</a>.</span>Cache<span class="signature">(valueFn)</span><span class="type-signature"></span></h2>
         
-            
+            <div class="class-description"><p>Represents a cache for a tracked value. It uses a function to find the
+actual value and caches it. Then as long as none of the Tracked instances it
+encounters during the execution of the function have not dirtied then the
+result of this Cache's value remains the same. Only when Tracked instances
+are dirtied would this re-execute the original function to update the cached
+value.</p>
+<p>This handles auto-tracking which means that while it is executing the
+function it is keeping track of any Tracked consumed. It then knows which
+Tracked to check with when it determines if it needs to re-evaluate the
+cached value.</p></div>
         
     
 </header>
@@ -147,155 +158,28 @@
     <div class="container-overview">
     
         
-            <div class="description"><pre class="prettyprint source lang-javascript"><code>// Unminified
-import { tracked } from 'https://fancy-pants.js.org/tracking.js';
-
-// Minified
-import { tracked } from 'https://fancy-pants.js.org/min/tracking.js';
-</code></pre>
-<p>This is the auto-tracking system and a use case for
-<a href="module-renderer.html#.scheduleRender"><code>scheduleRender</code></a>.</p></div>
-        
-
-        
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="tracking.js.html" class="button">View Source</a>
-            <span>
-                <a href="tracking.js.html">tracking.js</a>, <a href="tracking.js.html#line1">line 1</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    
-    </div>
-    
-    
-
-    
-
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="module-tracking.Cache.html">Cache</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-tracking.Tracked.html">Tracked</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <div class='vertical-section'>
-            <h1>Methods</h1>
-            <div class="members">
-            
-                <div class="member">
+            <div class='vertical-section'>
+                <div class="members">
+                    <div class="member">
+                        <div class=name>
+                            <span class="tag">Constructor</span>
+                        </div>
+                        
 
 
     
-    <h4 class="name" id=".activateTracking">
-        <a class="href-link" href="#.activateTracking">#</a>
-        
-            
-                <span class='tag'>static</span>
-            
+    <h4 class="name" id="Cache">
+        <a class="href-link" href="#Cache">#</a>
         
         <span class="code-name">
             
-                activateTracking<span class="signature">(owner)</span><span class="type-signature"> &rarr; {Object}</span>
+                new Cache<span class="signature">(valueFn)</span><span class="type-signature"></span>
             
         </span>
     </h4>
     
 
     
-    
-    <div class="description">
-        <p>This is how all <a href="module-tracking.html#.tracked"><code>tracked</code></a> properties are
-converted from the place holder TrackedProperty object into actual tracked
-getter/setters. Any object that uses <a href="module-tracking.html#.tracked"><code>tracked</code></a>
-must be passed through <code>activateTracking</code> otherwise the properties are
-useless.</p>
-    </div>
     
 
 
@@ -332,208 +216,7 @@ useless.</p>
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>owner</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">Object</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>the object to search and replace any Tracked
-objects.</p></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><p><a href="module-tracking.Tracked.html#.activate"><code>Tracked.activate</code></a></p></li>
-        </ul>
-    </dd>
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="tracking.js.html" class="button">View Source</a>
-            <span>
-                <a href="tracking.js.html">tracking.js</a>, <a href="tracking.js.html#line338">line 338</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'><p>the same owner object passed in to support chaining</p></div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">Object</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-    <h5>Examples</h5>
-    
-    
-        <pre class="prettyprint"><code>class Foo {
-  bar = tracked();
-}
-let foo = activateTracking(new Foo());
-foo.bar = 'BAR'; // will trigger a render (becomes dirty)</code></pre>
-    
-
-    
-        <pre class="prettyprint"><code>let obj = activateTracking({ bar: tracked('FOO') });
-foo.bar = 'BAR'; // will trigger a render (becomes dirty)</code></pre>
-    
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id=".memoizeFunction">
-        <a class="href-link" href="#.memoizeFunction">#</a>
-        
-            
-                <span class='tag'>static</span>
-            
-        
-        <span class="code-name">
-            
-                memoizeFunction<span class="signature">(fn)</span><span class="type-signature"> &rarr; {function}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        <p>Wrap a function to be memoized based on the auto-tracking system.</p>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>fn</code></td>
+      <td class="name"><code>valueFn</code></td>
   
 
   <td class="type">
@@ -549,7 +232,7 @@ foo.bar = 'BAR'; // will trigger a render (becomes dirty)</code></pre>
 
   
 
-  <td class="description last"><p>the function to memoized</p></td>
+  <td class="description last"><p>the function called to update the cached value</p></td>
 </tr>
 
 
@@ -597,7 +280,426 @@ foo.bar = 'BAR'; // will trigger a render (becomes dirty)</code></pre>
         <p class="tag-source">
             <a href="tracking.js.html" class="button">View Source</a>
             <span>
-                <a href="tracking.js.html">tracking.js</a>, <a href="tracking.js.html#line285">line 285</a>
+                <a href="tracking.js.html">tracking.js</a>, <a href="tracking.js.html#line192">line 192</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        
+    
+    </div>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class='vertical-section'>
+            <h1>Members</h1>
+            <div class="members">
+            
+                <div class="member">
+
+<h4 class="name" id="revision">
+    <a class="href-link" href="#revision">#</a>
+    
+    <span class="code-name">
+        revision
+    </span>
+    
+</h4>
+
+
+
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+<div class="table-container">
+    <table class="props table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+            
+<tr class="deep-level-0">
+    
+        <td class="name"><code>the</code></td>
+    
+
+    <td class="type">
+    
+        
+<span class="param-type">number</span>
+
+
+    
+    </td>
+
+    
+
+    
+
+    <td class="description last"><p>latest revision number for this Cache</p></td>
+</tr>
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="tracking.js.html" class="button">View Source</a>
+            <span>
+                <a href="tracking.js.html">tracking.js</a>, <a href="tracking.js.html#line240">line 240</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="value">
+    <a class="href-link" href="#value">#</a>
+    
+    <span class="code-name">
+        value
+    </span>
+    
+</h4>
+
+
+
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+<div class="table-container">
+    <table class="props table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+            
+<tr class="deep-level-0">
+    
+        <td class="name"><code>the</code></td>
+    
+
+    <td class="type">
+    
+        
+<span class="param-type">any</span>
+
+
+    
+    </td>
+
+    
+
+    
+
+    <td class="description last"><p>cached value</p></td>
+</tr>
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="tracking.js.html" class="button">View Source</a>
+            <span>
+                <a href="tracking.js.html">tracking.js</a>, <a href="tracking.js.html#line233">line 233</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+            </div>
+        </div>
+    
+
+    
+        <div class='vertical-section'>
+            <h1>Methods</h1>
+            <div class="members">
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".memoize">
+        <a class="href-link" href="#.memoize">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                memoize<span class="signature">()</span><span class="type-signature"> &rarr; {function}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>Convenience method to wrap a function in a Cache so that it is memoized.</p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+<div class="table-container">
+    <table class="props table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+            
+<tr class="deep-level-0">
+    
+        <td class="name"><code>fn</code></td>
+    
+
+    <td class="type">
+    
+        
+<span class="param-type">function</span>
+
+
+    
+    </td>
+
+    
+
+    
+
+    <td class="description last"><p>the function to be wrapped</p></td>
+</tr>
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="tracking.js.html" class="button">View Source</a>
+            <span>
+                <a href="tracking.js.html">tracking.js</a>, <a href="tracking.js.html#line249">line 249</a>
             </span>
         </p>
     
@@ -654,16 +756,12 @@ foo.bar = 'BAR'; // will trigger a render (becomes dirty)</code></pre>
 
 
     
-    <h4 class="name" id=".setScheduleRerender">
-        <a class="href-link" href="#.setScheduleRerender">#</a>
-        
-            
-                <span class='tag'>static</span>
-            
+    <h4 class="name" id="execute">
+        <a class="href-link" href="#execute">#</a>
         
         <span class="code-name">
             
-                setScheduleRerender<span class="signature">(callback)</span><span class="type-signature"></span>
+                execute<span class="signature">()</span><span class="type-signature"> &rarr; {any}</span>
             
         </span>
     </h4>
@@ -672,11 +770,8 @@ foo.bar = 'BAR'; // will trigger a render (becomes dirty)</code></pre>
     
     
     <div class="description">
-        <p>Register a function to be called when a Tracked instance is dirtied.
-There can only be one. This is not used when working with the
-<a href="module-renderer.html"><code>renderer</code></a> or <a href="Component.html"><code>Component</code></a> class as they mange
-this for you.</p>
-<p>You would only use this if you were interfacing with this module on your own.</p>
+        <p>Execute the value function if it needs to be updated based on any
+dependent Tracked it encounters.</p>
     </div>
     
 
@@ -687,57 +782,6 @@ this for you.</p>
 
 
 
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>callback</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">function</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>the function to call when tags are dirtied</p></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
 
 
 
@@ -778,178 +822,7 @@ this for you.</p>
         <p class="tag-source">
             <a href="tracking.js.html" class="button">View Source</a>
             <span>
-                <a href="tracking.js.html">tracking.js</a>, <a href="tracking.js.html#line276">line 276</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id=".tracked">
-        <a class="href-link" href="#.tracked">#</a>
-        
-            
-                <span class='tag'>static</span>
-            
-        
-        <span class="code-name">
-            
-                tracked<span class="signature">(initialValue<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Tracked}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        <p>Create a Tracked instance.</p>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-            <th>Attributes</th>
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>initialValue</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">any</span>
-
-
-  
-  </td>
-
-  
-      <td class="attributes">
-      
-          &lt;optional><br>
-      
-
-      
-
-      
-      </td>
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><p><a href="module-tracking.Tracked.html"><code>Tracked</code></a></p></li>
-        </ul>
-    </dd>
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="tracking.js.html" class="button">View Source</a>
-            <span>
-                <a href="tracking.js.html">tracking.js</a>, <a href="tracking.js.html#line311">line 311</a>
+                <a href="tracking.js.html">tracking.js</a>, <a href="tracking.js.html#line209">line 209</a>
             </span>
         </p>
     
@@ -980,11 +853,13 @@ this for you.</p>
 
 <div class="columns">
     
+    <div class='param-desc column is-7'><p>the cached value of the previous execution</p></div>
+    
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">Tracked</span>
+<span class="param-type">any</span>
 
 
     </div>
@@ -996,26 +871,6 @@ this for you.</p>
     </div>
 
 
-
-
-    <h5>Examples</h5>
-    
-    
-        <pre class="prettyprint"><code>class Foo {
-  bar = tracked();
-}
-let foo = new Foo();
-foo.bar.revision; // 0
-foo.bar.value = 'BAR';
-foo.bar.revision; // 1</code></pre>
-    
-
-    
-        <pre class="prettyprint"><code>let foo = { bar: tracked('FOO') };
-foo.bar.revision; // 0
-foo.bar.value = 'BAR';
-foo.bar.revision; // 1</code></pre>
-    
 
 
 </div>

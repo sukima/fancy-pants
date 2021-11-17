@@ -1,33 +1,28 @@
 /**********************************************\
 *  FancyPants — customElements micro-lib   O   *
 *  MIT — Copyright © 2021 Devin Weaver    /|\  *
-*  https://fancy-pants.js.org/   v2.5.0   </>  *
+*  https://fancy-pants.js.org/   v3.0.0   </>  *
 \**********************************************/
 /** @module component */
-import {
-  activateTracking,
-  memoizeFunction,
-  createTag,
-  dirtyTag,
-  consumeTag,
-  setOnTagDirtied
-} from './tracking.js';
+import { Tracked, Cache, setScheduleRerender } from './tracking.js';
 import {
   scheduleRender,
   registerRenderer,
   unregisterRenderer
-} from './renderer.js';
+} from './rendering.js';
 
-setOnTagDirtied(scheduleRender);
+setScheduleRerender(scheduleRender);
 
-const ATTRIBUTE_TAGS = Symbol('attribute tags');
 const RENDER = Symbol('memoized render');
 const templates = new Map();
 
 const dasherize = (str) => str.replace(/([a-z\d])([A-Z])/g, '$1-$2').toLowerCase();
 const findClosest = (t, s) => t.closest(`#${s}`) ?? t.closest(s);
 const yieldableProxy = (self) => new Proxy(self, {
-  get: (t, p) => findClosest(t, dasherize(p))?.yields?.(),
+  get: (target, prop) => {
+    if (typeof prop !== 'string') return;
+    return findClosest(target, dasherize(prop))?.yields?.();
+  },
 });
 
 function makeTemplateElement({ template, shadow }) {
@@ -144,16 +139,13 @@ function componentOf(ElementClass) {
           this.shadow.appendChild(template.content.cloneNode(true));
         }
       }
-      this[ATTRIBUTE_TAGS] = new Map(
-        (this.constructor.observedAttributes ?? []).map(i => [i, createTag()])
-      );
-      this[RENDER] = memoizeFunction(() => this.render(yieldableProxy(this)));
+      this[RENDER] = Cache.memoize(() => this.render(yieldableProxy(this)));
     }
 
     /**
      * Here is a good place to add event listeners to the DOM.
-     * Activates tracking and registers this component instance with the renderer.
-     * First render is scheduled after this callback.
+     * Activates tracking and registers this component instance with the
+     * renderer. First render is scheduled after this callback.
      *
      * ```js
      * class MyComponent extends Component {
@@ -202,16 +194,16 @@ function componentOf(ElementClass) {
      * ```
      */
     attributeChangedCallback(name) {
-      dirtyTag(this[ATTRIBUTE_TAGS].get(name));
+      Tracked.for(this, name).dirty();
     }
 
     getAttribute(name) {
-      consumeTag(this[ATTRIBUTE_TAGS].get(name));
+      Tracked.for(this, name).consume();
       return super.getAttribute(name);
     }
 
     hasAttribute(name) {
-      consumeTag(this[ATTRIBUTE_TAGS].get(name));
+      Tracked.for(this, name).consume();
       return super.hasAttribute(name);
     }
 
@@ -230,7 +222,7 @@ function componentOf(ElementClass) {
      * @returns {this}
      */
     track() {
-      activateTracking(this);
+      Tracked.activate(this);
       return this;
     }
 

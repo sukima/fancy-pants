@@ -92,6 +92,13 @@
                     
                         <a
                             class="link user-link "
+                            href="./tests/"
+                        >
+                            Test Suite
+                        </a>
+                    
+                        <a
+                            class="link user-link "
                             href="https://github.com/sukima/fancy-pants"
                         >
                             Github
@@ -111,7 +118,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-component.html">component</a></li><li><a href="module-renderer.html">renderer</a></li><li><a href="module-tracking.html">tracking</a></li></ul><h3>Classes</h3><ul><li><a href="module-component-Component.html">Component</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-component.html">component</a></li><li><a href="module-renderer.html">renderer</a></li><li><a href="module-tracking.html">tracking</a></li></ul><h3>Classes</h3><ul><li><a href="module-component-Component.html">Component</a></li><li><a href="module-tracking.Cache.html">Cache</a></li><li><a href="module-tracking.Tracked.html">Tracked</a></li></ul></div>
                 
             </nav>
         </div>
@@ -147,7 +154,7 @@
     <section>
         <article><p style="display: flex; flex-direction: column; align-items: center;">
   <img src="https://fancy-pants.js.org/images/logo.png" width="128" style="border-radius: 24px;" alt="FancyPants logo">
-  <span style="font-family: monospace; margin-top: 0.5rem;">Version 2.5.0</span>
+  <span style="font-family: monospace; margin-top: 0.5rem;">Version 3.0.0</span>
 </p>
 <p>Have you ever been working on a simple JavaScript project like a bookmarklet or
 tiny static site and thought to yourself if only you could have a backbone like
@@ -155,7 +162,7 @@ micro-lib to make writing <strong>custom elements</strong> easier?</p>
 <p>No?! … oh guess it was just me. Well it is done now might as well show it.</p>
 <p>This <em>micro-lib</em> is an attempt to introduce some very modern ECMAScript ideas
 and allow you to make small and yet <em>performant</em> custom elements.</p>
-<pre class="prettyprint source lang-js"><code>import Component from 'https://fancy-pants.js.org/min/component.js';
+<pre class="prettyprint source lang-javascript"><code>import Component from 'https://fancy-pants.js.org/min/component.js';
 import { tracked } from 'https://fancy-pants.js.org/min/tracking.js';
 
 class MyCustomElement extends Component {
@@ -193,7 +200,7 @@ MyCustomElement.register();
 <p><em>NOTE:</em> for <strong>Safari Mobile</strong> you will have to assign <code>tracked()</code> properties in
 the <code>constructor</code> instead of as a field since Apple is dragging their feet on
 modern JavaScript support.</p>
-<pre class="prettyprint source lang-js"><code>class MyCustomElement extends Component {
+<pre class="prettyprint source lang-javascript"><code>class MyCustomElement extends Component {
   constructor() {
     super();
     this.count = tracked(0);
@@ -278,7 +285,7 @@ a string. For now we will presume a <code>&lt;template&gt;</code> element.</p>
 </code></pre>
 <p>Take note it has the ID of <code>my-component</code> which will match to the component's
 name <code>MyComponent</code>.</p>
-<pre class="prettyprint source lang-js"><code>import Component from 'fancy-pants/component.js';
+<pre class="prettyprint source lang-javascript"><code>import Component from 'fancy-pants/component.js';
 
 class MyComponent extends Component {
 }
@@ -289,7 +296,7 @@ MyComponent.register();
 tagname based on dasherizing the class name — <code>MyComponent</code> will define a
 <code>&lt;my-component&gt;&lt;/my-component&gt;</code> element.</p>
 <p>This can be overridden by providing a static tagName.</p>
-<pre class="prettyprint source lang-js"><code>class MyComponent extends Component {
+<pre class="prettyprint source lang-javascript"><code>class MyComponent extends Component {
   static get tagName() {
     return 'some-other-dashed-name';
   }
@@ -298,7 +305,7 @@ MyComponent.register();
 </code></pre>
 <p>By default it will look for a <code>&lt;template&gt;</code> in the dom with an ID of the
 tagname. This can be overridden by passing in a selector string.</p>
-<pre class="prettyprint source lang-js"><code>MyComponent.register('#a-different-template-id');
+<pre class="prettyprint source lang-javascript"><code>MyComponent.register('#a-different-template-id');
 </code></pre>
 <p>Dynamic content can be updated with the <code>render()</code> method. This methods is
 automatically memoized for you. Any tracked/auto-tracked properties consumed
@@ -307,7 +314,7 @@ will contribute to this method to being executed.</p>
 appropriate <code>super.*()</code>.</p>
 <p>Any observed attributes will also be auto-tracked. Use <code>this.getAttribute()</code>
 and <code>this.setAttribute()</code> as normal.</p>
-<pre class="prettyprint source"><code>class MyComponent extends Component {
+<pre class="prettyprint source lang-javascript"><code>class MyComponent extends Component {
   static get observedAttributes() {
     return ['foo'];
   }
@@ -317,7 +324,7 @@ and <code>this.setAttribute()</code> as normal.</p>
 <h3>Renderer</h3>
 <p>The renderer is not exclusive to components. You can add any function to the
 renderer. Even memoizewd functions if you wish.</p>
-<pre class="prettyprint source lang-js"><code>import { registerRenderer, scheduleRender } from 'fancy-pants/renderer.js';
+<pre class="prettyprint source lang-javascript"><code>import { registerRenderer, scheduleRender } from 'fancy-pants/renderer.js';
 
 let shouldRender = true;
 
@@ -333,7 +340,7 @@ registerRenderer(() => {
 <p>Rendering is async within a microtask cycle. Calling <code>scheduleRender()</code> will
 only schedule the render cycle therefor multiple calls will only result in one
 pass over the registered functions.</p>
-<pre class="prettyprint source lang-js"><code>scheduleRender();                  // => render cycle
+<pre class="prettyprint source lang-javascript"><code>scheduleRender();                  // => render cycle
 setTimeout(scheduleRender, 1000);  // => noop cycle
 setTimeout(() => shouldRender = true, 2000);
 setTimeout(scheduleRender, 3000);  // => render cycle
@@ -342,30 +349,29 @@ setTimeout(scheduleRender, 3000);  // => render cycle
 <h3>Tracking</h3>
 <p>Any object can have tracked properties. Until <a href="https://github.com/tc39/proposal-decorators">decorators</a> are available
 there is an initialization step to activate tracked properties.</p>
-<pre class="prettyprint source lang-js"><code>import { tracked, activateTracking } from 'fancy-pants/tracking.js';
+<pre class="prettyprint source lang-javascript"><code>import { tracked, activateTracking } from 'fancy-pants/tracking.js';
 </code></pre>
-<p>The <code>tracked()</code> function returns a <code>Trackable</code> object. This is an inert object
-till it is activated.</p>
-<p>Calling <code>activateTracking()</code> on an object will convert all <code>Trackable</code>
+<p>The <code>tracked()</code> function returns a <code>Tracked</code> object.</p>
+<p>Calling <code>activateTracking()</code> on an object will convert all <code>Tracked</code>
 properties to getter and setters hooked into the auto-tracking system.</p>
 <p>This allows the following syntax to work with <code>Component</code>s.</p>
-<pre class="prettyprint source lang-js"><code>let myObject = {
+<pre class="prettyprint source lang-javascript"><code>let myObject = {
   foo: tracked()
 };
 activateTracking(myObject);
 </code></pre>
 <p>It also returns the same object to a more condenced syntax.</p>
-<pre class="prettyprint source lang-js"><code>let myObject = activateTracking({
+<pre class="prettyprint source lang-javascript"><code>let myObject = activateTracking({
   foo: tracked()
 });
 </code></pre>
 <p>Anytime foo is assigned it will mark the property as dirty and schedule
 a render cycle.</p>
-<pre class="prettyprint source lang-js"><code>myObject.foo = 'bar';
+<pre class="prettyprint source lang-javascript"><code>myObject.foo = 'bar';
 </code></pre>
 <p>To create a function that only runs when any of its auto-tracked dependencies
 changes use <code>memoizeFunction()</code>.</p>
-<pre class="prettyprint source lang-js"><code>import { memoizeFunction } from 'fancy-pants/tracking.js';
+<pre class="prettyprint source lang-javascript"><code>import { memoizeFunction } from 'fancy-pants/tracking.js';
 let optimised = memoizeFunction(() => { … });
 </code></pre>
 <p>For more specific usage see the many <a href="https://fancy-pants.js.org/tutorial-examples.html">Examples</a>.</p></article>
