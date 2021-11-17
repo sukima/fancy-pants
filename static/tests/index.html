@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <title>FancyPants Tests</title>
+  <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.14.0.css">
+</head>
+<body>
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<script src="https://code.jquery.com/qunit/qunit-2.14.0.js"></script>
+<script src="https://sinonjs.org/releases/sinon-9.2.4.js"></script>
+<script type="module">
+  sinon.assert.pass = (assertion) => QUnit.assert.ok(true, assertion);
+  sinon.assert.fail = (assertion) => QUnit.assert.ok(false, assertion);
+  QUnit.testDone(() => sinon.restore());
+</script>
+<script src="./tracking-test.js" type="module"></script>
+<script src="./rendering-test.js" type="module"></script>
+<script src="./component-test.js" type="module"></script>
+</body>
+</html>

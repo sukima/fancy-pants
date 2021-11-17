@@ -12,7 +12,7 @@ No?! … oh guess it was just me. Well it is done now might as well show it.
 This *micro-lib* is an attempt to introduce some very modern ECMAScript ideas
 and allow you to make small and yet *performant* custom elements.
 
-```js
+```javascript
 import Component from 'https://fancy-pants.js.org/min/component.js';
 import { tracked } from 'https://fancy-pants.js.org/min/tracking.js';
 
@@ -54,7 +54,7 @@ MyCustomElement.register();
 the `constructor` instead of as a field since Apple is dragging their feet on
 modern JavaScript support.
 
-```js
+```javascript
 class MyCustomElement extends Component {
   constructor() {
     super();
@@ -170,7 +170,7 @@ a string. For now we will presume a `<template>` element.
 Take note it has the ID of `my-component` which will match to the component's
 name `MyComponent`.
 
-```js
+```javascript
 import Component from 'fancy-pants/component.js';
 
 class MyComponent extends Component {
@@ -185,7 +185,7 @@ tagname based on dasherizing the class name — `MyComponent` will define a
 
 This can be overridden by providing a static tagName.
 
-```js
+```javascript
 class MyComponent extends Component {
   static get tagName() {
     return 'some-other-dashed-name';
@@ -197,7 +197,7 @@ MyComponent.register();
 By default it will look for a `<template>` in the dom with an ID of the
 tagname. This can be overridden by passing in a selector string.
 
-```js
+```javascript
 MyComponent.register('#a-different-template-id');
 ```
 
@@ -211,7 +211,7 @@ appropriate `super.*()`.
 Any observed attributes will also be auto-tracked. Use `this.getAttribute()`
 and `this.setAttribute()` as normal.
 
-```
+```javascript
 class MyComponent extends Component {
   static get observedAttributes() {
     return ['foo'];
@@ -226,7 +226,7 @@ The Shadow DOM for the component can be accessed via `this.shadow`.
 The renderer is not exclusive to components. You can add any function to the
 renderer. Even memoizewd functions if you wish.
 
-```js
+```javascript
 import { registerRenderer, scheduleRender } from 'fancy-pants/renderer.js';
 
 let shouldRender = true;
@@ -245,7 +245,7 @@ Rendering is async within a microtask cycle. Calling `scheduleRender()` will
 only schedule the render cycle therefor multiple calls will only result in one
 pass over the registered functions.
 
-```js
+```javascript
 scheduleRender();                  // => render cycle
 setTimeout(scheduleRender, 1000);  // => noop cycle
 setTimeout(() => shouldRender = true, 2000);
@@ -261,19 +261,18 @@ there is an initialization step to activate tracked properties.
 
 [3]: https://github.com/tc39/proposal-decorators
 
-```js
+```javascript
 import { tracked, activateTracking } from 'fancy-pants/tracking.js';
 ```
 
-The `tracked()` function returns a `Trackable` object. This is an inert object
-till it is activated.
+The `tracked()` function returns a `Tracked` object.
 
-Calling `activateTracking()` on an object will convert all `Trackable`
+Calling `activateTracking()` on an object will convert all `Tracked`
 properties to getter and setters hooked into the auto-tracking system.
 
 This allows the following syntax to work with `Component`s.
 
-```js
+```javascript
 let myObject = {
   foo: tracked()
 };
@@ -282,7 +281,7 @@ activateTracking(myObject);
 
 It also returns the same object to a more condenced syntax.
 
-```js
+```javascript
 let myObject = activateTracking({
   foo: tracked()
 });
@@ -291,14 +290,14 @@ let myObject = activateTracking({
 Anytime foo is assigned it will mark the property as dirty and schedule
 a render cycle.
 
-```js
+```javascript
 myObject.foo = 'bar';
 ```
 
 To create a function that only runs when any of its auto-tracked dependencies
 changes use `memoizeFunction()`.
 
-```js
+```javascript
 import { memoizeFunction } from 'fancy-pants/tracking.js';
 let optimised = memoizeFunction(() => { … });
 ```

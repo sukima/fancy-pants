@@ -66,14 +66,14 @@ class SelectableData extends Component {
     super();
     this.dataFrom = new WeakMap();
     this.data = tracked(this.getInitialData());
-    this.querySelectorAll('tbody [itemscope]').forEach(i => {
-      i.addEventListener('click', e => this.setChecked(e.currentTarget));
-    });
   }
   connectedCallback() {
     super.connectedCallback();
     this.querySelector('select-all').selectionData = this.data;
     this.querySelector('download-button').selectionData = this.data;
+    this.querySelectorAll('tbody [itemscope]').forEach(i => {
+      i.addEventListener('click', e => this.setChecked(e.currentTarget));
+    });
   }
   setChecked(item) {
     let data = this.dataFrom.get(item);

@@ -239,7 +239,7 @@ class FruitManager {
   }
   remove(fruit) {
     this.fruits.delete(fruit);
-    this.fruits = this.fruits;
+    this.fruits = new Set(this.fruits);
   }
 }
 
