@@ -13,7 +13,7 @@
  * ```
  *
  * This is the auto-tracking system and a use case for
- * [scheduleRender]{@link module:renderer.scheduleRender}.
+ * [scheduleRender]{@link module:rendering.scheduleRender}.
  * @module tracking
  */
 let $REVISION = 0;
@@ -271,7 +271,7 @@ export function setCurrentTracker(tracker) {
 /**
  * Register a function to be called when a Tracked instance is dirtied.
  * There can only be one. This is not used when working with the
- * [renderer]{@link module:renderer} or {@link Component} class as they mange
+ * [renderer]{@link module:rendering} or {@link Component} class as they mange
  * this for you.
  *
  * You would only use this if you were interfacing with this module on your own.

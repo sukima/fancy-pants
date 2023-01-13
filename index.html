@@ -118,7 +118,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-component.html">component</a></li><li><a href="module-renderer.html">renderer</a></li><li><a href="module-tracking.html">tracking</a></li></ul><h3>Classes</h3><ul><li><a href="module-component-Component.html">Component</a></li><li><a href="module-tracking.Cache.html">Cache</a></li><li><a href="module-tracking.Tracked.html">Tracked</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-component.html">component</a></li><li><a href="module-rendering.html">rendering</a></li><li><a href="module-tracking.html">tracking</a></li></ul><h3>Classes</h3><ul><li><a href="module-component-Component.html">Component</a></li><li><a href="module-tracking.Cache.html">Cache</a></li><li><a href="module-tracking.Tracked.html">Tracked</a></li></ul></div>
                 
             </nav>
         </div>
@@ -228,7 +228,7 @@ worth it. This micro-lib fits into the same needs spectrum as Backbone™.</p>
 </ul>
 <p>If your project needs more then just jQuery then this is not for you.</p>
 <h2>Technical explanation</h2>
-<p>This lib has three basic parts tracking, renderer, and component.</p>
+<p>This lib has three basic parts tracking, rendering, and component.</p>
 <h3>Tracking</h3>
 <p>This concept is explained in extreme detail (and where I stole this idea from)
 in the blog post &quot;<a href="https://www.pzuraq.com/how-autotracking-works/">How Autotracking Works</a>&quot; by <a href="https://www.pzuraq.com/author/pzuraq/">Chris Garrett</a>.</p>
@@ -251,10 +251,10 @@ not need to declare the dependencies because the very act of consuming a value
 will register it as a dependency. In short executing the memoized function will
 <strong>auto-track</strong> its dependencies.</p>
 <h3>Renderer</h3>
-<p>The renderer is responsible for collecting functions and scheduling when to
-execute those functions. It uses a microtask to schedule the next run. If all
-the functions it attempts to run on each render cycle are memoized it is quite
-performant.</p>
+<p>The rendering module is responsible for collecting functions and scheduling
+when to execute those functions. It uses a microtask to schedule the next run.
+If all the functions it attempts to run on each render cycle are memoized it is
+quite performant.</p>
 <p>It taps into the tracking system simply to schedule a render cycle when
 a tracked property is dirtied.</p>
 <h3>Component</h3>
@@ -312,9 +312,9 @@ and <code>this.setAttribute()</code> as normal.</p>
 </code></pre>
 <p>The Shadow DOM for the component can be accessed via <code>this.shadow</code>.</p>
 <h3>Renderer</h3>
-<p>The renderer is not exclusive to components. You can add any function to the
-renderer. Even memoizewd functions if you wish.</p>
-<pre class="prettyprint source lang-javascript"><code>import { registerRenderer, scheduleRender } from 'fancy-pants/renderer.js';
+<p>The rendering module is not exclusive to components. You can add any function
+to the renderer. Even memoized functions if you wish.</p>
+<pre class="prettyprint source lang-javascript"><code>import { registerRenderer, scheduleRender } from 'fancy-pants/rendering.js';
 
 let shouldRender = true;
 

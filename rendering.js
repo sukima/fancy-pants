@@ -7,16 +7,16 @@
  * ```js
  * // Unminified
  * import { registerRenderer, unregisterRenderer, scheduleRender }
- *   from 'https://fancy-pants.js.org/renderer.js';
+ *   from 'https://fancy-pants.js.org/rendering.js';
  *
  * // Minified
  * import { registerRenderer, unregisterRenderer, scheduleRender }
- *   from 'https://fancy-pants.js.org/min/renderer.js';
+ *   from 'https://fancy-pants.js.org/min/rendering.js';
  * ```
  *
  * This is the global rendering cycle. It is built into the {@link Component}
  * implementation but can also be used outside of a Component.
- * @module renderer
+ * @module rendering
  */
 let renderScheduled = false;
 const renderOperations = new Set();

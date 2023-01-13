@@ -118,7 +118,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-component.html">component</a></li><li><a href="module-renderer.html">renderer</a></li><li><a href="module-tracking.html">tracking</a></li></ul><h3>Classes</h3><ul><li><a href="module-component-Component.html">Component</a></li><li><a href="module-tracking.Cache.html">Cache</a></li><li><a href="module-tracking.Tracked.html">Tracked</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-component.html">component</a></li><li><a href="module-rendering.html">rendering</a></li><li><a href="module-tracking.html">tracking</a></li></ul><h3>Classes</h3><ul><li><a href="module-component-Component.html">Component</a></li><li><a href="module-tracking.Cache.html">Cache</a></li><li><a href="module-tracking.Tracked.html">Tracked</a></li></ul></div>
                 
             </nav>
         </div>
@@ -154,7 +154,7 @@ import { tracked } from 'https://fancy-pants.js.org/tracking.js';
 import { tracked } from 'https://fancy-pants.js.org/min/tracking.js';
 </code></pre>
 <p>This is the auto-tracking system and a use case for
-<a href="module-renderer.html#.scheduleRender"><code>scheduleRender</code></a>.</p></div>
+<a href="module-rendering.html#.scheduleRender"><code>scheduleRender</code></a>.</p></div>
         
 
         
@@ -674,7 +674,7 @@ foo.bar = 'BAR'; // will trigger a render (becomes dirty)</code></pre>
     <div class="description">
         <p>Register a function to be called when a Tracked instance is dirtied.
 There can only be one. This is not used when working with the
-<a href="module-renderer.html"><code>renderer</code></a> or <a href="Component.html"><code>Component</code></a> class as they mange
+<a href="module-rendering.html"><code>renderer</code></a> or <a href="Component.html"><code>Component</code></a> class as they mange
 this for you.</p>
 <p>You would only use this if you were interfacing with this module on your own.</p>
     </div>
