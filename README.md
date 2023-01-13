@@ -85,7 +85,7 @@ If your project needs more then just jQuery then this is not for you.
 
 ## Technical explanation
 
-This lib has three basic parts tracking, renderer, and component.
+This lib has three basic parts tracking, rendering, and component.
 
 ### Tracking
 
@@ -121,10 +121,10 @@ will register it as a dependency. In short executing the memoized function will
 
 ### Renderer
 
-The renderer is responsible for collecting functions and scheduling when to
-execute those functions. It uses a microtask to schedule the next run. If all
-the functions it attempts to run on each render cycle are memoized it is quite
-performant.
+The rendering module is responsible for collecting functions and scheduling
+when to execute those functions. It uses a microtask to schedule the next run.
+If all the functions it attempts to run on each render cycle are memoized it is
+quite performant.
 
 It taps into the tracking system simply to schedule a render cycle when
 a tracked property is dirtied.
@@ -210,11 +210,11 @@ The Shadow DOM for the component can be accessed via `this.shadow`.
 
 ### Renderer
 
-The renderer is not exclusive to components. You can add any function to the
-renderer. Even memoizewd functions if you wish.
+The rendering module is not exclusive to components. You can add any function
+to the renderer. Even memoized functions if you wish.
 
 ```javascript
-import { registerRenderer, scheduleRender } from 'fancy-pants/renderer.js';
+import { registerRenderer, scheduleRender } from 'fancy-pants/rendering.js';
 
 let shouldRender = true;
 
