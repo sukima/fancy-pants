@@ -1,4 +1,4 @@
-/* globals QUnit sinon */
+import { QUnit, sinon } from 'https://tritarget.org/cdn/testing.js';
 import {
   registerRenderer,
   unregisterRenderer,
