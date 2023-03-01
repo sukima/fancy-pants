@@ -1,4 +1,4 @@
-/* globals QUnit sinon */
+import { QUnit, sinon } from 'https://tritarget.org/cdn/testing.js';
 import Component from '../component.js';
 import { Tracked } from '../tracking.js';
 
