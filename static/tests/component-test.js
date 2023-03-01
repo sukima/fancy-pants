@@ -319,6 +319,34 @@ module('component', function (hooks) {
         'test-content'
       );
     });
+
+    test('safe to add/remove element', async function (assert) {
+      let testTagName = uniqueTagName();
+      class TestComponent extends Component {
+        static get tagName() {
+          return testTagName;
+        }
+        static get template() {
+          return `<p>test-content</p>`;
+        }
+      }
+      TestComponent.register();
+
+      let testSubject = document.createElement(testTagName);
+      testSubject.setAttribute('id', 'test-subject');
+
+      this.fixture.appendChild(testSubject);
+      await nextMicroTask();
+      testSubject.remove();
+      await nextMicroTask();
+      this.fixture.appendChild(testSubject);
+      await nextMicroTask();
+
+      assert.equal(
+        this.fixture.querySelector('#test-subject').textContent.trim(),
+        'test-content'
+      );
+    });
   });
 
   module('shadow DOM', function () {
@@ -453,6 +481,34 @@ module('component', function (hooks) {
       this.fixture.appendChild(testSubject);
 
       await nextMicroTask();
+      assert.equal(
+        this.fixture.querySelector('#test-subject').shadowRoot.textContent.trim(),
+        'test-content'
+      );
+    });
+
+    test('safe to add/remove element', async function (assert) {
+      let testTagName = uniqueTagName();
+      class TestComponent extends Component {
+        static get tagName() {
+          return testTagName;
+        }
+        static get shadow() {
+          return `<p>test-content</p>`;
+        }
+      }
+      TestComponent.register();
+
+      let testSubject = document.createElement(testTagName);
+      testSubject.setAttribute('id', 'test-subject');
+
+      this.fixture.appendChild(testSubject);
+      await nextMicroTask();
+      testSubject.remove();
+      await nextMicroTask();
+      this.fixture.appendChild(testSubject);
+      await nextMicroTask();
+
       assert.equal(
         this.fixture.querySelector('#test-subject').shadowRoot.textContent.trim(),
         'test-content'
