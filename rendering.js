@@ -1,7 +1,7 @@
 /**********************************************\
 *  FancyPants — customElements micro-lib   O   *
-*  MIT — Copyright © 2021 Devin Weaver    /|\  *
-*  https://fancy-pants.js.org/   v3.0.0   </>  *
+*  MIT — Copyright © 2023 Devin Weaver    /|\  *
+*  https://fancy-pants.js.org/   v3.0.1   </>  *
 \**********************************************/
 /**
  * ```js

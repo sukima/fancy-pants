@@ -1,7 +1,7 @@
 /**********************************************\
 *  FancyPants — customElements micro-lib   O   *
-*  MIT — Copyright © 2021 Devin Weaver    /|\  *
-*  https://fancy-pants.js.org/   v3.0.0   </>  *
+*  MIT — Copyright © 2023 Devin Weaver    /|\  *
+*  https://fancy-pants.js.org/   v3.0.1   </>  *
 \**********************************************/
 /** @module component */
 import { Tracked, Cache, setScheduleRerender } from './tracking.js';
@@ -93,6 +93,7 @@ function componentOf(ElementClass) {
    * define the custom element and associate a template to the custom element.
    */
   class Component extends ElementClass {
+    #initialized = false;
 
     /**
      * Direct access to the Shadow DOM.
@@ -130,15 +131,6 @@ function componentOf(ElementClass) {
      */
     constructor() {
       super();
-      let template = templates.get(this.tagName.toLowerCase());
-      if (template) {
-        if (template.dataset.shadow === undefined) {
-          appendWithSlotableContent(this, template.content.cloneNode(true));
-        } else {
-          this.shadow = this.attachShadow({ mode: 'open' });
-          this.shadow.appendChild(template.content.cloneNode(true));
-        }
-      }
       this[RENDER] = Cache.memoize(() => this.render(yieldableProxy(this)));
     }
 
@@ -159,8 +151,20 @@ function componentOf(ElementClass) {
      * ```
      */
     connectedCallback() {
-      this.track();
-      registerRenderer(this[RENDER]);
+      if (!this.#initialized) {
+        let template = templates.get(this.tagName.toLowerCase());
+        if (template) {
+          if (template.dataset.shadow === undefined) {
+            appendWithSlotableContent(this, template.content.cloneNode(true));
+          } else {
+            this.shadow = this.attachShadow({ mode: 'open' });
+            this.shadow.appendChild(template.content.cloneNode(true));
+          }
+        }
+        this.track();
+        registerRenderer(this[RENDER]);
+        this.#initialized = true;
+      }
       scheduleRender();
     }
 
