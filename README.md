@@ -1,3 +1,21 @@
+# Give Up GitHub
+
+This project has given up GitHub.  ([See Software Freedom Conservancy's *Give
+Up  GitHub* site for details](https://GiveUpGitHub.org).)
+
+You can now find this project at
+[SourceHut](https://sr.ht/~sukima/fancy-pants.js/) instead.
+
+Any use of this project's code by GitHub Copilot, past or present, is done
+without our permission.  We do not consent to GitHub's use of this project's
+code in Copilot.
+
+Join us; you can [give up GitHub](https://GiveUpGitHub.org) too!
+
+![Logo of the GiveUpGitHub campaign](https://sfconservancy.org/img/GiveUpGitHub.png)
+
+----
+
 <p style="display: flex; flex-direction: column; align-items: center;">
   <img src="https://fancy-pants.js.org/images/logo.png" width="128" style="border-radius: 24px;" alt="FancyPants logo">
   <span style="font-family: monospace; margin-top: 0.5rem;">Version 3.0.1</span>
